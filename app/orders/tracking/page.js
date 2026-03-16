@@ -1,4 +1,4 @@
-import OrderTrackingClient from '@/components\OrderTrackingClient';
+import OrderTrackingClient from '@/components/OrderTrackingClient';
 
 export const metadata = {
   title: 'Track Order',
