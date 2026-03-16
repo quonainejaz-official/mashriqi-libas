@@ -22,6 +22,11 @@ const structuredWebsite = {
   '@type': 'WebSite',
   name: siteName,
   url: siteUrl,
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: `${siteUrl}/products?search={search_term_string}`,
+    'query-input': 'required name=search_term_string',
+  },
 };
 
 export const metadata = {
