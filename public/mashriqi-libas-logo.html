@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mashriqi Libas Logo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        --emerald: #0b3a2e;
+        --emerald-dark: #07251d;
+        --gold: #d9b36c;
+        --gold-soft: #f0d7a6;
+        --white: #ffffff;
+      }
+      .logo-frame {
+        background: radial-gradient(120% 120% at 20% 10%, #114c3a 0%, #0b3a2e 35%, #07251d 100%);
+        border: 1px solid rgba(217, 179, 108, 0.25);
+        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+      }
+      .pattern-line {
+        stroke: var(--gold);
+        stroke-width: 2;
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 540;
+        stroke-dashoffset: 540;
+        animation: draw-pattern 8s ease-in-out infinite;
+      }
+      .pattern-line.secondary {
+        stroke: rgba(217, 179, 108, 0.5);
+        stroke-width: 1.5;
+      }
+      .fabric-line {
+        stroke: var(--white);
+        stroke-width: 3;
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 520;
+        stroke-dashoffset: 520;
+        animation: draw-fabric 8s ease-in-out infinite;
+      }
+      .fabric-line.accent {
+        stroke: var(--gold);
+        stroke-width: 2;
+      }
+      .brand-text {
+        font-family: "Cinzel", "Cormorant Garamond", "Georgia", serif;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        fill: var(--gold);
+        opacity: 1;
+        animation: text-glow-pulse 4s ease-in-out infinite;
+      }
+      .brand-sub {
+        font-family: "Cormorant Garamond", "Georgia", serif;
+        letter-spacing: 0.38em;
+        fill: rgba(255, 255, 255, 0.7);
+        opacity: 1;
+        animation: text-float-subtle 6s ease-in-out infinite;
+      }
+      .brand-shimmer {
+        fill: var(--gold-soft);
+        opacity: 0.25;
+        mask: url(#text-shimmer-mask);
+        animation: shimmer-visibility 6s linear infinite;
+      }
+      .underline-fabric {
+        stroke: var(--gold);
+        stroke-width: 1.5;
+        fill: none;
+        stroke-linecap: round;
+        opacity: 0.6;
+        animation: fabric-flow 8s ease-in-out infinite;
+      }
+      .shimmer-sweep {
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: shimmer-move 4s linear infinite;
+      }
+      @keyframes text-glow-pulse {
+        0%, 100% {
+          filter: drop-shadow(0 0 2px rgba(217, 179, 108, 0.2));
+        }
+        50% {
+          filter: drop-shadow(0 0 15px rgba(217, 179, 108, 0.5));
+        }
+      }
+      @keyframes text-float-subtle {
+        0%, 100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-2px);
+        }
+      }
+      @keyframes shimmer-visibility {
+        0%, 100% { opacity: 0.2; }
+        50% { opacity: 0.7; }
+      }
+      @keyframes fabric-flow {
+        0%, 100% {
+          stroke-dasharray: 400 200;
+          stroke-dashoffset: 0;
+          transform: scaleX(1) translateY(0);
+          opacity: 0.5;
+        }
+        50% {
+          stroke-dasharray: 300 300;
+          stroke-dashoffset: 150;
+          transform: scaleX(1.02) translateY(1px);
+          opacity: 0.8;
+        }
+      }
+      @keyframes shimmer-move {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(100%);
+        }
+      }
+      @keyframes draw-pattern {
+        0%, 100% { stroke-dashoffset: 540; opacity: 0.8; }
+        50% { stroke-dashoffset: 0; opacity: 1; }
+      }
+      @keyframes draw-fabric {
+        0%, 100% { stroke-dashoffset: 520; opacity: 0.8; }
+        50% { stroke-dashoffset: 0; opacity: 1; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .pattern-line,
+        .fabric-line,
+        .brand-text,
+        .brand-sub,
+        .brand-shimmer,
+        .shimmer-sweep {
+          animation: none !important;
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-[#071f18] flex items-center justify-center p-8">
+    <div class="logo-frame w-full max-w-[900px] rounded-2xl px-10 py-9">
+      <svg viewBox="0 0 900 220" class="w-full h-auto" role="img" aria-label="Mashriqi Libas logo">
+        <defs>
+          <linearGradient id="gold-glow" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#f0d7a6" stop-opacity="0.2" />
+            <stop offset="50%" stop-color="#d9b36c" stop-opacity="0.9" />
+            <stop offset="100%" stop-color="#f0d7a6" stop-opacity="0.2" />
+          </linearGradient>
+          <linearGradient id="shimmer-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0" />
+            <stop offset="45%" stop-color="#ffffff" stop-opacity="0" />
+            <stop offset="50%" stop-color="#ffffff" stop-opacity="0.9" />
+            <stop offset="55%" stop-color="#ffffff" stop-opacity="0" />
+            <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+          </linearGradient>
+          <mask id="text-shimmer-mask" maskUnits="userSpaceOnUse" x="300" y="110" width="560" height="90">
+            <rect x="300" y="110" width="560" height="90" fill="black" />
+            <rect class="shimmer-sweep" x="300" y="110" width="560" height="90" fill="url(#shimmer-gradient)" />
+          </mask>
+        </defs>
+
+        <g transform="translate(40 25)">
+          <circle cx="80" cy="85" r="72" stroke="url(#gold-glow)" stroke-width="2" fill="none" opacity="0.5" />
+          <path class="pattern-line" d="M80 15 L107 45 L145 45 L118 70 L130 110 L80 92 L30 110 L42 70 L15 45 L53 45 Z" />
+          <path class="pattern-line secondary" d="M80 30 L98 56 L128 56 L107 78 L115 108 L80 94 L45 108 L53 78 L32 56 L62 56 Z" />
+          <path class="pattern-line secondary" d="M80 6 L80 164 M-4 85 L164 85 M20 25 L140 145 M140 25 L20 145" />
+        </g>
+
+        <g transform="translate(230 28)">
+          <path class="fabric-line" d="M80 18 L130 18 L152 42 L152 158 L80 180 L8 158 L8 42 L30 18 L80 18" />
+          <path class="fabric-line accent" d="M80 20 L80 84 L55 108 L80 140 L105 108 L80 84" />
+          <path class="fabric-line" d="M30 18 L40 60 L8 72 M130 18 L120 60 L152 72" />
+          <path class="fabric-line accent" d="M40 140 L120 140" />
+        </g>
+
+        <g transform="translate(340 110)">
+          <text x="0" y="0" font-size="64" class="brand-text">Mashriqi Libas</text>
+          <text x="0" y="0" font-size="64" class="brand-shimmer">Mashriqi Libas</text>
+          <path d="M5 12 Q 280 20 555 12" class="underline-fabric" />
+          <text x="8" y="48" font-size="18" class="brand-sub">EASTERN LUXURY</text>
+        </g>
+      </svg>
+    </div>
+  </body>
+</html>

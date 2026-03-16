@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Lucy Said Ok Personal Use Italic";
+  src: url("/fonts/LucySaidOkPersonalUseItalic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 255, 255, 255;
+  --background-end-rgb: 255, 255, 255;
+  
+  --primary: #000000;
+  --secondary: #A08C5B;
+  --accent: #000000;
+  --border: #F3F4F6;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: white;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.gold-accent {
+  color: var(--secondary);
+}
+
+.btn-primary {
+  @apply bg-black text-white py-4 px-10 rounded-none uppercase tracking-[0.2em] text-[10px] font-bold hover:bg-gray-800 transition-all duration-300;
+}
+
+.btn-outline {
+  @apply border border-black text-black py-4 px-10 rounded-none uppercase tracking-[0.2em] text-[10px] font-bold hover:bg-black hover:text-white transition-all duration-300;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* Swiper Customization */
+.swiper-pagination-bullet {
+  @apply bg-white opacity-50 !important;
+}
+.swiper-pagination-bullet-active {
+  @apply bg-white opacity-100 !important;
+}
+.swiper-button-next, .swiper-button-prev {
+  @apply !text-black scale-75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 !important;
+}
+.swiper-button-next:after, .swiper-button-prev:after {
+  @apply !text-2xl font-light !important;
+}
+
+/* Product Carousel Specifics */
+.product-carousel .swiper-button-next, 
+.product-carousel .swiper-button-prev {
+  @apply !bg-white/80 !w-12 !h-12 rounded-full shadow-sm !text-black !opacity-100 !important;
+}
+.product-carousel .swiper-button-next:after, 
+.product-carousel .swiper-button-prev:after {
+  @apply !text-base font-bold !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
