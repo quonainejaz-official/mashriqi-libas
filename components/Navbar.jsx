@@ -6,13 +6,14 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
-import { HiOutlineShoppingBag, HiOutlineUser, HiOutlineSearch, HiMenuAlt3, HiX } from 'react-icons/hi';
+import { HiOutlineShoppingBag, HiOutlineUser, HiOutlineSearch, HiMenuAlt3, HiX, HiOutlineLogout } from 'react-icons/hi';
 import BrandLogo from '@/components/BrandLogo';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [categories, setCategories] = useState([]);
   const { cart, setIsCartOpen } = useCart();
@@ -114,11 +115,77 @@ const Navbar = () => {
               <HiOutlineSearch strokeWidth={1.5} />
             </button>
             
-            <div className="relative group hidden sm:block">
-              <Link href={user ? "/profile" : "/login"} className="text-xl hover:text-gray-400 transition-colors flex items-center">
-                <HiOutlineUser strokeWidth={1.5} />
-                {user && <span className="hidden xl:block text-[10px] uppercase ml-2 tracking-widest font-medium">{user.name.split(' ')[0]}</span>}
-              </Link>
+            <div
+              className="relative hidden sm:block"
+              onBlur={(e) => {
+                if (!e.currentTarget.contains(e.relatedTarget)) {
+                  setIsProfileOpen(false);
+                }
+              }}
+              tabIndex={0}
+            >
+              {user ? (
+                <>
+                  <button
+                    onClick={() => setIsProfileOpen((prev) => !prev)}
+                    className="flex items-center gap-2 text-[10px] uppercase tracking-widest font-medium text-gray-700 hover:text-gray-900 transition-colors"
+                    aria-haspopup="menu"
+                    aria-expanded={isProfileOpen}
+                  >
+                    <span className="w-8 h-8 rounded-full bg-[#1a1a1a] text-white flex items-center justify-center text-xs font-semibold shadow-md">
+                      {user.name?.[0]?.toUpperCase() || <HiOutlineUser strokeWidth={1.5} />}
+                    </span>
+                    <span className="hidden xl:block">{user.name?.split(' ')[0]}</span>
+                  </button>
+                  <div
+                    className={`absolute right-0 top-full pt-3 transition-all duration-200 ${
+                      isProfileOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
+                    }`}
+                  >
+                    <div className="w-64 rounded-xl border border-gray-100 bg-white shadow-2xl">
+                      <div className="p-4 border-b border-gray-100">
+                        <p className="text-xs uppercase tracking-widest text-gray-400">Signed in as</p>
+                        <p className="text-sm font-semibold text-gray-900">{user.name}</p>
+                        <p className="text-xs text-gray-400">{user.email}</p>
+                      </div>
+                      <div className="p-2">
+                        <Link
+                          href="/profile"
+                          onClick={() => setIsProfileOpen(false)}
+                          className="flex items-center gap-3 px-3 py-2 rounded-lg text-[11px] uppercase tracking-widest text-gray-700 hover:bg-gray-50"
+                        >
+                          <HiOutlineUser className="text-lg" />
+                          Profile
+                        </Link>
+                        <Link
+                          href="/orders"
+                          onClick={() => setIsProfileOpen(false)}
+                          className="flex items-center gap-3 px-3 py-2 rounded-lg text-[11px] uppercase tracking-widest text-gray-700 hover:bg-gray-50"
+                        >
+                          <HiOutlineShoppingBag className="text-lg" />
+                          Orders
+                        </Link>
+                      </div>
+                      <div className="p-2 border-t border-gray-100">
+                        <button
+                          onClick={() => {
+                            setIsProfileOpen(false);
+                            logout();
+                          }}
+                          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-[11px] uppercase tracking-widest text-red-600 hover:bg-red-50"
+                        >
+                          <HiOutlineLogout className="text-lg" />
+                          Logout
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <Link href="/login" className="text-xl hover:text-gray-400 transition-colors flex items-center">
+                  <HiOutlineUser strokeWidth={1.5} />
+                </Link>
+              )}
             </div>
 
             <button onClick={() => setIsCartOpen(true)} className="relative text-xl hover:text-gray-400 transition-colors">
