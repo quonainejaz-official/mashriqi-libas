@@ -10,6 +10,19 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://mashriqi-libas.verc
 const siteName = 'Mashriqi Libas';
 const defaultTitle = 'Mashriqi Libas | Premium Eastern Wear';
 const defaultDescription = 'Mashriqi Libas - Your destination for premium Eastern and traditional Pakistani clothing.';
+const structuredOrganization = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: siteName,
+  url: siteUrl,
+  logo: `${siteUrl}/opengraph-image`,
+};
+const structuredWebsite = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: siteName,
+  url: siteUrl,
+};
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
@@ -74,6 +87,20 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredOrganization),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredWebsite),
+          }}
+        />
+      </head>
       <body className={inter.className}>
         <Providers>
           <Navbar />
