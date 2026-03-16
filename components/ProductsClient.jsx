@@ -211,37 +211,28 @@ const ProductsContent = () => {
         <span>{pagination.total || 0} Products</span>
       </div>
 
-      <div className="flex flex-wrap gap-4 text-[11px] uppercase tracking-[0.3em] text-gray-500 border-b pb-4">
-        {categories.map((cat) => (
-          <button
-            key={cat._id}
-            onClick={() => {
-              updateFilters('category', cat.slug);
-              updateFilters('subcategory', '');
-            }}
-            className={`${activeCategorySlug === cat.slug ? 'text-[#A08C5B] font-bold' : 'hover:text-[#2C3E50]'}`}
-          >
-            {cat.name}
-          </button>
-        ))}
-      </div>
-
       <div className="text-center space-y-3">
         <h1 className="text-3xl md:text-4xl font-light uppercase tracking-[0.6em] text-[#2C3E50]">
           {activeCategorySlug ? activeCategorySlug.replace('-', ' ') : 'Collections'}
         </h1>
-        <div className="flex flex-wrap justify-center gap-4 text-[10px] uppercase tracking-[0.4em] text-gray-500">
-          {subcategoryTabs.map((sub) => (
-            <button
-              key={sub.slug}
-              onClick={() => updateFilters('subcategory', sub.slug)}
-              className={`${searchParams.get('subcategory') === sub.slug ? 'text-[#2C3E50] font-bold' : 'hover:text-[#2C3E50]'}`}
-            >
-              {sub.name}
-            </button>
-          ))}
-        </div>
       </div>
+
+      {subcategoryTabs.length > 0 && (
+        <div className="text-center space-y-3">
+          <p className="text-[10px] uppercase tracking-[0.4em] text-gray-400">Subcategories</p>
+          <div className="flex flex-wrap justify-center gap-4 text-[10px] uppercase tracking-[0.4em] text-gray-500">
+            {subcategoryTabs.map((sub) => (
+              <button
+                key={sub.slug}
+                onClick={() => updateFilters('subcategory', sub.slug)}
+                className={`${searchParams.get('subcategory') === sub.slug ? 'text-[#2C3E50] font-bold' : 'hover:text-[#2C3E50]'}`}
+              >
+                {sub.name}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] items-center gap-4 border-y py-4">
         <div className="flex items-center gap-3">
