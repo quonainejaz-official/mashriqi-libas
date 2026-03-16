@@ -17,6 +17,23 @@ const faqs = [
   },
 ];
 
+export const metadata = {
+  title: 'FAQs',
+  description: 'Find answers about shipping, returns, and ordering at Mashriqi Libas.',
+  alternates: {
+    canonical: '/faq',
+  },
+  openGraph: {
+    title: 'FAQs',
+    description: 'Find answers about shipping, returns, and ordering at Mashriqi Libas.',
+    url: '/faq',
+  },
+  twitter: {
+    title: 'FAQs',
+    description: 'Find answers about shipping, returns, and ordering at Mashriqi Libas.',
+  },
+};
+
 export default function FaqPage() {
   return (
     <div className="max-w-5xl mx-auto px-4 md:px-8 py-16">

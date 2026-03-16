@@ -1,3 +1,20 @@
+export const metadata = {
+  title: 'Shipping & Returns',
+  description: 'Shipping timelines, delivery fees, and return policy for Mashriqi Libas.',
+  alternates: {
+    canonical: '/shipping',
+  },
+  openGraph: {
+    title: 'Shipping & Returns',
+    description: 'Shipping timelines, delivery fees, and return policy for Mashriqi Libas.',
+    url: '/shipping',
+  },
+  twitter: {
+    title: 'Shipping & Returns',
+    description: 'Shipping timelines, delivery fees, and return policy for Mashriqi Libas.',
+  },
+};
+
 export default function ShippingPage() {
   return (
     <div className="max-w-6xl mx-auto px-4 md:px-8 py-16">

@@ -1,3 +1,20 @@
+export const metadata = {
+  title: 'Contact Us',
+  description: 'Contact Mashriqi Libas for order help, returns, and customer support.',
+  alternates: {
+    canonical: '/contact',
+  },
+  openGraph: {
+    title: 'Contact Us',
+    description: 'Contact Mashriqi Libas for order help, returns, and customer support.',
+    url: '/contact',
+  },
+  twitter: {
+    title: 'Contact Us',
+    description: 'Contact Mashriqi Libas for order help, returns, and customer support.',
+  },
+};
+
 export default function ContactPage() {
   return (
     <div className="max-w-6xl mx-auto px-4 md:px-8 py-16">

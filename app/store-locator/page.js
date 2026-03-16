@@ -16,6 +16,23 @@ const stores = [
   },
 ];
 
+export const metadata = {
+  title: 'Store Locator',
+  description: 'Find Mashriqi Libas stores in Karachi, Lahore, and Islamabad.',
+  alternates: {
+    canonical: '/store-locator',
+  },
+  openGraph: {
+    title: 'Store Locator',
+    description: 'Find Mashriqi Libas stores in Karachi, Lahore, and Islamabad.',
+    url: '/store-locator',
+  },
+  twitter: {
+    title: 'Store Locator',
+    description: 'Find Mashriqi Libas stores in Karachi, Lahore, and Islamabad.',
+  },
+};
+
 export default function StoreLocatorPage() {
   return (
     <div className="max-w-6xl mx-auto px-4 md:px-8 py-16">

@@ -6,12 +6,68 @@ import Footer from '@/components/Footer';
 import CartSidebar from '@/components/CartSidebar';
 
 const inter = Inter({ subsets: ['latin'] });
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://mashriqilibas.com';
+const siteName = 'Mashriqi Libas';
+const defaultTitle = 'Mashriqi Libas | Premium Eastern Wear';
+const defaultDescription = 'Mashriqi Libas - Your destination for premium Eastern and traditional Pakistani clothing.';
 
 export const metadata = {
-  title: 'Mashriqi Libas | Premium Eastern Wear',
-  description: 'Mashriqi Libas - Your destination for premium Eastern and traditional Pakistani clothing.',
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: defaultTitle,
+    template: '%s | Mashriqi Libas',
+  },
+  description: defaultDescription,
+  applicationName: siteName,
+  keywords: [
+    'Pakistani clothing',
+    'Eastern wear',
+    'Women fashion',
+    'Unstitched suits',
+    'Stitched wear',
+    'Luxury pret',
+    'Mashriqi Libas',
+  ],
+  authors: [{ name: siteName }],
+  creator: siteName,
+  publisher: siteName,
   icons: {
     icon: '/icon.svg',
+  },
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    url: siteUrl,
+    title: defaultTitle,
+    description: defaultDescription,
+    siteName,
+    images: [
+      {
+        url: '/icon.svg',
+        width: 512,
+        height: 512,
+        alt: siteName,
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: defaultTitle,
+    description: defaultDescription,
+    images: ['/icon.svg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
   },
 };
 
