@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import ProductsClient from '@/components/ProductsClient';
 
 const buildTitle = (category, search) => {
@@ -40,5 +41,9 @@ export async function generateMetadata({ searchParams }) {
 }
 
 export default function ProductsPage() {
-  return <ProductsClient />;
+  return (
+    <Suspense fallback={null}>
+      <ProductsClient />
+    </Suspense>
+  );
 }

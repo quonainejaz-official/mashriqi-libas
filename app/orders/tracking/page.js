@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import OrderTrackingClient from '@/components/OrderTrackingClient';
 
 export const metadata = {
@@ -22,5 +23,9 @@ export const metadata = {
 };
 
 export default function TrackingPage() {
-  return <OrderTrackingClient />;
+  return (
+    <Suspense fallback={null}>
+      <OrderTrackingClient />
+    </Suspense>
+  );
 }
