@@ -2,11 +2,30 @@
 
 import { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
-import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
 const AuthContext = createContext();
+
+const getStoredToken = () => {
+  if (typeof window === 'undefined') return null;
+  return localStorage.getItem('token');
+};
+
+const setAuthHeader = (token) => {
+  if (token) {
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+    return;
+  }
+  delete axios.defaults.headers.common.Authorization;
+};
+
+if (typeof window !== 'undefined') {
+  const existingToken = localStorage.getItem('token');
+  if (existingToken) {
+    setAuthHeader(existingToken);
+  }
+}
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -15,14 +34,16 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const loadUser = async () => {
-      const token = Cookies.get('token');
+      const token = getStoredToken();
       if (token) {
         try {
+          setAuthHeader(token);
           const { data } = await axios.get('/api/auth/me');
           setUser(data.user);
         } catch (error) {
           console.error('Failed to load user:', error);
-          Cookies.remove('token');
+          localStorage.removeItem('token');
+          setAuthHeader(null);
           setUser(null);
         }
       }
@@ -36,7 +57,8 @@ export const AuthProvider = ({ children }) => {
     try {
       const { data } = await axios.post('/api/auth/login', { email, password });
       setUser(data.user);
-      Cookies.set('token', data.token, { expires: 7 });
+      localStorage.setItem('token', data.token);
+      setAuthHeader(data.token);
       toast.success('Login successful!');
       router.push(data.user.role === 'admin' ? '/admin/dashboard' : '/profile');
       return { success: true };
@@ -51,7 +73,8 @@ export const AuthProvider = ({ children }) => {
     try {
       const { data } = await axios.post('/api/auth/signup', userData);
       setUser(data.user);
-      Cookies.set('token', data.token, { expires: 7 });
+      localStorage.setItem('token', data.token);
+      setAuthHeader(data.token);
       toast.success('Signup successful!');
       router.push('/profile');
       return { success: true };
@@ -62,8 +85,18 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
-    Cookies.remove('token');
+  const logout = async () => {
+    const token = getStoredToken();
+    if (token) {
+      setAuthHeader(token);
+      try {
+        await axios.post('/api/auth/me');
+      } catch (error) {
+        console.error('Logout request failed:', error);
+      }
+    }
+    localStorage.removeItem('token');
+    setAuthHeader(null);
     setUser(null);
     toast.success('Logged out successfully');
     router.push('/login');
