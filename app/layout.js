@@ -6,7 +6,7 @@ import Footer from '@/components/Footer';
 import CartSidebar from '@/components/CartSidebar';
 
 const inter = Inter({ subsets: ['latin'] });
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://mashriqilibas.com';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://mashriqi-libas.vercel.app';
 const siteName = 'Mashriqi Libas';
 const defaultTitle = 'Mashriqi Libas | Premium Eastern Wear';
 const defaultDescription = 'Mashriqi Libas - Your destination for premium Eastern and traditional Pakistani clothing.';
@@ -45,9 +45,9 @@ export const metadata = {
     siteName,
     images: [
       {
-        url: '/icon.svg',
-        width: 512,
-        height: 512,
+        url: '/opengraph-image',
+        width: 1200,
+        height: 630,
         alt: siteName,
       },
     ],
@@ -56,7 +56,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: defaultTitle,
     description: defaultDescription,
-    images: ['/icon.svg'],
+    images: ['/twitter-image'],
   },
   robots: {
     index: true,
