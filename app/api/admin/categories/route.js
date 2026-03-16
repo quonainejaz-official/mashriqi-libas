@@ -4,6 +4,24 @@ import { requireAdmin } from '@/lib/auth';
 import { uploadImage, deleteImage } from '@/lib/cloudinary';
 import { NextResponse } from 'next/server';
 
+const slugify = (value) => value.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+
+const normalizeSubcategories = (items = []) =>
+  items
+    .map((sub) => {
+      if (!sub?.name?.trim()) return null;
+      return {
+        name: sub.name.trim(),
+        slug: slugify(sub.name),
+        description: sub.description || '',
+        image: sub.image || {},
+        order: parseInt(sub.order, 10) || 0,
+        isActive: sub.isActive !== false,
+        subcategories: normalizeSubcategories(sub.subcategories || [])
+      };
+    })
+    .filter(Boolean);
+
 export async function GET(request) {
   try {
     await connectDB();
@@ -26,7 +44,9 @@ export async function POST(request) {
     const name = formData.get('name');
     const description = formData.get('description');
     const order = parseInt(formData.get('order')) || 0;
-    const slug = name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+    const slug = slugify(name || '');
+    const isActiveRaw = formData.get('isActive');
+    const isActive = isActiveRaw === null ? true : isActiveRaw === 'true' || isActiveRaw === true;
     const subcategoriesRaw = formData.get('subcategories');
     const subcategories = subcategoriesRaw ? JSON.parse(subcategoriesRaw) : [];
 
@@ -38,14 +58,17 @@ export async function POST(request) {
       image = await uploadImage(base64);
     }
 
-    const normalizedSubcategories = subcategories.map((sub) => ({
-      name: sub.name?.trim(),
-      slug: sub.name?.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
-      order: parseInt(sub.order) || 0,
-      isActive: sub.isActive !== false,
-    })).filter((sub) => sub.name);
+    const normalizedSubcategories = normalizeSubcategories(subcategories);
 
-    const category = await Category.create({ name, slug, description, image, order, subcategories: normalizedSubcategories });
+    const category = await Category.create({
+      name,
+      slug,
+      description,
+      image,
+      order,
+      isActive,
+      subcategories: normalizedSubcategories
+    });
     return NextResponse.json({ message: 'Category created', category }, { status: 201 });
   } catch (err) {
     return NextResponse.json({ error: err.message || 'Server error' }, { status: 500 });

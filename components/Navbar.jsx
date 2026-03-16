@@ -50,6 +50,19 @@ const Navbar = () => {
   };
 
   const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+  const renderSubcategoryLinks = (subcategories, categorySlug, depth = 0, onClick) =>
+    subcategories.map((sub) => (
+      <div key={`${categorySlug}-${sub.slug}`} style={{ paddingLeft: depth * 12 }}>
+        <Link
+          href={`/products?category=${categorySlug}&subcategory=${sub.slug}`}
+          className="hover:text-[#A08C5B] transition-colors block"
+          onClick={onClick}
+        >
+          {sub.name}
+        </Link>
+        {sub.subcategories?.length > 0 && renderSubcategoryLinks(sub.subcategories, categorySlug, depth + 1, onClick)}
+      </div>
+    ));
 
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 bg-white border-b border-gray-100 py-3`}>
@@ -65,12 +78,8 @@ const Navbar = () => {
                 {category.subcategories?.length > 0 && (
                   <div className="absolute left-0 top-full pt-6 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300">
                     <div className="bg-white border border-gray-100 shadow-2xl p-6 w-[520px] grid grid-cols-[1fr_180px] gap-6">
-                      <div className="grid grid-cols-2 gap-3 text-[10px] uppercase tracking-widest text-gray-500">
-                        {category.subcategories.map((sub) => (
-                          <Link key={sub.slug} href={`/products?category=${category.slug}&subcategory=${sub.slug}`} className="hover:text-[#A08C5B] transition-colors">
-                            {sub.name}
-                          </Link>
-                        ))}
+                      <div className="space-y-2 text-[10px] uppercase tracking-widest text-gray-500">
+                        {renderSubcategoryLinks(category.subcategories || [], category.slug)}
                         <Link href={`/products?category=${category.slug}`} className="text-[#A08C5B] font-semibold">
                           View All
                         </Link>
@@ -169,11 +178,7 @@ const Navbar = () => {
                 </Link>
                 {category.subcategories?.length > 0 && (
                   <div className="pl-3 space-y-2">
-                    {category.subcategories.map((sub) => (
-                      <Link key={sub.slug} href={`/products?category=${category.slug}&subcategory=${sub.slug}`} onClick={() => setIsMobileMenuOpen(false)} className="text-xs uppercase tracking-widest text-gray-500 block">
-                        {sub.name}
-                      </Link>
-                    ))}
+                    {renderSubcategoryLinks(category.subcategories || [], category.slug, 0, () => setIsMobileMenuOpen(false))}
                   </div>
                 )}
               </div>

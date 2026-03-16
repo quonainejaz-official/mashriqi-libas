@@ -4,6 +4,24 @@ import { requireAdmin } from '@/lib/auth';
 import { uploadImage, deleteImage } from '@/lib/cloudinary';
 import { NextResponse } from 'next/server';
 
+const slugify = (value) => value.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+
+const normalizeSubcategories = (items = []) =>
+  items
+    .map((sub) => {
+      if (!sub?.name?.trim()) return null;
+      return {
+        name: sub.name.trim(),
+        slug: slugify(sub.name),
+        description: sub.description || '',
+        image: sub.image || {},
+        order: parseInt(sub.order, 10) || 0,
+        isActive: sub.isActive !== false,
+        subcategories: normalizeSubcategories(sub.subcategories || [])
+      };
+    })
+    .filter(Boolean);
+
 export async function PUT(request, { params }) {
   try {
     await connectDB();
@@ -16,8 +34,11 @@ export async function PUT(request, { params }) {
     const formData = await request.formData();
     const name = formData.get('name');
     const description = formData.get('description');
-    const order = parseInt(formData.get('order')) || 0;
-    const slug = name ? name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') : category.slug;
+    const orderRaw = formData.get('order');
+    const order = orderRaw === null ? category.order : parseInt(orderRaw, 10) || 0;
+    const slug = name ? slugify(name) : category.slug;
+    const isActiveRaw = formData.get('isActive');
+    const isActive = isActiveRaw === null ? category.isActive : isActiveRaw === 'true' || isActiveRaw === true;
     const subcategoriesRaw = formData.get('subcategories');
     const subcategories = subcategoriesRaw ? JSON.parse(subcategoriesRaw) : [];
 
@@ -33,15 +54,11 @@ export async function PUT(request, { params }) {
 
     category.name = name || category.name;
     category.slug = slug;
-    category.description = description || '';
+    category.description = description === null ? category.description : description;
     category.order = order;
+    category.isActive = isActive;
     if (subcategoriesRaw) {
-      category.subcategories = subcategories.map((sub) => ({
-        name: sub.name?.trim(),
-        slug: sub.name?.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
-        order: parseInt(sub.order) || 0,
-        isActive: sub.isActive !== false,
-      })).filter((sub) => sub.name);
+      category.subcategories = normalizeSubcategories(subcategories);
     }
 
     await category.save();

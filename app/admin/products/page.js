@@ -85,6 +85,12 @@ const AdminProductsPage = () => {
     setSelectedImages(files);
   };
 
+  const flattenSubcategories = (nodes = [], depth = 0) =>
+    nodes.flatMap((node) => [
+      { ...node, depth },
+      ...(node.subcategories ? flattenSubcategories(node.subcategories, depth + 1) : [])
+    ]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const loadingToast = toast.loading(editingProduct ? 'Updating product...' : 'Creating product...');
@@ -100,7 +106,9 @@ const AdminProductsPage = () => {
       });
 
       const selectedCategory = categories.find((cat) => cat._id === formData.category);
-      const selectedSubcategory = selectedCategory?.subcategories?.find((sub) => sub.slug === formData.subcategory);
+      const selectedSubcategory = flattenSubcategories(selectedCategory?.subcategories || []).find(
+        (sub) => sub.slug === formData.subcategory
+      );
       data.set('subcategory', selectedSubcategory ? JSON.stringify({ name: selectedSubcategory.name, slug: selectedSubcategory.slug }) : 'null');
       
       selectedImages.forEach(image => {
@@ -170,7 +178,7 @@ const AdminProductsPage = () => {
   };
 
   const selectedCategory = categories.find((cat) => cat._id === formData.category);
-  const subcategoryOptions = selectedCategory?.subcategories || [];
+  const subcategoryOptions = flattenSubcategories(selectedCategory?.subcategories || []);
 
   return (
     <div className="space-y-8 animate-fadeIn">
@@ -331,7 +339,9 @@ const AdminProductsPage = () => {
                   >
                     <option value="">{formData.category ? 'Select Subcategory' : 'Select Category First'}</option>
                     {subcategoryOptions.map((sub) => (
-                      <option key={sub.slug} value={sub.slug}>{sub.name}</option>
+                      <option key={`${sub.slug}-${sub.depth}`} value={sub.slug}>
+                        {`${sub.depth ? `${'—'.repeat(sub.depth)} ` : ''}${sub.name}`}
+                      </option>
                     ))}
                   </select>
                 </div>
