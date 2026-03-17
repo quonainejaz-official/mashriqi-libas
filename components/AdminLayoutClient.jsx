@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import {
   HiOutlineViewGrid,
@@ -50,8 +51,12 @@ const AdminLayoutClient = ({ children }) => {
 
         <div className="p-4 border-t border-gray-700 space-y-4">
           <div className="flex items-center space-x-3 px-4">
-            <div className="w-8 h-8 rounded-full bg-[#A08C5B] flex items-center justify-center font-bold">
-              {user?.name?.[0] || 'A'}
+            <div className="w-8 h-8 rounded-full bg-[#A08C5B] flex items-center justify-center font-bold overflow-hidden relative">
+              {user?.image?.url ? (
+                <Image src={user.image.url} alt={user?.name || 'Admin'} fill className="object-cover" />
+              ) : (
+                user?.name?.[0] || 'A'
+              )}
             </div>
             <div className="flex-grow overflow-hidden">
               <p className="text-xs font-bold truncate">{user?.name || 'Admin User'}</p>

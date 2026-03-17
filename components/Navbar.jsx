@@ -132,8 +132,12 @@ const Navbar = () => {
                     aria-haspopup="menu"
                     aria-expanded={isProfileOpen}
                   >
-                    <span className="w-8 h-8 rounded-full bg-[#1a1a1a] text-white flex items-center justify-center text-xs font-semibold shadow-md">
-                      {user.name?.[0]?.toUpperCase() || <HiOutlineUser strokeWidth={1.5} />}
+                    <span className="w-8 h-8 rounded-full bg-[#1a1a1a] text-white flex items-center justify-center text-xs font-semibold shadow-md overflow-hidden relative">
+                      {user.image?.url ? (
+                        <Image src={user.image.url} alt={user.name} fill className="object-cover" />
+                      ) : (
+                        user.name?.[0]?.toUpperCase() || <HiOutlineUser strokeWidth={1.5} />
+                      )}
                     </span>
                     <span className="hidden xl:block">{user.name?.split(' ')[0]}</span>
                   </button>

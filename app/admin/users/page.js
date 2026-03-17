@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import axios from 'axios';
 import { 
   HiOutlineUsers, 
@@ -96,8 +97,12 @@ const AdminUsersPage = () => {
                 <tr key={user._id} className="hover:bg-gray-50 transition-colors">
                   <td className="px-6 py-4">
                     <div className="flex items-center space-x-3">
-                      <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center font-bold text-[#2C3E50]">
-                        {user.name[0]}
+                      <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center font-bold text-[#2C3E50] overflow-hidden relative">
+                        {user.image?.url ? (
+                          <Image src={user.image.url} alt={user.name} fill className="object-cover" />
+                        ) : (
+                          user.name[0]
+                        )}
                       </div>
                       <p className="text-xs font-bold uppercase">{user.name}</p>
                     </div>

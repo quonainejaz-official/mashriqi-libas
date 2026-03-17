@@ -37,6 +37,10 @@ const userSchema = new mongoose.Schema(
       enum: ['user', 'admin'],
       default: 'user',
     },
+    image: {
+      url: String,
+      public_id: String,
+    },
     isBlocked: {
       type: Boolean,
       default: false,
