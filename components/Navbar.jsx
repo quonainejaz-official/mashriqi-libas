@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
-import { HiOutlineShoppingBag, HiOutlineUser, HiOutlineSearch, HiMenuAlt3, HiX, HiOutlineLogout } from 'react-icons/hi';
+import { HiOutlineShoppingBag, HiOutlineUser, HiOutlineSearch, HiMenuAlt3, HiX, HiOutlineLogout, HiSun, HiMoon } from 'react-icons/hi';
 import BrandLogo from '@/components/BrandLogo';
 
 const Navbar = () => {
@@ -16,6 +16,15 @@ const Navbar = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [categories, setCategories] = useState([]);
+  const getInitialTheme = () => {
+    if (typeof window === 'undefined') {
+      return 'light';
+    }
+    const stored = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return stored || (systemPrefersDark ? 'dark' : 'light');
+  };
+  const [theme, setTheme] = useState(getInitialTheme);
   const { cart, setIsCartOpen } = useCart();
   const { user, logout } = useAuth();
   const router = useRouter();
@@ -41,6 +50,13 @@ const Navbar = () => {
     fetchCategories();
   }, []);
 
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.remove('theme-dark', 'theme-light');
+    root.classList.add(`theme-${theme}`);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
@@ -51,6 +67,9 @@ const Navbar = () => {
   };
 
   const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  };
   const renderSubcategoryLinks = (subcategories, categorySlug, depth = 0, onClick) =>
     subcategories.map((sub) => (
       <div key={`${categorySlug}-${sub.slug}`} style={{ paddingLeft: depth * 12 }}>
@@ -111,6 +130,13 @@ const Navbar = () => {
 
           {/* Right: Actions */}
           <div className="flex-1 flex items-center justify-end space-x-5 md:space-x-8">
+            <button
+              onClick={toggleTheme}
+              className="text-xl theme-icon hover:opacity-80 transition-opacity"
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? <HiSun strokeWidth={1.5} /> : <HiMoon strokeWidth={1.5} />}
+            </button>
             <button onClick={() => setIsSearchOpen(true)} className="text-xl hover:text-gray-400 transition-colors">
               <HiOutlineSearch strokeWidth={1.5} />
             </button>

@@ -23,7 +23,12 @@
   --gold-border: #ead8b5;
   --gold-border-strong: #e2c79b;
   --gold-shadow: 0 10px 30px rgba(184, 134, 11, 0.18), 0 3px 10px rgba(184, 134, 11, 0.12);
-  --content-bg: #e4e7eb;
+  --content-bg: #dfe3e8;
+  --page-bg: #ffffff;
+  --surface-bg: #ffffff;
+  --surface-muted: #F8F9FA;
+  --icon-color: rgba(0, 0, 0, 0.8);
+  --theme-transition: 220ms;
   --text-on-light: rgba(0, 0, 0, 0.8);
   --text-on-dark: #FFFFFF;
   --text-default: var(--text-on-light);
@@ -36,7 +41,7 @@
 
 body {
   color: var(--text-default);
-  background: white;
+  background: var(--page-bg);
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
 }
@@ -45,22 +50,35 @@ body {
   background: var(--content-bg);
 }
 
-:root.theme-dark body {
-  background: #0d0d0d;
+:where(body, nav, header, main, footer, section, article, aside, div, a, button, input, textarea, select, svg) {
+  transition: background-color var(--theme-transition) ease, color var(--theme-transition) ease, border-color var(--theme-transition) ease, box-shadow var(--theme-transition) ease;
 }
 
-:root.theme-dark [class*="bg-white"] {
-  background-color: #121212 !important;
+.theme-icon {
+  color: var(--icon-color);
+}
+
+[class*="bg-white"] {
+  background-color: var(--surface-bg);
+}
+
+[class*="bg-gray-50"],
+[class*="bg-gray-100"] {
+  background-color: var(--surface-muted);
 }
 
 :root.theme-dark [class*="bg-[#fafafa]"],
 :root.theme-dark [class*="bg-[#F9F9F9]"],
 :root.theme-dark [class*="bg-[#FAFAFA]"] {
-  background-color: #121212 !important;
+  background-color: var(--surface-bg) !important;
 }
 
 :root.theme-dark {
   --content-bg: #121212;
+  --page-bg: #0d0d0d;
+  --surface-bg: #121212;
+  --surface-muted: #161616;
+  --icon-color: rgba(237, 237, 237, 0.95);
   --gold-border: #3b2f1b;
   --gold-border-strong: #544126;
   --gold-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 3px 10px rgba(0, 0, 0, 0.5);
