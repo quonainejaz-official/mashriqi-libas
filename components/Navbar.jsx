@@ -91,9 +91,9 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-500 ${theme.utilities.bgSurface} ${isScrolled ? 'shadow-lg py-2' : 'py-4'} border-b ${theme.utilities.border} !bg-opacity-100`}>
+    <nav className={`fixed w-full z-50 transition-all duration-500 ${theme.utilities.bgSurface} ${isScrolled ? 'shadow-lg py-0.5 sm:py-2' : 'py-1 sm:py-4'} border-b ${theme.utilities.border} !bg-opacity-100`}>
       <div className="max-w-[1600px] mx-auto px-4 md:px-8">
-        <div className="flex items-center justify-between h-16 gap-2">
+        <div className="flex items-center justify-between h-12 sm:h-16 gap-2">
           {/* Left: Navigation Links (Desktop) */}
           <div className="hidden lg:flex items-center space-x-10 flex-1">
             {categories.map((category) => (
