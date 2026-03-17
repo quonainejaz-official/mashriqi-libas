@@ -23,7 +23,7 @@
   --gold-border: #ead8b5;
   --gold-border-strong: #e2c79b;
   --gold-shadow: 0 10px 30px rgba(184, 134, 11, 0.18), 0 3px 10px rgba(184, 134, 11, 0.12);
-  --content-bg: #f3f3f3;
+  --content-bg: #e4e7eb;
   --text-on-light: rgba(0, 0, 0, 0.8);
   --text-on-dark: #FFFFFF;
   --text-default: var(--text-on-light);
@@ -45,13 +45,32 @@ body {
   background: var(--content-bg);
 }
 
+:root.theme-dark body {
+  background: #0d0d0d;
+}
+
+:root.theme-dark [class*="bg-white"] {
+  background-color: #121212 !important;
+}
+
+:root.theme-dark [class*="bg-[#fafafa]"],
+:root.theme-dark [class*="bg-[#F9F9F9]"],
+:root.theme-dark [class*="bg-[#FAFAFA]"] {
+  background-color: #121212 !important;
+}
+
 :root.theme-dark {
+  --content-bg: #121212;
+  --gold-border: #3b2f1b;
+  --gold-border-strong: #544126;
+  --gold-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 3px 10px rgba(0, 0, 0, 0.5);
+  --text-on-dark: #EDEDED;
   --text-default: var(--text-on-dark);
-  --text-placeholder: var(--text-on-dark);
-  --text-link: var(--text-on-dark);
-  --text-link-hover: var(--text-on-dark);
-  --text-link-active: var(--text-on-dark);
-  --text-link-visited: var(--text-on-dark);
+  --text-placeholder: rgba(237, 237, 237, 0.8);
+  --text-link: #F2F2F2;
+  --text-link-hover: #F5F5F5;
+  --text-link-active: #F5F5F5;
+  --text-link-visited: #F0F0F0;
 }
 
 :root.theme-light {
