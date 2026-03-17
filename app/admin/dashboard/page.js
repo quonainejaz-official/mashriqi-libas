@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { HiOutlineShoppingBag, HiOutlineChartBar, HiOutlineCurrencyDollar, HiOutlineExclamationCircle } from 'react-icons/hi';
+import { useTheme } from '@/context/ThemeContext';
 import { 
   Chart as ChartJS, 
   CategoryScale, 
@@ -28,6 +29,7 @@ ChartJS.register(
 );
 
 const DashboardPage = () => {
+  const { theme } = useTheme();
   const [stats, setStats] = useState({
     totalSales: 0,
     totalOrders: 0,
@@ -69,7 +71,7 @@ const DashboardPage = () => {
       {
         label: 'Sales (PKR)',
         data: [12000, 19000, 3000, 5000, 2000, 30000, 15000],
-        backgroundColor: '#A08C5B',
+        backgroundColor: theme.colors.accent,
         borderRadius: 4,
       },
     ],

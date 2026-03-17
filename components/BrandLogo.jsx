@@ -12,11 +12,11 @@ const BrandLogo = ({ className = 'w-[190px] md:w-[230px] h-auto', ariaLabel = 'M
     <svg viewBox="0 0 720 170" className={className} role="img" aria-label={ariaLabel} xmlns="http://www.w3.org/2000/svg" overflow="visible">
       <defs>
         <linearGradient id={goldShimmerId} x1="-100%" y1="0%" x2="200%" y2="0%">
-          <stop offset="0%" stopColor="#C87C00" stopOpacity="0.7" />
-          <stop offset="35%" stopColor="#FFD65A" stopOpacity="1" />
-          <stop offset="50%" stopColor="#FFFFFF" stopOpacity="1" />
-          <stop offset="65%" stopColor="#FFD65A" stopOpacity="1" />
-          <stop offset="100%" stopColor="#C87C00" stopOpacity="0.7" />
+          <stop offset="0%" stopColor="var(--color-logo-gold)" stopOpacity="0.7" />
+          <stop offset="35%" stopColor="var(--color-logo-highlight)" stopOpacity="1" />
+          <stop offset="50%" stopColor="var(--color-text-inverse)" stopOpacity="1" />
+          <stop offset="65%" stopColor="var(--color-logo-highlight)" stopOpacity="1" />
+          <stop offset="100%" stopColor="var(--color-logo-gold)" stopOpacity="0.7" />
           <animate attributeName="x1" values="-100%;100%;100%" keyTimes="0;0.4;1" dur="10s" repeatCount="indefinite" />
           <animate attributeName="x2" values="0%;200%;200%" keyTimes="0;0.4;1" dur="10s" repeatCount="indefinite" />
         </linearGradient>
@@ -30,7 +30,7 @@ const BrandLogo = ({ className = 'w-[190px] md:w-[230px] h-auto', ariaLabel = 'M
       </defs>
       <style>{`
         .pattern polygon {
-          stroke: #C67A00;
+          stroke: var(--color-logo-gold);
           stroke-width: 4.8;
           fill: none;
           stroke-dasharray: 300;
@@ -49,7 +49,7 @@ const BrandLogo = ({ className = 'w-[190px] md:w-[230px] h-auto', ariaLabel = 'M
           }
         }
         .fabric path {
-          stroke: #C67A00;
+          stroke: var(--color-logo-gold);
           stroke-width: 4.2;
           fill: none;
           stroke-linecap: round;
@@ -70,21 +70,21 @@ const BrandLogo = ({ className = 'w-[190px] md:w-[230px] h-auto', ariaLabel = 'M
           }
         }
         .glow {
-          filter: drop-shadow(0 0 8px rgba(198, 122, 0, 0.75));
+          filter: drop-shadow(0 0 8px var(--color-logo-glow));
           animation: glowPulse 10s ease-in-out infinite;
         }
         @keyframes glowPulse {
           0% {
-            filter: drop-shadow(0 0 4px rgba(198, 122, 0, 0.4));
+            filter: drop-shadow(0 0 4px var(--color-logo-glow-soft));
           }
           20% {
-            filter: drop-shadow(0 0 14px rgba(255, 214, 90, 0.9));
+            filter: drop-shadow(0 0 14px var(--color-logo-glow-strong));
           }
           40% {
-            filter: drop-shadow(0 0 4px rgba(198, 122, 0, 0.4));
+            filter: drop-shadow(0 0 4px var(--color-logo-glow-soft));
           }
           100% {
-            filter: drop-shadow(0 0 4px rgba(198, 122, 0, 0.4));
+            filter: drop-shadow(0 0 4px var(--color-logo-glow-soft));
           }
         }
       `}</style>

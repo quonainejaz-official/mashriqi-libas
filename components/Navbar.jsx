@@ -6,7 +6,8 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
-import { HiOutlineShoppingBag, HiOutlineUser, HiOutlineSearch, HiMenuAlt3, HiX, HiOutlineLogout, HiSun, HiMoon } from 'react-icons/hi';
+import { useTheme } from '@/context/ThemeContext';
+import { HiOutlineShoppingBag, HiOutlineUser, HiOutlineSearch, HiMenuAlt3, HiX, HiOutlineLogout, HiSun, HiMoon, HiStar } from 'react-icons/hi';
 import BrandLogo from '@/components/BrandLogo';
 
 const Navbar = () => {
@@ -16,15 +17,7 @@ const Navbar = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [categories, setCategories] = useState([]);
-  const getInitialTheme = () => {
-    if (typeof window === 'undefined') {
-      return 'light';
-    }
-    const stored = localStorage.getItem('theme');
-    const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    return stored || (systemPrefersDark ? 'dark' : 'light');
-  };
-  const [theme, setTheme] = useState(getInitialTheme);
+  const { theme, themeKey, cycleTheme } = useTheme();
   const { cart, setIsCartOpen } = useCart();
   const { user, logout } = useAuth();
   const router = useRouter();
@@ -50,13 +43,6 @@ const Navbar = () => {
     fetchCategories();
   }, []);
 
-  useEffect(() => {
-    const root = document.documentElement;
-    root.classList.remove('theme-dark', 'theme-light');
-    root.classList.add(`theme-${theme}`);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
@@ -67,15 +53,18 @@ const Navbar = () => {
   };
 
   const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  const themeIcons = {
+    dark: HiMoon,
+    light: HiSun,
+    gold: HiStar
   };
+  const ThemeIcon = themeIcons[themeKey] || HiMoon;
   const renderSubcategoryLinks = (subcategories, categorySlug, depth = 0, onClick) =>
     subcategories.map((sub) => (
       <div key={`${categorySlug}-${sub.slug}`} style={{ paddingLeft: depth * 12 }}>
         <Link
           href={`/products?category=${categorySlug}&subcategory=${sub.slug}`}
-          className="hover:text-[#A08C5B] transition-colors block"
+          className={`hover:${theme.utilities.textPrimary} transition-all block py-1`}
           onClick={onClick}
         >
           {sub.name}
@@ -85,34 +74,39 @@ const Navbar = () => {
     ));
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 bg-white border-b border-gray-100 py-3`}>
+    <nav className={`fixed w-full z-50 transition-all duration-500 ${isScrolled ? `${theme.utilities.bgSurface} shadow-lg py-2` : 'bg-transparent py-4'} border-b ${theme.utilities.border} backdrop-blur-md`}>
       <div className="max-w-[1600px] mx-auto px-4 md:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Left: Navigation Links (Desktop) */}
-          <div className="hidden lg:flex items-center space-x-8 flex-1">
+          <div className="hidden lg:flex items-center space-x-10 flex-1">
             {categories.map((category) => (
               <div key={category._id} className="relative group">
-                <Link href={`/products?category=${category.slug}`} className="text-[11px] uppercase tracking-[0.2em] font-medium hover:text-gray-500 transition-colors">
+                <Link href={`/products?category=${category.slug}`} className={`text-[11px] uppercase tracking-[0.25em] font-bold ${theme.utilities.textSecondary} hover:${theme.utilities.textPrimary} transition-all`}>
                   {category.name}
                 </Link>
                 {category.subcategories?.length > 0 && (
-                  <div className="absolute left-0 top-full pt-6 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300">
-                    <div className="bg-white border border-gray-100 shadow-2xl p-6 w-[520px] grid grid-cols-[1fr_180px] gap-6">
-                      <div className="space-y-2 text-[10px] uppercase tracking-widest text-gray-500">
-                        {renderSubcategoryLinks(category.subcategories || [], category.slug)}
-                        <Link href={`/products?category=${category.slug}`} className="text-[#A08C5B] font-semibold">
-                          View All
-                        </Link>
+                  <div className="absolute left-0 top-full pt-6 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
+                    <div className={`${theme.utilities.bgSurface} border ${theme.utilities.border} shadow-2xl p-8 w-[560px] grid grid-cols-[1.2fr_180px] gap-8 rounded-sm`}>
+                      <div className="space-y-4">
+                        <div className={`text-[10px] uppercase tracking-[0.3em] font-black ${theme.utilities.textMuted} mb-4 opacity-50`}>Collections</div>
+                        <div className="space-y-3">
+                          {renderSubcategoryLinks(category.subcategories || [], category.slug)}
+                        </div>
+                        <div className="pt-4 mt-4 border-t border-gray-100/10">
+                          <Link href={`/products?category=${category.slug}`} className={`text-[10px] uppercase tracking-[0.3em] font-black ${theme.utilities.textPrimary} hover:opacity-60 transition-opacity`}>
+                            Explore All
+                          </Link>
+                        </div>
                       </div>
-                      <div className="space-y-3">
-                        <div className="h-28 w-full bg-gray-50 overflow-hidden relative">
+                      <div className="space-y-4">
+                        <div className={`h-40 w-full ${theme.utilities.bgMuted} overflow-hidden relative rounded-sm`}>
                           {category.image?.url ? (
-                            <Image src={category.image.url} alt={category.name} fill className="object-cover" />
+                            <Image src={category.image.url} alt={category.name} fill className="object-cover hover:scale-110 transition-transform duration-700" />
                           ) : (
-                            <div className="h-full w-full bg-gradient-to-br from-gray-50 to-gray-100" />
+                            <div className="h-full w-full bg-gradient-to-br from-gray-50/50 to-gray-100/50" />
                           )}
                         </div>
-                        <p className="text-[9px] uppercase tracking-widest text-gray-400">{category.name}</p>
+                        <p className={`text-[9px] uppercase tracking-[0.4em] font-bold ${theme.utilities.textMuted} text-center`}>{category.name}</p>
                       </div>
                     </div>
                   </div>
@@ -129,15 +123,16 @@ const Navbar = () => {
           </div>
 
           {/* Right: Actions */}
-          <div className="flex-1 flex items-center justify-end space-x-5 md:space-x-8">
+          <div className="flex-1 flex items-center justify-end space-x-6 md:space-x-10">
             <button
-              onClick={toggleTheme}
-              className="text-xl theme-icon hover:opacity-80 transition-opacity"
-              aria-label="Toggle theme"
+              onClick={cycleTheme}
+              className={`text-xl ${theme.utilities.textSecondary} hover:${theme.utilities.textPrimary} transition-all transform hover:scale-110 active:scale-95`}
+              aria-label={`Switch theme: ${theme?.label || 'Theme'}`}
+              title={theme?.label}
             >
-              {theme === 'dark' ? <HiSun strokeWidth={1.5} /> : <HiMoon strokeWidth={1.5} />}
+              <ThemeIcon strokeWidth={1.5} />
             </button>
-            <button onClick={() => setIsSearchOpen(true)} className="text-xl hover:text-gray-400 transition-colors">
+            <button onClick={() => setIsSearchOpen(true)} className={`text-xl ${theme.utilities.textSecondary} hover:${theme.utilities.textPrimary} transition-all`}>
               <HiOutlineSearch strokeWidth={1.5} />
             </button>
             
@@ -154,11 +149,11 @@ const Navbar = () => {
                 <>
                   <button
                     onClick={() => setIsProfileOpen((prev) => !prev)}
-                    className="flex items-center gap-2 text-[10px] uppercase tracking-widest font-medium text-gray-700 hover:text-gray-900 transition-colors"
+                    className={`flex items-center gap-3 text-[10px] uppercase tracking-[0.2em] font-bold ${theme.utilities.textSecondary} hover:${theme.utilities.textPrimary} transition-all`}
                     aria-haspopup="menu"
                     aria-expanded={isProfileOpen}
                   >
-                    <span className="w-8 h-8 rounded-full bg-[#1a1a1a] text-white flex items-center justify-center text-xs font-semibold shadow-md overflow-hidden relative">
+                    <span className={`w-9 h-9 rounded-full ${theme.utilities.bgContrast} ${theme.utilities.textInverse} flex items-center justify-center text-xs font-black shadow-lg overflow-hidden relative border-2 ${theme.utilities.border} opacity-90`}>
                       {user.image?.url ? (
                         <Image src={user.image.url} alt={user.name} fill className="object-cover" />
                       ) : (
@@ -168,66 +163,66 @@ const Navbar = () => {
                     <span className="hidden xl:block">{user.name?.split(' ')[0]}</span>
                   </button>
                   <div
-                    className={`absolute right-0 top-full pt-3 transition-all duration-200 ${
-                      isProfileOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
+                    className={`absolute right-0 top-full pt-4 transition-all duration-300 ${
+                      isProfileOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-4'
                     }`}
                   >
-                    <div className="w-64 rounded-xl border border-gray-100 bg-white shadow-2xl">
-                      <div className="p-4 border-b border-gray-100">
-                        <p className="text-xs uppercase tracking-widest text-gray-400">Signed in as</p>
-                        <p className="text-sm font-semibold text-gray-900">{user.name}</p>
-                        <p className="text-xs text-gray-400">{user.email}</p>
+                    <div className={`w-72 rounded-sm border ${theme.utilities.border} ${theme.utilities.bgSurface} shadow-[0_20px_50px_rgba(0,0,0,0.2)] overflow-hidden`}>
+                      <div className={`p-6 border-b ${theme.utilities.border} ${theme.utilities.bgMuted}`}>
+                        <p className={`text-[9px] uppercase tracking-[0.3em] font-black ${theme.utilities.textMuted} mb-1 opacity-50`}>Member</p>
+                        <p className={`text-sm font-bold tracking-tight ${theme.utilities.textPrimary}`}>{user.name}</p>
+                        <p className={`text-[11px] ${theme.utilities.textMuted} mt-1 truncate`}>{user.email}</p>
                       </div>
-                      <div className="p-2">
+                      <div className="p-3">
                         <Link
                           href="/profile"
                           onClick={() => setIsProfileOpen(false)}
-                          className="flex items-center gap-3 px-3 py-2 rounded-lg text-[11px] uppercase tracking-widest text-gray-700 hover:bg-gray-50"
+                          className={`flex items-center gap-4 px-4 py-3 rounded-sm text-[10px] uppercase tracking-[0.2em] font-bold ${theme.utilities.textSecondary} hover:${theme.utilities.bgMuted} transition-all`}
                         >
                           <HiOutlineUser className="text-lg" />
-                          Profile
+                          Profile Settings
                         </Link>
                         <Link
                           href="/orders"
                           onClick={() => setIsProfileOpen(false)}
-                          className="flex items-center gap-3 px-3 py-2 rounded-lg text-[11px] uppercase tracking-widest text-gray-700 hover:bg-gray-50"
+                          className={`flex items-center gap-4 px-4 py-3 rounded-sm text-[10px] uppercase tracking-[0.2em] font-bold ${theme.utilities.textSecondary} hover:${theme.utilities.bgMuted} transition-all`}
                         >
                           <HiOutlineShoppingBag className="text-lg" />
-                          Orders
+                          Order History
                         </Link>
                       </div>
-                      <div className="p-2 border-t border-gray-100">
+                      <div className={`p-3 border-t ${theme.utilities.border}`}>
                         <button
                           onClick={() => {
                             setIsProfileOpen(false);
                             logout();
                           }}
-                          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-[11px] uppercase tracking-widest text-red-600 hover:bg-red-50"
+                          className={`w-full flex items-center gap-4 px-4 py-3 rounded-sm text-[10px] uppercase tracking-[0.2em] font-black text-red-500 hover:bg-red-50 transition-all`}
                         >
                           <HiOutlineLogout className="text-lg" />
-                          Logout
+                          Sign Out
                         </button>
                       </div>
                     </div>
                   </div>
                 </>
               ) : (
-                <Link href="/login" className="text-xl hover:text-gray-400 transition-colors flex items-center">
+                <Link href="/login" className={`text-xl ${theme.utilities.textSecondary} hover:${theme.utilities.textPrimary} transition-all flex items-center`}>
                   <HiOutlineUser strokeWidth={1.5} />
                 </Link>
               )}
             </div>
 
-            <button onClick={() => setIsCartOpen(true)} className="relative text-xl hover:text-gray-400 transition-colors">
+            <button onClick={() => setIsCartOpen(true)} className={`relative text-xl ${theme.utilities.textSecondary} hover:${theme.utilities.textPrimary} transition-all`}>
               <HiOutlineShoppingBag strokeWidth={1.5} />
               {totalItems > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 bg-black text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+                <span className={`absolute -top-2 -right-2 ${theme.utilities.bgContrast} ${theme.utilities.textInverse} text-[9px] w-5 h-5 rounded-full flex items-center justify-center font-black shadow-lg border-2 ${theme.utilities.bgSurface}`}>
                   {totalItems}
                 </span>
               )}
             </button>
 
-            <button className="lg:hidden text-2xl" onClick={() => setIsMobileMenuOpen(true)}>
+            <button className={`lg:hidden text-2xl ${theme.utilities.textPrimary}`} onClick={() => setIsMobileMenuOpen(true)}>
               <HiMenuAlt3 />
             </button>
           </div>
@@ -236,51 +231,61 @@ const Navbar = () => {
 
       {/* Search Overlay */}
       {isSearchOpen && (
-        <div className="fixed inset-0 bg-white z-[100] animate-fadeIn flex items-center justify-center p-8">
-          <button onClick={() => setIsSearchOpen(false)} className="absolute top-8 right-8 text-3xl hover:rotate-90 transition-transform">
+        <div className={`fixed inset-0 ${theme.utilities.bgSurface} z-[100] animate-fadeIn flex items-center justify-center p-8`}>
+          <button onClick={() => setIsSearchOpen(false)} className={`absolute top-8 right-8 text-3xl hover:rotate-90 transition-transform ${theme.utilities.textMuted} hover:${theme.utilities.textPrimary}`}>
             <HiX />
           </button>
-          <form onSubmit={handleSearch} className="w-full max-w-3xl space-y-8">
-            <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-center text-gray-400">Search Products</h2>
+          <form onSubmit={handleSearch} className="w-full max-w-3xl space-y-12">
+            <h2 className={`text-sm font-black uppercase tracking-[0.5em] text-center ${theme.utilities.textMuted} opacity-50`}>Find Products</h2>
             <div className="relative">
               <input 
                 type="text" 
                 autoFocus
-                placeholder="What are you looking for?" 
-                className="w-full bg-transparent border-b-2 border-gray-100 py-6 text-2xl md:text-5xl font-light uppercase tracking-tighter focus:border-[#A08C5B] outline-none transition-all"
+                placeholder="Search Mashriqi Libas..." 
+                className={`w-full bg-transparent border-b-2 ${theme.utilities.border} py-8 text-3xl md:text-6xl font-light uppercase tracking-tighter focus:border-black outline-none transition-all ${theme.utilities.textPrimary}`}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <button type="submit" className="absolute right-0 bottom-6 text-3xl text-gray-300 hover:text-[#A08C5B]">
+              <button type="submit" className={`absolute right-0 bottom-8 text-4xl ${theme.utilities.textMuted} hover:${theme.utilities.textPrimary} transition-all`}>
                 <HiOutlineSearch />
               </button>
             </div>
-            <p className="text-[10px] text-gray-400 uppercase tracking-widest text-center">Press Enter to Search</p>
+            <p className={`text-[10px] ${theme.utilities.textMuted} uppercase tracking-[0.4em] text-center font-bold`}>Enter to search collection</p>
           </form>
         </div>
       )}
 
       {/* Mobile Menu Overlay */}
-      <div className={`fixed inset-0 bg-black bg-opacity-50 z-[60] transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
-        <div className={`fixed left-0 top-0 h-full w-4/5 max-w-sm bg-white z-[70] transform transition-transform duration-300 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} p-8`}>
-          <button className="absolute top-4 right-4 text-2xl" onClick={() => setIsMobileMenuOpen(false)}>
+      <div className={`fixed inset-0 bg-black/60 backdrop-blur-[2px] z-[60] transition-opacity duration-500 ${isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
+        <div className={`fixed left-0 top-0 h-full w-[85%] max-w-sm ${theme.utilities.bgSurface} z-[70] transform transition-transform duration-700 cubic-bezier(0.4, 0, 0.2, 1) ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} p-10 flex flex-col shadow-2xl`}>
+          <button className={`absolute top-6 right-6 text-3xl ${theme.utilities.textMuted} hover:${theme.utilities.textPrimary}`} onClick={() => setIsMobileMenuOpen(false)}>
             <HiX />
           </button>
-          <div className="flex flex-col space-y-6 mt-12">
-            <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="text-xl font-semibold uppercase tracking-widest border-b pb-2">Home</Link>
+          
+          <div className="flex flex-col space-y-10 mt-16 overflow-y-auto scrollbar-hide">
+            <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className={`text-2xl font-black uppercase tracking-[0.2em] border-b-2 ${theme.utilities.border} pb-4 ${theme.utilities.textPrimary}`}>Home</Link>
+            
             {categories.map((category) => (
-              <div key={category._id} className="space-y-3">
-                <Link href={`/products?category=${category.slug}`} onClick={() => setIsMobileMenuOpen(false)} className="text-xl font-semibold uppercase tracking-widest border-b pb-2">
+              <div key={category._id} className="space-y-6">
+                <Link href={`/products?category=${category.slug}`} onClick={() => setIsMobileMenuOpen(false)} className={`text-2xl font-black uppercase tracking-[0.2em] border-b-2 ${theme.utilities.border} pb-4 flex justify-between items-center ${theme.utilities.textPrimary}`}>
                   {category.name}
+                  <span className="text-sm opacity-30">+</span>
                 </Link>
                 {category.subcategories?.length > 0 && (
-                  <div className="pl-3 space-y-2">
+                  <div className="pl-4 space-y-4 border-l-2 border-gray-100/10">
                     {renderSubcategoryLinks(category.subcategories || [], category.slug, 0, () => setIsMobileMenuOpen(false))}
                   </div>
                 )}
               </div>
             ))}
-            <Link href="/orders/tracking" onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-medium text-gray-500 uppercase tracking-widest pt-4">Track Order</Link>
+            
+            <div className="pt-10 mt-auto space-y-6">
+              <Link href="/orders/tracking" onClick={() => setIsMobileMenuOpen(false)} className={`block text-[11px] font-black ${theme.utilities.textMuted} uppercase tracking-[0.4em] hover:${theme.utilities.textPrimary}`}>Track Your Order</Link>
+              <div className={`pt-6 border-t ${theme.utilities.border} opacity-20`}>
+                <p className={`text-[9px] uppercase tracking-[0.3em] ${theme.utilities.textMuted} mb-4`}>Need assistance?</p>
+                <p className={`text-xs font-bold ${theme.utilities.textPrimary}`}>+92 300 1234567</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
