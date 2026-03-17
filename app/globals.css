@@ -20,17 +20,286 @@
   --secondary: #A08C5B;
   --accent: #000000;
   --border: #F3F4F6;
+  --gold-border: #ead8b5;
+  --gold-border-strong: #e2c79b;
+  --gold-shadow: 0 10px 30px rgba(184, 134, 11, 0.18), 0 3px 10px rgba(184, 134, 11, 0.12);
+  --content-bg: #f3f3f3;
+  --text-on-light: rgba(0, 0, 0, 0.8);
+  --text-on-dark: #FFFFFF;
+  --text-default: var(--text-on-light);
+  --text-placeholder: rgba(0, 0, 0, 0.8);
+  --text-link: rgba(0, 0, 0, 0.8);
+  --text-link-hover: rgba(0, 0, 0, 0.8);
+  --text-link-active: rgba(0, 0, 0, 0.8);
+  --text-link-visited: rgba(0, 0, 0, 0.8);
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  color: var(--text-default);
   background: white;
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
+.content-surface {
+  background: var(--content-bg);
+}
+
+:root.theme-dark {
+  --text-default: var(--text-on-dark);
+  --text-placeholder: var(--text-on-dark);
+  --text-link: var(--text-on-dark);
+  --text-link-hover: var(--text-on-dark);
+  --text-link-active: var(--text-on-dark);
+  --text-link-visited: var(--text-on-dark);
+}
+
+:root.theme-light {
+  --text-default: var(--text-on-light);
+  --text-placeholder: rgba(0, 0, 0, 0.8);
+  --text-link: rgba(0, 0, 0, 0.8);
+  --text-link-hover: rgba(0, 0, 0, 0.8);
+  --text-link-active: rgba(0, 0, 0, 0.8);
+  --text-link-visited: rgba(0, 0, 0, 0.8);
+}
+
+/* Typography color system */
+:where(h1, h2, h3, h4, h5, h6) {
+  color: var(--text-default) !important;
+}
+
+:where(p, span, li, label, input, textarea, select, a, button, small, strong, em) {
+  color: var(--text-default) !important;
+}
+
+::placeholder {
+  color: var(--text-placeholder) !important;
+  opacity: 1;
+}
+
+:where(div, section, aside, article, main)[class*="shadow"]:where([class*="bg-"]):where([class*="p-"], [class*="px-"], [class*="py-"]) {
+  border: 1px solid var(--gold-border);
+  box-shadow: var(--gold-shadow);
+}
+
+.border,
+.border-t,
+.border-b,
+.border-l,
+.border-r,
+.border-gray-50,
+.border-gray-100,
+.border-gray-200,
+.border-gray-300,
+.border-gray-400,
+.border-black,
+.border-white {
+  border-color: var(--gold-border) !important;
+}
+
+[class*="border-["] {
+  border-color: var(--gold-border-strong) !important;
+}
+
+.divide-y > :not([hidden]) ~ :not([hidden]),
+.divide-x > :not([hidden]) ~ :not([hidden]),
+hr {
+  border-color: var(--gold-border) !important;
+}
+
+.text-gray-300,
+.text-gray-400,
+.text-gray-500,
+.text-gray-600,
+.text-gray-700,
+.text-gray-800,
+.text-gray-900,
+.text-black,
+.text-white {
+  color: var(--text-default) !important;
+}
+
+[class*="text-[#"] {
+  color: var(--text-default) !important;
+}
+
+:where(a:link) {
+  color: var(--text-link) !important;
+}
+
+:where(a:visited) {
+  color: var(--text-link-visited) !important;
+}
+
+:where(a:hover) {
+  color: var(--text-link-hover) !important;
+}
+
+:where(a:active) {
+  color: var(--text-link-active) !important;
+}
+
+:where(button) {
+  color: var(--text-default) !important;
+}
+
+/* Dark background detection for text overrides */
+:where(
+  [class~="bg-black"],
+  [class~="bg-gray-800"],
+  [class~="bg-gray-900"],
+  [class~="bg-[#1a1a1a]"],
+  [class~="bg-[#2C3E50]"],
+  [class~="bg-dark-700"],
+  [class~="bg-dark-800"],
+  [class~="bg-dark-900"]
+) {
+  color: var(--text-on-dark) !important;
+  --text-default: var(--text-on-dark);
+  --text-placeholder: var(--text-on-dark);
+  --text-link: var(--text-on-dark);
+  --text-link-hover: var(--text-on-dark);
+  --text-link-active: var(--text-on-dark);
+  --text-link-visited: var(--text-on-dark);
+}
+
+:where(
+  [class~="bg-black"],
+  [class~="bg-gray-800"],
+  [class~="bg-gray-900"],
+  [class~="bg-[#1a1a1a]"],
+  [class~="bg-[#2C3E50]"],
+  [class~="bg-dark-700"],
+  [class~="bg-dark-800"],
+  [class~="bg-dark-900"]
+) :where(h1, h2, h3, h4, h5, h6, p, span, li, label, input, textarea, select, a, button),
+:where(
+  [class~="bg-black"],
+  [class~="bg-gray-800"],
+  [class~="bg-gray-900"],
+  [class~="bg-[#1a1a1a]"],
+  [class~="bg-[#2C3E50]"],
+  [class~="bg-dark-700"],
+  [class~="bg-dark-800"],
+  [class~="bg-dark-900"]
+) .text-gray-300,
+:where(
+  [class~="bg-black"],
+  [class~="bg-gray-800"],
+  [class~="bg-gray-900"],
+  [class~="bg-[#1a1a1a]"],
+  [class~="bg-[#2C3E50]"],
+  [class~="bg-dark-700"],
+  [class~="bg-dark-800"],
+  [class~="bg-dark-900"]
+) .text-gray-400,
+:where(
+  [class~="bg-black"],
+  [class~="bg-gray-800"],
+  [class~="bg-gray-900"],
+  [class~="bg-[#1a1a1a]"],
+  [class~="bg-[#2C3E50]"],
+  [class~="bg-dark-700"],
+  [class~="bg-dark-800"],
+  [class~="bg-dark-900"]
+) .text-gray-500,
+:where(
+  [class~="bg-black"],
+  [class~="bg-gray-800"],
+  [class~="bg-gray-900"],
+  [class~="bg-[#1a1a1a]"],
+  [class~="bg-[#2C3E50]"],
+  [class~="bg-dark-700"],
+  [class~="bg-dark-800"],
+  [class~="bg-dark-900"]
+) .text-gray-600,
+:where(
+  [class~="bg-black"],
+  [class~="bg-gray-800"],
+  [class~="bg-gray-900"],
+  [class~="bg-[#1a1a1a]"],
+  [class~="bg-[#2C3E50]"],
+  [class~="bg-dark-700"],
+  [class~="bg-dark-800"],
+  [class~="bg-dark-900"]
+) .text-gray-700,
+:where(
+  [class~="bg-black"],
+  [class~="bg-gray-800"],
+  [class~="bg-gray-900"],
+  [class~="bg-[#1a1a1a]"],
+  [class~="bg-[#2C3E50]"],
+  [class~="bg-dark-700"],
+  [class~="bg-dark-800"],
+  [class~="bg-dark-900"]
+) .text-gray-800,
+:where(
+  [class~="bg-black"],
+  [class~="bg-gray-800"],
+  [class~="bg-gray-900"],
+  [class~="bg-[#1a1a1a]"],
+  [class~="bg-[#2C3E50]"],
+  [class~="bg-dark-700"],
+  [class~="bg-dark-800"],
+  [class~="bg-dark-900"]
+) .text-gray-900,
+:where(
+  [class~="bg-black"],
+  [class~="bg-gray-800"],
+  [class~="bg-gray-900"],
+  [class~="bg-[#1a1a1a]"],
+  [class~="bg-[#2C3E50]"],
+  [class~="bg-dark-700"],
+  [class~="bg-dark-800"],
+  [class~="bg-dark-900"]
+) .text-black,
+:where(
+  [class~="bg-black"],
+  [class~="bg-gray-800"],
+  [class~="bg-gray-900"],
+  [class~="bg-[#1a1a1a]"],
+  [class~="bg-[#2C3E50]"],
+  [class~="bg-dark-700"],
+  [class~="bg-dark-800"],
+  [class~="bg-dark-900"]
+) .text-white,
+:where(
+  [class~="bg-black"],
+  [class~="bg-gray-800"],
+  [class~="bg-gray-900"],
+  [class~="bg-[#1a1a1a]"],
+  [class~="bg-[#2C3E50]"],
+  [class~="bg-dark-700"],
+  [class~="bg-dark-800"],
+  [class~="bg-dark-900"]
+) [class*="text-[#"] {
+  color: var(--text-on-dark) !important;
+}
+
+:where(
+  [class~="bg-black"],
+  [class~="bg-gray-800"],
+  [class~="bg-gray-900"],
+  [class~="bg-[#1a1a1a]"],
+  [class~="bg-[#2C3E50]"],
+  [class~="bg-dark-700"],
+  [class~="bg-dark-800"],
+  [class~="bg-dark-900"]
+) ::placeholder {
+  color: var(--text-on-dark) !important;
+  opacity: 1;
+}
+
+:where([class*="hover:bg-black"]):hover,
+:where([class*="hover:bg-gray-800"]):hover,
+:where([class*="hover:bg-gray-900"]):hover,
+:where([class*="hover:bg-[#1a1a1a]"]):hover,
+:where([class*="hover:bg-[#2C3E50]"]):hover {
+  color: var(--text-on-dark) !important;
+}
+
 .gold-accent {
-  color: var(--secondary);
+  color: var(--text-default) !important;
 }
 
 .btn-primary {
