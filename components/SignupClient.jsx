@@ -46,7 +46,7 @@ const SignupClient = () => {
               required
               value={formData.name}
               onChange={handleChange}
-              className={`w-full ${theme.utilities.bgMuted} border-none px-12 py-4 text-sm focus:ring-1 focus:ring-[#A08C5B] transition-all outline-none ${theme.utilities.textPrimary}`}
+              className={`w-full ${theme.components.input} border px-12 py-4 text-sm outline-none ${theme.utilities.textPrimary}`}
               placeholder="John Doe"
             />
           </div>
@@ -62,7 +62,7 @@ const SignupClient = () => {
               required
               value={formData.email}
               onChange={handleChange}
-              className={`w-full ${theme.utilities.bgMuted} border-none px-12 py-4 text-sm focus:ring-1 focus:ring-[#A08C5B] transition-all outline-none ${theme.utilities.textPrimary}`}
+              className={`w-full ${theme.components.input} border px-12 py-4 text-sm outline-none ${theme.utilities.textPrimary}`}
               placeholder="name@example.com"
             />
           </div>
@@ -78,7 +78,7 @@ const SignupClient = () => {
               required
               value={formData.phone}
               onChange={handleChange}
-              className={`w-full ${theme.utilities.bgMuted} border-none px-12 py-4 text-sm focus:ring-1 focus:ring-[#A08C5B] transition-all outline-none ${theme.utilities.textPrimary}`}
+              className={`w-full ${theme.components.input} border px-12 py-4 text-sm outline-none ${theme.utilities.textPrimary}`}
               placeholder="+92 300 1234567"
             />
           </div>
@@ -94,7 +94,7 @@ const SignupClient = () => {
               required
               value={formData.password}
               onChange={handleChange}
-              className={`w-full ${theme.utilities.bgMuted} border-none px-12 py-4 text-sm focus:ring-1 focus:ring-[#A08C5B] transition-all outline-none ${theme.utilities.textPrimary}`}
+              className={`w-full ${theme.components.input} border px-12 py-4 text-sm outline-none ${theme.utilities.textPrimary}`}
               placeholder="••••••••"
             />
           </div>
@@ -112,7 +112,7 @@ const SignupClient = () => {
 
       <div className={`mt-12 pt-8 border-t ${theme.utilities.border} text-center space-y-4`}>
         <p className={`text-xs ${theme.utilities.textMuted} uppercase tracking-widest font-medium`}>Already have an account?</p>
-        <Link href="/login" className={`text-sm font-bold uppercase tracking-widest border-b-2 ${theme.utilities.border} pb-1 hover:${theme.utilities.textPrimary} transition-all`}>
+        <Link href="/login" className={`text-sm font-bold uppercase tracking-widest border-b-2 ${theme.utilities.border} pb-1 ${theme.components.link}`}>
           Sign In
         </Link>
       </div>

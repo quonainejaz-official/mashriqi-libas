@@ -202,13 +202,13 @@ const AdminProductsPage = () => {
       <div className={`${theme.utilities.bgSurface} p-4 border ${theme.utilities.border} shadow-sm flex items-center space-x-4`}>
         <div className="relative flex-grow max-w-md">
           <HiOutlineSearch className={`absolute left-4 top-1/2 -translate-y-1/2 ${theme.utilities.textMuted}`} />
-          <input 
-            type="text" 
-            placeholder="Search by name or SKU..." 
-            className={`w-full ${theme.utilities.bgMuted} border-none pl-12 pr-4 py-3 text-sm focus:ring-1 focus:ring-[#A08C5B] outline-none ${theme.utilities.textPrimary}`}
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+            <input 
+              type="text" 
+              placeholder="Search by name or SKU..." 
+              className={`w-full ${theme.components.input} border pl-12 pr-4 py-3 text-sm outline-none ${theme.utilities.textPrimary}`}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
         </div>
       </div>
 
@@ -239,7 +239,7 @@ const AdminProductsPage = () => {
               ))
             ) : products.length > 0 ? (
               products.map((product) => (
-                <tr key={product._id} className={`hover:${theme.utilities.bgMuted} transition-colors`}>
+                <tr key={product._id} className={`theme-hover-bg-muted transition-colors`}>
                   <td className="px-6 py-4 flex items-center space-x-4">
                     <div className={`relative w-10 h-14 ${theme.utilities.bgMuted}`}>
                       <Image src={product.images?.[0]?.url || product.images?.[0] || '/placeholder.jpg'} alt={product.name} fill className="object-cover" />
@@ -259,8 +259,8 @@ const AdminProductsPage = () => {
                   <td className={`px-6 py-4 text-center text-sm font-bold ${theme.utilities.textPrimary}`}>Rs. {product.price.toLocaleString()}</td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex justify-end space-x-2">
-                      <button onClick={() => handleEdit(product)} className={`p-2 text-blue-600 hover:${theme.utilities.bgMuted} transition-all`}><HiOutlinePencil /></button>
-                      <button onClick={() => handleDelete(product._id)} className={`p-2 ${theme.utilities.textDanger} hover:${theme.utilities.bgMuted} transition-all`}><HiOutlineTrash /></button>
+                      <button onClick={() => handleEdit(product)} className={`p-2 text-blue-600 theme-hover-bg-muted transition-all`}><HiOutlinePencil /></button>
+                      <button onClick={() => handleDelete(product._id)} className={`p-2 ${theme.utilities.textDanger} theme-hover-bg-muted transition-all`}><HiOutlineTrash /></button>
                     </div>
                   </td>
                 </tr>
@@ -278,8 +278,8 @@ const AdminProductsPage = () => {
           <div className={`${theme.utilities.bgMuted} px-6 py-4 flex items-center justify-between border-t ${theme.utilities.border}`}>
             <p className={`text-[10px] uppercase font-bold ${theme.utilities.textMuted} tracking-widest`}>Page {page} of {totalPages}</p>
             <div className="flex space-x-2">
-              <button onClick={() => setPage(p => Math.max(1, p - 1))} className={`p-2 border ${theme.utilities.border} ${theme.utilities.bgSurface} hover:${theme.utilities.bgMuted} ${theme.utilities.textPrimary}`}><HiChevronLeft /></button>
-              <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} className={`p-2 border ${theme.utilities.border} ${theme.utilities.bgSurface} hover:${theme.utilities.bgMuted} ${theme.utilities.textPrimary}`}><HiChevronRight /></button>
+              <button onClick={() => setPage(p => Math.max(1, p - 1))} className={`p-2 border ${theme.utilities.border} ${theme.utilities.bgSurface} theme-hover-bg-muted ${theme.utilities.textPrimary}`}><HiChevronLeft /></button>
+              <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} className={`p-2 border ${theme.utilities.border} ${theme.utilities.bgSurface} theme-hover-bg-muted ${theme.utilities.textPrimary}`}><HiChevronRight /></button>
             </div>
           </div>
         )}
@@ -293,7 +293,7 @@ const AdminProductsPage = () => {
               <h2 className={`text-xl font-bold uppercase tracking-widest ${theme.utilities.textPrimary}`}>
                 {editingProduct ? 'Edit Product' : 'Add New Product'}
               </h2>
-              <button onClick={() => setShowModal(false)} className={`text-2xl hover:rotate-90 transition-transform ${theme.utilities.textMuted} hover:${theme.utilities.textPrimary}`}><HiX /></button>
+              <button onClick={() => setShowModal(false)} className={`text-2xl hover:rotate-90 transition-transform ${theme.utilities.textMuted} theme-hover-text-primary`}><HiX /></button>
             </div>
 
             <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -301,31 +301,31 @@ const AdminProductsPage = () => {
               <div className="space-y-6">
                 <div className="space-y-2">
                   <label className={`text-[10px] uppercase tracking-widest font-bold ${theme.utilities.textMuted}`}>Product Name</label>
-                  <input type="text" name="name" required className={`w-full ${theme.utilities.bgMuted} border-none p-4 text-sm focus:ring-1 focus:ring-[#A08C5B] outline-none ${theme.utilities.textPrimary}`} value={formData.name} onChange={handleInputChange} />
+                  <input type="text" name="name" required className={`w-full ${theme.components.input} border p-4 text-sm outline-none ${theme.utilities.textPrimary}`} value={formData.name} onChange={handleInputChange} />
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label className={`text-[10px] uppercase tracking-widest font-bold ${theme.utilities.textMuted}`}>Price (PKR)</label>
-                    <input type="number" name="price" required className={`w-full ${theme.utilities.bgMuted} border-none p-4 text-sm focus:ring-1 focus:ring-[#A08C5B] outline-none ${theme.utilities.textPrimary}`} value={formData.price} onChange={handleInputChange} />
+                    <input type="number" name="price" required className={`w-full ${theme.components.input} border p-4 text-sm outline-none ${theme.utilities.textPrimary}`} value={formData.price} onChange={handleInputChange} />
                   </div>
                   <div className="space-y-2">
                     <label className={`text-[10px] uppercase tracking-widest font-bold ${theme.utilities.textMuted}`}>SKU Code</label>
-                    <input type="text" name="sku" required className={`w-full ${theme.utilities.bgMuted} border-none p-4 text-sm focus:ring-1 focus:ring-[#A08C5B] outline-none uppercase ${theme.utilities.textPrimary}`} value={formData.sku} onChange={handleInputChange} />
+                    <input type="text" name="sku" required className={`w-full ${theme.components.input} border p-4 text-sm outline-none uppercase ${theme.utilities.textPrimary}`} value={formData.sku} onChange={handleInputChange} />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label className={`text-[10px] uppercase tracking-widest font-bold ${theme.utilities.textMuted}`}>Category</label>
-                    <select name="category" required className={`w-full ${theme.utilities.bgMuted} border-none p-4 text-sm focus:ring-1 focus:ring-[#A08C5B] outline-none ${theme.utilities.textPrimary}`} value={formData.category} onChange={handleInputChange}>
+                    <select name="category" required className={`w-full ${theme.components.input} border p-4 text-sm outline-none ${theme.utilities.textPrimary}`} value={formData.category} onChange={handleInputChange}>
                       <option value="">Select Category</option>
                       {categories.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}
                     </select>
                   </div>
                   <div className="space-y-2">
                     <label className={`text-[10px] uppercase tracking-widest font-bold ${theme.utilities.textMuted}`}>Stock Quantity</label>
-                    <input type="number" name="stock" required className={`w-full ${theme.utilities.bgMuted} border-none p-4 text-sm focus:ring-1 focus:ring-[#A08C5B] outline-none ${theme.utilities.textPrimary}`} value={formData.stock} onChange={handleInputChange} />
+                    <input type="number" name="stock" required className={`w-full ${theme.components.input} border p-4 text-sm outline-none ${theme.utilities.textPrimary}`} value={formData.stock} onChange={handleInputChange} />
                   </div>
                 </div>
 
@@ -333,7 +333,7 @@ const AdminProductsPage = () => {
                   <label className={`text-[10px] uppercase tracking-widest font-bold ${theme.utilities.textMuted}`}>Subcategory</label>
                   <select
                     name="subcategory"
-                    className={`w-full ${theme.utilities.bgMuted} border-none p-4 text-sm focus:ring-1 focus:ring-[#A08C5B] outline-none ${theme.utilities.textPrimary}`}
+                    className={`w-full ${theme.components.input} border p-4 text-sm outline-none ${theme.utilities.textPrimary}`}
                     value={formData.subcategory}
                     onChange={handleInputChange}
                     disabled={!formData.category || subcategoryOptions.length === 0}
@@ -350,7 +350,7 @@ const AdminProductsPage = () => {
 
                 <div className="space-y-2">
                   <label className={`text-[10px] uppercase tracking-widest font-bold ${theme.utilities.textMuted}`}>Product Description</label>
-                  <textarea name="description" rows="4" className={`w-full ${theme.utilities.bgMuted} border-none p-4 text-sm focus:ring-1 focus:ring-[#A08C5B] outline-none resize-none ${theme.utilities.textPrimary}`} value={formData.description} onChange={handleInputChange}></textarea>
+                  <textarea name="description" rows="4" className={`w-full ${theme.components.input} border p-4 text-sm outline-none resize-none ${theme.utilities.textPrimary}`} value={formData.description} onChange={handleInputChange}></textarea>
                 </div>
               </div>
 
@@ -386,7 +386,7 @@ const AdminProductsPage = () => {
                     <HiCheckCircle className="text-xl" />
                     <span>{editingProduct ? 'Update Product' : 'Release Product'}</span>
                   </button>
-                  <button type="button" onClick={() => setShowModal(false)} className={`w-full text-center text-[10px] uppercase tracking-widest font-bold ${theme.utilities.textMuted} hover:${theme.utilities.textPrimary}`}>Cancel Changes</button>
+                  <button type="button" onClick={() => setShowModal(false)} className={`w-full text-center text-[10px] uppercase tracking-widest font-bold ${theme.utilities.textMuted} theme-hover-text-primary`}>Cancel Changes</button>
                 </div>
               </div>
             </form>

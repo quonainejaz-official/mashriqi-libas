@@ -72,14 +72,14 @@ const CartClient = () => {
                 <div className={`flex items-center border ${theme.utilities.border} rounded-sm overflow-hidden`}>
                   <button
                     onClick={() => updateQuantity(item._id, item.selectedSize, item.selectedColor?.name, item.quantity - 1)}
-                    className={`w-10 h-10 flex items-center justify-center hover:${theme.utilities.bgMuted} transition-colors border-r ${theme.utilities.border}`}
+                    className={`w-10 h-10 flex items-center justify-center theme-hover-bg-muted transition-colors border-r ${theme.utilities.border}`}
                   >
                     <HiMinus className="text-xs" />
                   </button>
                   <span className="w-10 text-center text-xs font-bold">{item.quantity}</span>
                   <button
                     onClick={() => updateQuantity(item._id, item.selectedSize, item.selectedColor?.name, item.quantity + 1)}
-                    className={`w-10 h-10 flex items-center justify-center hover:${theme.utilities.bgMuted} transition-colors border-l ${theme.utilities.border}`}
+                    className={`w-10 h-10 flex items-center justify-center theme-hover-bg-muted transition-colors border-l ${theme.utilities.border}`}
                   >
                     <HiPlus className="text-xs" />
                   </button>
@@ -98,7 +98,7 @@ const CartClient = () => {
           ))}
 
           <div className="pt-4">
-            <Link href="/products" className={`inline-flex items-center text-[11px] font-bold uppercase tracking-[0.2em] border-b-2 ${theme.utilities.border} pb-1 hover:${theme.utilities.textPrimary} transition-all`}>
+            <Link href="/products" className={`inline-flex items-center text-[11px] font-bold uppercase tracking-[0.2em] border-b-2 ${theme.utilities.border} pb-1 ${theme.components.link}`}>
               Continue Shopping
             </Link>
           </div>

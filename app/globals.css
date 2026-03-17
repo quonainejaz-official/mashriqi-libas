@@ -61,8 +61,20 @@
   --color-logo-glow-strong: rgba(255, 214, 90, 0.9);
   --color-logo-glow-soft: rgba(198, 122, 0, 0.4);
   --color-link: var(--color-text-primary);
-  --color-link-hover: var(--color-link);
-  --color-link-active: var(--color-link);
+  --color-link-hover: var(--color-accent);
+  --color-link-active: var(--color-accent-strong);
+  --color-button-hover-bg: var(--color-bg-contrast);
+  --color-button-active-bg: var(--color-bg-contrast-muted);
+  --color-button-hover-border: var(--color-bg-contrast);
+  --color-button-active-border: var(--color-bg-contrast-muted);
+  --color-button-outline-hover-bg: var(--color-bg-contrast);
+  --color-button-outline-active-bg: var(--color-bg-contrast-muted);
+  --color-button-outline-hover-text: var(--color-text-inverse);
+  --color-button-outline-active-text: var(--color-text-inverse);
+  --color-button-outline-hover-border: var(--color-bg-contrast);
+  --color-button-outline-active-border: var(--color-bg-contrast-muted);
+  --color-input-hover-border: var(--color-border-strong);
+  --color-input-focus-border: var(--color-focus);
   --primary: var(--color-text-primary);
   --secondary: var(--color-accent);
   --accent: var(--color-accent);
@@ -102,14 +114,6 @@ h1, h2, h3, h4, h5, h6 {
 
 :where(body, nav, header, main, footer, section, article, aside, div, a, button, input, textarea, select, svg) {
   transition: background-color var(--theme-transition) ease, color var(--theme-transition) ease, border-color var(--theme-transition) ease, box-shadow var(--theme-transition) ease;
-}
-
-:where(a, button, input, textarea, select, [role="button"]):not(:disabled):not([aria-disabled="true"]):hover {
-  filter: brightness(1.12);
-}
-
-:where(a, button, input, textarea, select, [role="button"]):not(:disabled):not([aria-disabled="true"]):active {
-  filter: brightness(0.94);
 }
 
 .theme-icon {
@@ -152,6 +156,10 @@ h1, h2, h3, h4, h5, h6 {
   background-color: var(--color-bg-contrast) !important;
 }
 
+.theme-bg-contrast-muted {
+  background-color: var(--color-bg-contrast-muted) !important;
+}
+
 .theme-border {
   border-color: var(--color-border) !important;
 }
@@ -172,6 +180,14 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-link-active) !important;
 }
 
+.theme-link.is-hover {
+  color: var(--color-link-hover) !important;
+}
+
+.theme-link.is-active {
+  color: var(--color-link-active) !important;
+}
+
 .theme-button-primary {
   background-color: var(--color-button-bg);
   color: var(--color-button-text) !important;
@@ -179,13 +195,27 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .theme-button-primary:hover {
-  background-color: var(--color-button-bg);
-  background-color: color-mix(in srgb, var(--color-button-bg) 88%, #ffffff);
+  background-color: var(--color-button-hover-bg);
+  border-color: var(--color-button-hover-border);
+  color: var(--color-button-text) !important;
 }
 
 .theme-button-primary:active {
-  background-color: var(--color-button-bg);
-  background-color: color-mix(in srgb, var(--color-button-bg) 92%, #000000);
+  background-color: var(--color-button-active-bg);
+  border-color: var(--color-button-active-border);
+  color: var(--color-button-text) !important;
+}
+
+.theme-button-primary.is-hover {
+  background-color: var(--color-button-hover-bg);
+  border-color: var(--color-button-hover-border);
+  color: var(--color-button-text) !important;
+}
+
+.theme-button-primary.is-active {
+  background-color: var(--color-button-active-bg);
+  border-color: var(--color-button-active-border);
+  color: var(--color-button-text) !important;
 }
 
 .theme-button-outline {
@@ -195,14 +225,27 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .theme-button-outline:hover {
-  background-color: var(--color-button-outline-border);
-  background-color: color-mix(in srgb, var(--color-button-outline-border) 88%, #ffffff);
-  color: var(--color-text-inverse) !important;
+  background-color: var(--color-button-outline-hover-bg);
+  color: var(--color-button-outline-hover-text) !important;
+  border-color: var(--color-button-outline-hover-border);
 }
 
 .theme-button-outline:active {
-  background-color: var(--color-button-outline-border);
-  background-color: color-mix(in srgb, var(--color-button-outline-border) 92%, #000000);
+  background-color: var(--color-button-outline-active-bg);
+  color: var(--color-button-outline-active-text) !important;
+  border-color: var(--color-button-outline-active-border);
+}
+
+.theme-button-outline.is-hover {
+  background-color: var(--color-button-outline-hover-bg);
+  color: var(--color-button-outline-hover-text) !important;
+  border-color: var(--color-button-outline-hover-border);
+}
+
+.theme-button-outline.is-active {
+  background-color: var(--color-button-outline-active-bg);
+  color: var(--color-button-outline-active-text) !important;
+  border-color: var(--color-button-outline-active-border);
 }
 
 .theme-input {
@@ -211,8 +254,129 @@ h1, h2, h3, h4, h5, h6 {
   border-color: var(--color-input-border) !important;
 }
 
+.theme-input:hover {
+  border-color: var(--color-input-hover-border) !important;
+}
+
+.theme-input:focus,
+.theme-input:focus-visible {
+  border-color: var(--color-input-focus-border) !important;
+  box-shadow: 0 0 0 2px var(--color-accent-soft);
+}
+
+.theme-input.is-hover {
+  border-color: var(--color-input-hover-border) !important;
+}
+
+.theme-input.is-focus {
+  border-color: var(--color-input-focus-border) !important;
+  box-shadow: 0 0 0 2px var(--color-accent-soft);
+}
+
 .theme-input::placeholder {
   color: var(--color-input-placeholder) !important;
+}
+
+.theme-hover-text-primary:hover,
+.theme-hover-text-primary.is-hover,
+.theme-hover-text-primary:active,
+.theme-hover-text-primary.is-active {
+  color: var(--color-text-primary) !important;
+}
+
+.theme-hover-text-secondary:hover,
+.theme-hover-text-secondary.is-hover,
+.theme-hover-text-secondary:active,
+.theme-hover-text-secondary.is-active {
+  color: var(--color-text-secondary) !important;
+}
+
+.theme-hover-text-muted:hover,
+.theme-hover-text-muted.is-hover,
+.theme-hover-text-muted:active,
+.theme-hover-text-muted.is-active {
+  color: var(--color-text-muted) !important;
+}
+
+.theme-hover-text-inverse:hover,
+.theme-hover-text-inverse.is-hover,
+.theme-hover-text-inverse:active,
+.theme-hover-text-inverse.is-active {
+  color: var(--color-text-inverse) !important;
+}
+
+.theme-hover-text-accent:hover,
+.theme-hover-text-accent.is-hover,
+.theme-hover-text-accent:active,
+.theme-hover-text-accent.is-active {
+  color: var(--color-accent) !important;
+}
+
+.theme-hover-text-danger:hover,
+.theme-hover-text-danger.is-hover,
+.theme-hover-text-danger:active,
+.theme-hover-text-danger.is-active {
+  color: var(--color-danger) !important;
+}
+
+.theme-hover-bg-muted:hover,
+.theme-hover-bg-muted.is-hover,
+.theme-hover-bg-muted:active,
+.theme-hover-bg-muted.is-active {
+  background-color: var(--color-bg-muted) !important;
+}
+
+.theme-hover-bg-surface:hover,
+.theme-hover-bg-surface.is-hover,
+.theme-hover-bg-surface:active,
+.theme-hover-bg-surface.is-active {
+  background-color: var(--color-bg-surface) !important;
+}
+
+.theme-hover-bg-contrast:hover,
+.theme-hover-bg-contrast.is-hover,
+.theme-hover-bg-contrast:active,
+.theme-hover-bg-contrast.is-active {
+  background-color: var(--color-bg-contrast) !important;
+  color: var(--color-text-inverse) !important;
+}
+
+.theme-hover-bg-contrast-muted:hover,
+.theme-hover-bg-contrast-muted.is-hover,
+.theme-hover-bg-contrast-muted:active,
+.theme-hover-bg-contrast-muted.is-active {
+  background-color: var(--color-bg-contrast-muted) !important;
+  color: var(--color-text-inverse) !important;
+}
+
+.theme-hover-border:hover,
+.theme-hover-border.is-hover,
+.theme-hover-border:active,
+.theme-hover-border.is-active {
+  border-color: var(--color-border) !important;
+}
+
+.theme-hover-border-strong:hover,
+.theme-hover-border-strong.is-hover,
+.theme-hover-border-strong:active,
+.theme-hover-border-strong.is-active {
+  border-color: var(--color-border-strong) !important;
+}
+
+.theme-active-bg-muted:active,
+.theme-active-bg-muted.is-active {
+  background-color: var(--color-bg-muted) !important;
+}
+
+.theme-active-bg-contrast:active,
+.theme-active-bg-contrast.is-active {
+  background-color: var(--color-bg-contrast) !important;
+  color: var(--color-text-inverse) !important;
+}
+
+.theme-active-border-strong:active,
+.theme-active-border-strong.is-active {
+  border-color: var(--color-border-strong) !important;
 }
 
 .theme-nav-item {
@@ -274,16 +438,16 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Typography color system */
 :where(h1, h2, h3, h4, h5, h6) {
-  color: var(--text-default) !important;
+  color: var(--text-default);
   font-family: var(--font-heading);
 }
 
 :where(p, span, li, label, small, strong, em) {
-  color: var(--text-default) !important;
+  color: var(--text-default);
 }
 
 ::placeholder {
-  color: var(--text-placeholder) !important;
+  color: var(--text-placeholder);
   opacity: 1;
 }
 
@@ -304,78 +468,78 @@ h1, h2, h3, h4, h5, h6 {
 .border-gray-400,
 .border-black,
 .border-white {
-  border-color: var(--gold-border) !important;
+  border-color: var(--gold-border);
 }
 
 [class*="border-["] {
-  border-color: var(--gold-border-strong) !important;
+  border-color: var(--gold-border-strong);
 }
 
 .divide-y > :not([hidden]) ~ :not([hidden]),
 .divide-x > :not([hidden]) ~ :not([hidden]),
 hr {
-  border-color: var(--gold-border) !important;
+  border-color: var(--gold-border);
 }
 
 .text-gray-300,
 .text-gray-400,
 .text-gray-500 {
-  color: var(--color-text-muted) !important;
+  color: var(--color-text-muted);
 }
 
 .text-gray-600,
 .text-gray-700 {
-  color: var(--color-text-secondary) !important;
+  color: var(--color-text-secondary);
 }
 
 .text-gray-800,
 .text-gray-900,
 .text-black {
-  color: var(--color-text-primary) !important;
+  color: var(--color-text-primary);
 }
 
 .text-white {
-  color: var(--color-text-inverse) !important;
+  color: var(--color-text-inverse);
 }
 
 .text-green-600,
 .text-green-700 {
-  color: var(--color-success) !important;
+  color: var(--color-success);
 }
 
 .text-amber-600,
 .text-amber-700 {
-  color: var(--color-warning) !important;
+  color: var(--color-warning);
 }
 
 .text-red-600,
 .text-red-700 {
-  color: var(--color-danger) !important;
+  color: var(--color-danger);
 }
 
 .text-blue-600,
 .text-blue-700 {
-  color: var(--color-info) !important;
+  color: var(--color-info);
 }
 
 .bg-green-100,
 .bg-green-200 {
-  background-color: var(--color-success-bg) !important;
+  background-color: var(--color-success-bg);
 }
 
 .bg-amber-100,
 .bg-amber-200 {
-  background-color: var(--color-warning-bg) !important;
+  background-color: var(--color-warning-bg);
 }
 
 .bg-red-100,
 .bg-red-200 {
-  background-color: var(--color-danger-bg) !important;
+  background-color: var(--color-danger-bg);
 }
 
 .bg-blue-100,
 .bg-blue-200 {
-  background-color: var(--color-info-bg) !important;
+  background-color: var(--color-info-bg);
 }
 
 :where(
@@ -386,7 +550,7 @@ hr {
   [class~="bg-[#ffd700]"],
   [class~="bg-[#FFD700]"]
 ) {
-  background-color: var(--color-accent) !important;
+  background-color: var(--color-accent);
 }
 
 :where(
@@ -397,7 +561,7 @@ hr {
   [class~="border-[#ffd700]"],
   [class~="border-[#FFD700]"]
 ) {
-  border-color: var(--color-accent) !important;
+  border-color: var(--color-accent);
 }
 
 [class*="focus:ring-[#A08C5B]"],
@@ -406,7 +570,7 @@ hr {
 [class*="focus:ring-[#D4AF37]"],
 [class*="focus:ring-[#ffd700]"],
 [class*="focus:ring-[#FFD700]"] {
-  --tw-ring-color: var(--color-focus) !important;
+  --tw-ring-color: var(--color-focus);
 }
 
 [class*="accent-[#A08C5B]"],
@@ -425,7 +589,7 @@ hr {
   [class~="text-[#ffd700]"],
   [class~="text-[#FFD700]"]
 ) {
-  color: var(--color-accent) !important;
+  color: var(--color-accent);
 }
 
 :where(
@@ -434,23 +598,23 @@ hr {
   [class~="text-[#1a1a1a]"],
   [class~="text-[#2d2d2d]"]
 ) {
-  color: var(--color-text-primary) !important;
+  color: var(--color-text-primary);
 }
 
 :where(a:link) {
-  color: var(--text-link) !important;
+  color: var(--text-link);
 }
 
 :where(a:visited) {
-  color: var(--text-link-visited) !important;
+  color: var(--text-link-visited);
 }
 
 :where(a:hover) {
-  color: var(--text-link-hover) !important;
+  color: var(--text-link-hover);
 }
 
 :where(a:active) {
-  color: var(--text-link-active) !important;
+  color: var(--text-link-active);
 }
 
 .btn-primary:disabled,
@@ -466,7 +630,7 @@ hr {
 :where([class*="hover:text-[#2c3e50]"]):hover,
 :where([class*="hover:text-[#1a1a1a]"]):hover,
 :where([class*="hover:text-[#2d2d2d]"]):hover {
-  color: var(--color-text-primary) !important;
+  color: var(--color-text-primary);
 }
 
 :where([class*="hover:text-[#A08C5B]"]):hover,
@@ -475,7 +639,7 @@ hr {
 :where([class*="hover:text-[#D4AF37]"]):hover,
 :where([class*="hover:text-[#ffd700]"]):hover,
 :where([class*="hover:text-[#FFD700]"]):hover {
-  color: var(--color-accent) !important;
+  color: var(--color-accent);
 }
 
 :where([class*="hover:border-[#A08C5B]"]):hover,
@@ -484,7 +648,7 @@ hr {
 :where([class*="hover:border-[#D4AF37]"]):hover,
 :where([class*="hover:border-[#ffd700]"]):hover,
 :where([class*="hover:border-[#FFD700]"]):hover {
-  border-color: var(--color-accent) !important;
+  border-color: var(--color-accent);
 }
 
 :where([class*="hover:bg-black"]):hover,
@@ -493,7 +657,7 @@ hr {
 :where([class*="hover:bg-[#1a1a1a]"]):hover,
 :where([class*="hover:bg-[#2d2d2d]"]):hover,
 :where([class*="hover:bg-[#2C3E50]"]):hover {
-  background-color: var(--color-bg-contrast) !important;
+  background-color: var(--color-bg-contrast);
   color: var(--color-text-inverse) !important;
 }
 
@@ -504,7 +668,21 @@ hr {
 :where([class*="hover:bg-[#FAFAFA]"]):hover,
 :where([class*="hover:bg-[#F9F9F9]"]):hover,
 :where([class*="hover:bg-white"]):hover {
-  background-color: var(--surface-muted) !important;
+  background-color: var(--surface-muted);
+  color: var(--text-default) !important;
+}
+
+:where([class*="hover:text-white"]):hover {
+  color: var(--color-text-inverse) !important;
+}
+
+:where([class*="hover:text-black"]):hover {
+  color: var(--color-text-primary) !important;
+}
+
+:where([class*="hover:text-gray-800"]):hover,
+:where([class*="hover:text-gray-900"]):hover {
+  color: var(--color-text-primary) !important;
 }
 
 /* Dark background detection for text overrides */

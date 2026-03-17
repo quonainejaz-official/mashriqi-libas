@@ -20,10 +20,10 @@ const Footer = () => {
               Redefining Eastern elegance through timeless designs and premium craftsmanship. Discover the fabric of our heritage.
             </p>
             <div className="flex space-x-6 pt-2">
-              <a href="#" className={`${theme.utilities.textMuted} hover:${theme.utilities.textPrimary} transition-colors`}><FaFacebookF /></a>
-              <a href="#" className={`${theme.utilities.textMuted} hover:${theme.utilities.textPrimary} transition-colors`}><FaInstagram /></a>
-              <a href="#" className={`${theme.utilities.textMuted} hover:${theme.utilities.textPrimary} transition-colors`}><FaWhatsapp /></a>
-              <a href="#" className={`${theme.utilities.textMuted} hover:${theme.utilities.textPrimary} transition-colors`}><FaPinterestP /></a>
+              <a href="#" className={`${theme.utilities.textMuted} theme-hover-text-primary transition-colors`}><FaFacebookF /></a>
+              <a href="#" className={`${theme.utilities.textMuted} theme-hover-text-primary transition-colors`}><FaInstagram /></a>
+              <a href="#" className={`${theme.utilities.textMuted} theme-hover-text-primary transition-colors`}><FaWhatsapp /></a>
+              <a href="#" className={`${theme.utilities.textMuted} theme-hover-text-primary transition-colors`}><FaPinterestP /></a>
             </div>
           </div>
 
@@ -31,11 +31,11 @@ const Footer = () => {
           <div className="space-y-8">
             <h4 className={`text-[10px] font-bold uppercase tracking-[0.3em] ${theme.utilities.textMuted}`}>Shop</h4>
             <ul className={`space-y-4 text-xs tracking-widest uppercase font-medium ${theme.utilities.textSecondary}`}>
-              <li><Link href="/products" className={`hover:${theme.utilities.textPrimary} transition-colors`}>New Arrivals</Link></li>
-              <li><Link href="/products?category=stitched" className={`hover:${theme.utilities.textPrimary} transition-colors`}>Stitched</Link></li>
-              <li><Link href="/products?category=unstitched" className={`hover:${theme.utilities.textPrimary} transition-colors`}>Unstitched</Link></li>
-              <li><Link href="/products?category=accessories" className={`hover:${theme.utilities.textPrimary} transition-colors`}>Accessories</Link></li>
-              <li><Link href="/products?sale=true" className="hover:text-red-500 transition-colors">Sale %</Link></li>
+              <li><Link href="/products" className="theme-hover-text-primary transition-colors">New Arrivals</Link></li>
+              <li><Link href="/products?category=stitched" className="theme-hover-text-primary transition-colors">Stitched</Link></li>
+              <li><Link href="/products?category=unstitched" className="theme-hover-text-primary transition-colors">Unstitched</Link></li>
+              <li><Link href="/products?category=accessories" className="theme-hover-text-primary transition-colors">Accessories</Link></li>
+              <li><Link href="/products?sale=true" className="theme-hover-text-danger transition-colors">Sale %</Link></li>
             </ul>
           </div>
 
@@ -43,11 +43,11 @@ const Footer = () => {
           <div className="space-y-8">
             <h4 className={`text-[10px] font-bold uppercase tracking-[0.3em] ${theme.utilities.textMuted}`}>Customer Care</h4>
             <ul className={`space-y-4 text-xs tracking-widest uppercase font-medium ${theme.utilities.textSecondary}`}>
-              <li><Link href="/orders/tracking" className={`hover:${theme.utilities.textPrimary} transition-colors`}>Track Order</Link></li>
-              <li><Link href="/shipping" className={`hover:${theme.utilities.textPrimary} transition-colors`}>Shipping & Returns</Link></li>
-              <li><Link href="/contact" className={`hover:${theme.utilities.textPrimary} transition-colors`}>Contact Us</Link></li>
-              <li><Link href="/faq" className={`hover:${theme.utilities.textPrimary} transition-colors`}>FAQs</Link></li>
-              <li><Link href="/store-locator" className={`hover:${theme.utilities.textPrimary} transition-colors`}>Store Locator</Link></li>
+              <li><Link href="/orders/tracking" className="theme-hover-text-primary transition-colors">Track Order</Link></li>
+              <li><Link href="/shipping" className="theme-hover-text-primary transition-colors">Shipping & Returns</Link></li>
+              <li><Link href="/contact" className="theme-hover-text-primary transition-colors">Contact Us</Link></li>
+              <li><Link href="/faq" className="theme-hover-text-primary transition-colors">FAQs</Link></li>
+              <li><Link href="/store-locator" className="theme-hover-text-primary transition-colors">Store Locator</Link></li>
             </ul>
           </div>
 
@@ -66,8 +66,8 @@ const Footer = () => {
         <div className={`border-t ${theme.utilities.border} pt-10 flex flex-col md:flex-row items-center justify-between text-[10px] ${theme.utilities.textMuted} uppercase tracking-[0.3em] font-medium`}>
           <p>© 2024 Mashriqi Libas. All Rights Reserved.</p>
           <div className="flex items-center space-x-8 mt-6 md:mt-0">
-            <Link href="/privacy" className={`hover:${theme.utilities.textPrimary} transition-colors`}>Privacy Policy</Link>
-            <Link href="/terms" className={`hover:${theme.utilities.textPrimary} transition-colors`}>Terms of Service</Link>
+            <Link href="/privacy" className="theme-hover-text-primary transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="theme-hover-text-primary transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>

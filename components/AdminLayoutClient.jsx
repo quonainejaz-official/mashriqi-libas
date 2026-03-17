@@ -42,7 +42,7 @@ const AdminLayoutClient = ({ children }) => {
               href={item.href}
               className={`
                 flex items-center space-x-4 px-4 py-3 text-sm font-medium transition-all
-                ${pathname === item.href ? `${theme.utilities.bgContrastMuted} ${theme.utilities.textInverse} shadow-lg` : `opacity-60 hover:opacity-100 hover:${theme.utilities.bgContrastMuted}`}
+                ${pathname === item.href ? `theme-bg-contrast-muted ${theme.utilities.textInverse} shadow-lg` : `opacity-60 hover:opacity-100 theme-hover-bg-contrast-muted`}
               `}
             >
               <item.icon className="text-xl" />
@@ -53,7 +53,7 @@ const AdminLayoutClient = ({ children }) => {
 
         <div className={`p-4 border-t ${theme.utilities.border} opacity-20 space-y-4`}>
           <div className="flex items-center space-x-3 px-4">
-            <div className={`w-8 h-8 rounded-full ${theme.utilities.bgContrastMuted} flex items-center justify-center font-bold overflow-hidden relative shadow-inner`}>
+            <div className={`w-8 h-8 rounded-full theme-bg-contrast-muted flex items-center justify-center font-bold overflow-hidden relative shadow-inner`}>
               {user?.image?.url ? (
                 <Image src={user.image.url} alt={user?.name || 'Admin'} fill className="object-cover" />
               ) : (

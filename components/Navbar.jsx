@@ -11,13 +11,15 @@ import { HiOutlineShoppingBag, HiOutlineUser, HiOutlineSearch, HiMenuAlt3, HiX, 
 import BrandLogo from '@/components/BrandLogo';
 
 const Navbar = () => {
+  const { theme, themeKey, cycleTheme } = useTheme();
+  console.log('Navbar rendering, theme:', theme?.key);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [activeMobileCategory, setActiveMobileCategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [categories, setCategories] = useState([]);
-  const { theme, themeKey, cycleTheme } = useTheme();
   const { cart, setIsCartOpen } = useCart();
   const { user, logout } = useAuth();
   const router = useRouter();
@@ -29,6 +31,16 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = '';
+      };
+    }
+    document.body.style.overflow = '';
+  }, [isMobileMenuOpen]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -48,6 +60,7 @@ const Navbar = () => {
     if (searchQuery.trim()) {
       router.push(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
       setIsSearchOpen(false);
+      setIsMobileMenuOpen(false);
       setSearchQuery('');
     }
   };
@@ -64,7 +77,7 @@ const Navbar = () => {
       <div key={`${categorySlug}-${sub.slug}`} style={{ paddingLeft: depth * 12 }}>
         <Link
           href={`/products?category=${categorySlug}&subcategory=${sub.slug}`}
-          className={`hover:${theme.utilities.textPrimary} transition-all block py-1`}
+          className={`${theme.components.link} block py-1`}
           onClick={onClick}
         >
           {sub.name}
@@ -73,15 +86,19 @@ const Navbar = () => {
       </div>
     ));
 
+  const toggleMobileCategory = (slug) => {
+    setActiveMobileCategory((prev) => (prev === slug ? null : slug));
+  };
+
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-500 ${isScrolled ? `${theme.utilities.bgSurface} shadow-lg py-2` : 'bg-transparent py-4'} border-b ${theme.utilities.border} backdrop-blur-md`}>
+    <nav className={`fixed w-full z-50 transition-all duration-500 ${theme.utilities.bgSurface} ${isScrolled ? 'shadow-lg py-2' : 'py-4'} border-b ${theme.utilities.border} !bg-opacity-100`}>
       <div className="max-w-[1600px] mx-auto px-4 md:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 gap-2">
           {/* Left: Navigation Links (Desktop) */}
           <div className="hidden lg:flex items-center space-x-10 flex-1">
             {categories.map((category) => (
               <div key={category._id} className="relative group">
-                <Link href={`/products?category=${category.slug}`} className={`text-[11px] uppercase tracking-[0.25em] font-bold ${theme.utilities.textSecondary} hover:${theme.utilities.textPrimary} transition-all`}>
+                <Link href={`/products?category=${category.slug}`} className={`text-[11px] uppercase tracking-[0.25em] font-bold ${theme.components.navItem} transition-all`}>
                   {category.name}
                 </Link>
                 {category.subcategories?.length > 0 && (
@@ -116,23 +133,23 @@ const Navbar = () => {
           </div>
 
           {/* Center: Logo */}
-          <div className="flex-1 flex justify-center">
-            <Link href="/" className="block scale-90 md:scale-100">
-              <BrandLogo className="w-[180px] md:w-[220px] h-auto" />
+          <div className="flex-1 flex justify-center min-w-0">
+            <Link href="/" className="block scale-90 md:scale-100 shrink-0">
+              <BrandLogo className="w-[150px] sm:w-[180px] md:w-[220px] h-auto" />
             </Link>
           </div>
 
           {/* Right: Actions */}
-          <div className="flex-1 flex items-center justify-end space-x-6 md:space-x-10">
+          <div className="flex-1 flex items-center justify-end space-x-2 sm:space-x-4 md:space-x-10">
             <button
               onClick={cycleTheme}
-              className={`text-xl ${theme.utilities.textSecondary} hover:${theme.utilities.textPrimary} transition-all transform hover:scale-110 active:scale-95`}
+              className={`text-lg sm:text-xl ${theme.utilities.textSecondary} theme-hover-text-primary transition-all transform hover:scale-110 active:scale-95`}
               aria-label={`Switch theme: ${theme?.label || 'Theme'}`}
               title={theme?.label}
             >
               <ThemeIcon strokeWidth={1.5} />
             </button>
-            <button onClick={() => setIsSearchOpen(true)} className={`text-xl ${theme.utilities.textSecondary} hover:${theme.utilities.textPrimary} transition-all`}>
+            <button onClick={() => setIsSearchOpen(true)} className={`text-lg sm:text-xl ${theme.utilities.textSecondary} theme-hover-text-primary transition-all`}>
               <HiOutlineSearch strokeWidth={1.5} />
             </button>
             
@@ -149,7 +166,7 @@ const Navbar = () => {
                 <>
                   <button
                     onClick={() => setIsProfileOpen((prev) => !prev)}
-                    className={`flex items-center gap-3 text-[10px] uppercase tracking-[0.2em] font-bold ${theme.utilities.textSecondary} hover:${theme.utilities.textPrimary} transition-all`}
+                    className={`flex items-center gap-3 text-[10px] uppercase tracking-[0.2em] font-bold ${theme.utilities.textSecondary} theme-hover-text-primary transition-all`}
                     aria-haspopup="menu"
                     aria-expanded={isProfileOpen}
                   >
@@ -177,7 +194,7 @@ const Navbar = () => {
                         <Link
                           href="/profile"
                           onClick={() => setIsProfileOpen(false)}
-                          className={`flex items-center gap-4 px-4 py-3 rounded-sm text-[10px] uppercase tracking-[0.2em] font-bold ${theme.utilities.textSecondary} hover:${theme.utilities.bgMuted} transition-all`}
+                          className={`flex items-center gap-4 px-4 py-3 rounded-sm text-[10px] uppercase tracking-[0.2em] font-bold ${theme.utilities.textSecondary} theme-hover-bg-muted transition-all`}
                         >
                           <HiOutlineUser className="text-lg" />
                           Profile Settings
@@ -185,7 +202,7 @@ const Navbar = () => {
                         <Link
                           href="/orders"
                           onClick={() => setIsProfileOpen(false)}
-                          className={`flex items-center gap-4 px-4 py-3 rounded-sm text-[10px] uppercase tracking-[0.2em] font-bold ${theme.utilities.textSecondary} hover:${theme.utilities.bgMuted} transition-all`}
+                          className={`flex items-center gap-4 px-4 py-3 rounded-sm text-[10px] uppercase tracking-[0.2em] font-bold ${theme.utilities.textSecondary} theme-hover-bg-muted transition-all`}
                         >
                           <HiOutlineShoppingBag className="text-lg" />
                           Order History
@@ -197,7 +214,7 @@ const Navbar = () => {
                             setIsProfileOpen(false);
                             logout();
                           }}
-                          className={`w-full flex items-center gap-4 px-4 py-3 rounded-sm text-[10px] uppercase tracking-[0.2em] font-black ${theme.utilities.textDanger} hover:${theme.utilities.bgMuted} transition-all`}
+                          className={`w-full flex items-center gap-4 px-4 py-3 rounded-sm text-[10px] uppercase tracking-[0.2em] font-black ${theme.utilities.textDanger} theme-hover-bg-muted transition-all`}
                         >
                           <HiOutlineLogout className="text-lg" />
                           Sign Out
@@ -207,22 +224,28 @@ const Navbar = () => {
                   </div>
                 </>
               ) : (
-                <Link href="/login" className={`text-xl ${theme.utilities.textSecondary} hover:${theme.utilities.textPrimary} transition-all flex items-center`}>
+                <Link href="/login" className={`text-xl ${theme.utilities.textSecondary} theme-hover-text-primary transition-all flex items-center`}>
                   <HiOutlineUser strokeWidth={1.5} />
                 </Link>
               )}
             </div>
 
-            <button onClick={() => setIsCartOpen(true)} className={`relative text-xl ${theme.utilities.textSecondary} hover:${theme.utilities.textPrimary} transition-all`}>
+            <button onClick={() => setIsCartOpen(true)} className={`relative text-lg sm:text-xl ${theme.utilities.textSecondary} theme-hover-text-primary transition-all`}>
               <HiOutlineShoppingBag strokeWidth={1.5} />
               {totalItems > 0 && (
-                <span className={`absolute -top-2 -right-2 ${theme.utilities.bgContrast} ${theme.utilities.textInverse} text-[9px] w-5 h-5 rounded-full flex items-center justify-center font-black shadow-lg border-2 ${theme.utilities.bgSurface}`}>
+                <span className={`absolute -top-2 -right-2 ${theme.utilities.bgContrast} ${theme.utilities.textInverse} text-[8px] w-[18px] h-[18px] rounded-full flex items-center justify-center font-black shadow-lg border-2 ${theme.utilities.bgSurface}`}>
                   {totalItems}
                 </span>
               )}
             </button>
 
-            <button className={`lg:hidden text-2xl ${theme.utilities.textPrimary}`} onClick={() => setIsMobileMenuOpen(true)}>
+            <button
+              className={`lg:hidden text-xl sm:text-2xl ${theme.utilities.textPrimary}`}
+              onClick={() => setIsMobileMenuOpen(true)}
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-menu"
+              aria-label="Open menu"
+            >
               <HiMenuAlt3 />
             </button>
           </div>
@@ -232,7 +255,7 @@ const Navbar = () => {
       {/* Search Overlay */}
       {isSearchOpen && (
         <div className={`fixed inset-0 ${theme.utilities.bgSurface} z-[100] animate-fadeIn flex items-center justify-center p-8`}>
-          <button onClick={() => setIsSearchOpen(false)} className={`absolute top-8 right-8 text-3xl hover:rotate-90 transition-transform ${theme.utilities.textMuted} hover:${theme.utilities.textPrimary}`}>
+          <button onClick={() => setIsSearchOpen(false)} className={`absolute top-8 right-8 text-3xl hover:rotate-90 transition-transform ${theme.utilities.textMuted} theme-hover-text-primary`}>
             <HiX />
           </button>
           <form onSubmit={handleSearch} className="w-full max-w-3xl space-y-12">
@@ -246,7 +269,7 @@ const Navbar = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <button type="submit" className={`absolute right-0 bottom-8 text-4xl ${theme.utilities.textMuted} hover:${theme.utilities.textPrimary} transition-all`}>
+              <button type="submit" className={`absolute right-0 bottom-8 text-4xl ${theme.utilities.textMuted} theme-hover-text-primary transition-all`}>
                 <HiOutlineSearch />
               </button>
             </div>
@@ -256,32 +279,130 @@ const Navbar = () => {
       )}
 
       {/* Mobile Menu Overlay */}
-      <div className={`fixed inset-0 bg-black/60 backdrop-blur-[2px] z-[60] transition-opacity duration-500 ${isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
-        <div className={`fixed left-0 top-0 h-full w-[85%] max-w-sm ${theme.utilities.bgSurface} z-[70] transform transition-transform duration-700 cubic-bezier(0.4, 0, 0.2, 1) ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} p-10 flex flex-col shadow-2xl`}>
-          <button className={`absolute top-6 right-6 text-3xl ${theme.utilities.textMuted} hover:${theme.utilities.textPrimary}`} onClick={() => setIsMobileMenuOpen(false)}>
-            <HiX />
-          </button>
-          
-          <div className="flex flex-col space-y-10 mt-16 overflow-y-auto scrollbar-hide">
-            <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className={`text-2xl font-black uppercase tracking-[0.2em] border-b-2 ${theme.utilities.border} pb-4 ${theme.utilities.textPrimary}`}>Home</Link>
-            
-            {categories.map((category) => (
-              <div key={category._id} className="space-y-6">
-                <Link href={`/products?category=${category.slug}`} onClick={() => setIsMobileMenuOpen(false)} className={`text-2xl font-black uppercase tracking-[0.2em] border-b-2 ${theme.utilities.border} pb-4 flex justify-between items-center ${theme.utilities.textPrimary}`}>
-                  {category.name}
-                  <span className="text-sm opacity-30">+</span>
-                </Link>
-                {category.subcategories?.length > 0 && (
-                  <div className="pl-4 space-y-4 border-l-2 border-gray-100/10">
-                    {renderSubcategoryLinks(category.subcategories || [], category.slug, 0, () => setIsMobileMenuOpen(false))}
+      <div
+        className={`fixed inset-0 z-[80] transition-opacity duration-500 ${isMobileMenuOpen ? 'opacity-100 visible pointer-events-auto' : 'opacity-0 invisible pointer-events-none'}`}
+        onClick={() => setIsMobileMenuOpen(false)}
+        aria-hidden={!isMobileMenuOpen}
+      >
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-[6px]" />
+        <div
+          id="mobile-menu"
+          className={`fixed left-0 top-0 h-full w-full max-w-[420px] ${theme.utilities.bgSurface} z-[90] transform transition-[transform,opacity] duration-500 ease-out ${isMobileMenuOpen ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'} flex flex-col shadow-[0_30px_80px_rgba(0,0,0,0.35)]`}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className={`flex items-center justify-between px-6 pt-6 pb-4 border-b ${theme.utilities.border}`}>
+            <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3">
+              <BrandLogo className="w-[140px] h-auto" />
+            </Link>
+            <button className={`text-3xl ${theme.utilities.textMuted} theme-hover-text-primary`} onClick={() => setIsMobileMenuOpen(false)} aria-label="Close menu">
+              <HiX />
+            </button>
+          </div>
+
+          <div className="px-6 pt-4">
+            <form onSubmit={handleSearch} className={`flex items-center gap-3 rounded-full border ${theme.utilities.border} ${theme.utilities.bgMuted} px-4 py-3`}>
+              <HiOutlineSearch className={`text-lg ${theme.utilities.textMuted}`} />
+              <input
+                type="text"
+                placeholder="Search collections"
+                className={`w-full bg-transparent text-sm ${theme.utilities.textPrimary} outline-none`}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </form>
+          </div>
+
+          <div className="mt-6 px-6 flex items-center justify-between">
+            <button
+              onClick={cycleTheme}
+              className={`flex items-center gap-3 text-xs uppercase tracking-[0.35em] font-bold ${theme.utilities.textSecondary} theme-hover-text-primary transition-all`}
+            >
+              <ThemeIcon className="text-lg" />
+              Theme
+            </button>
+            <button
+              onClick={() => {
+                setIsCartOpen(true);
+                setIsMobileMenuOpen(false);
+              }}
+              className={`relative flex items-center gap-3 text-xs uppercase tracking-[0.35em] font-bold ${theme.utilities.textSecondary} theme-hover-text-primary transition-all`}
+            >
+              <HiOutlineShoppingBag className="text-lg" />
+              Cart
+              {totalItems > 0 && (
+                <span className={`absolute -top-2 -right-2 ${theme.utilities.bgContrast} ${theme.utilities.textInverse} text-[9px] w-5 h-5 rounded-full flex items-center justify-center font-black shadow-lg border-2 ${theme.utilities.bgSurface}`}>
+                  {totalItems}
+                </span>
+              )}
+            </button>
+          </div>
+
+          <div className="flex-1 mt-8 overflow-y-auto px-6 pb-8 space-y-6">
+            <Link
+              href="/"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`text-base font-black uppercase tracking-[0.35em] ${theme.utilities.textPrimary}`}
+            >
+              Home
+            </Link>
+
+            <div className="space-y-4">
+              {categories.map((category) => {
+                const isActive = activeMobileCategory === category.slug;
+                return (
+                  <div key={category._id} className={`border-b ${theme.utilities.border} pb-4`}>
+                    <button
+                      onClick={() => toggleMobileCategory(category.slug)}
+                      className={`w-full flex items-center justify-between text-left text-base font-black uppercase tracking-[0.3em] ${theme.utilities.textPrimary}`}
+                      aria-expanded={isActive}
+                    >
+                      <span>{category.name}</span>
+                      <span className={`text-sm transition-transform duration-300 ${isActive ? 'rotate-45 opacity-70' : 'opacity-30'}`}>+</span>
+                    </button>
+                    <div className={`grid transition-all duration-300 ease-out ${isActive ? 'grid-rows-[1fr] opacity-100 mt-4' : 'grid-rows-[0fr] opacity-0'}`}>
+                      <div className="overflow-hidden pl-3 space-y-3 border-l-2 border-gray-100/10">
+                        <Link
+                          href={`/products?category=${category.slug}`}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className={`block text-[11px] font-black uppercase tracking-[0.4em] ${theme.utilities.textMuted} theme-hover-text-primary`}
+                        >
+                          Explore All
+                        </Link>
+                        {category.subcategories?.length > 0 &&
+                          renderSubcategoryLinks(category.subcategories || [], category.slug, 0, () => setIsMobileMenuOpen(false))}
+                      </div>
+                    </div>
                   </div>
-                )}
-              </div>
-            ))}
-            
-            <div className="pt-10 mt-auto space-y-6">
-              <Link href="/orders/tracking" onClick={() => setIsMobileMenuOpen(false)} className={`block text-[11px] font-black ${theme.utilities.textMuted} uppercase tracking-[0.4em] hover:${theme.utilities.textPrimary}`}>Track Your Order</Link>
-              <div className={`pt-6 border-t ${theme.utilities.border} opacity-20`}>
+                );
+              })}
+            </div>
+
+            <div className="pt-4 space-y-6">
+              <Link
+                href="/orders/tracking"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`block text-[11px] font-black ${theme.utilities.textMuted} uppercase tracking-[0.4em] theme-hover-text-primary`}
+              >
+                Track Your Order
+              </Link>
+              {user ? (
+                <Link
+                  href="/profile"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`block text-[11px] font-black ${theme.utilities.textMuted} uppercase tracking-[0.4em] theme-hover-text-primary`}
+                >
+                  My Account
+                </Link>
+              ) : (
+                <Link
+                  href="/login"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`block text-[11px] font-black ${theme.utilities.textMuted} uppercase tracking-[0.4em] theme-hover-text-primary`}
+                >
+                  Sign In
+                </Link>
+              )}
+              <div className={`pt-6 border-t ${theme.utilities.border} opacity-60`}>
                 <p className={`text-[9px] uppercase tracking-[0.3em] ${theme.utilities.textMuted} mb-4`}>Need assistance?</p>
                 <p className={`text-xs font-bold ${theme.utilities.textPrimary}`}>+92 300 1234567</p>
               </div>

@@ -6,8 +6,10 @@ import { useCart } from '@/context/CartContext';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import { useTheme } from '@/context/ThemeContext';
 
 const CheckoutForm = ({ shippingAddress, clientSecret }) => {
+  const { theme } = useTheme();
   const stripe = useStripe();
   const elements = useElements();
   const { cart, total, clearCart } = useCart();
@@ -65,20 +67,20 @@ const CheckoutForm = ({ shippingAddress, clientSecret }) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
-      <div className="bg-white p-6 border border-gray-100 shadow-sm">
-        <h3 className="text-sm font-bold uppercase tracking-widest text-[#2C3E50] mb-6">Payment Information</h3>
+      <div className={`p-6 border shadow-sm ${theme.utilities.bgSurface} ${theme.utilities.border}`}>
+        <h3 className={`text-sm font-bold uppercase tracking-widest ${theme.utilities.textPrimary} mb-6`}>Payment Information</h3>
         <PaymentElement />
       </div>
 
       <button
         type="submit"
         disabled={!stripe || loading}
-        className="w-full btn-primary h-14 flex items-center justify-center space-x-3 disabled:opacity-50"
+        className={`w-full ${theme.components.buttonPrimary} h-14 flex items-center justify-center space-x-3 disabled:opacity-50`}
       >
         <span>{loading ? 'Processing...' : `Pay Rs. ${(total + 200).toLocaleString()}`}</span>
       </button>
       
-      <p className="text-[10px] text-center text-gray-400 uppercase tracking-widest leading-relaxed">
+      <p className={`text-[10px] text-center ${theme.utilities.textMuted} uppercase tracking-widest leading-relaxed`}>
         Your payment is secured with 256-bit encryption. <br />
         By clicking pay, you agree to our terms and conditions.
       </p>

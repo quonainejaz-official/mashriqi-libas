@@ -110,7 +110,7 @@ export default function RootLayout({ children }) {
         <Providers>
           <Navbar />
           <CartSidebar />
-          <main className="min-h-screen pt-20 content-surface">
+          <main className="min-h-screen pt-24 content-surface">
             {children}
           </main>
           <Footer />

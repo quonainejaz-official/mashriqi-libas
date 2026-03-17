@@ -133,7 +133,7 @@ const ProductDetailClient = ({ id, initialProduct }) => {
                   onClick={() => setSelectedSize(size)}
                   className={`
                     min-w-[50px] h-10 flex items-center justify-center border text-[11px] font-bold transition-all
-                    ${selectedSize === size ? `${theme.utilities.bgContrast} ${theme.utilities.textInverse} border-transparent` : `${theme.utilities.border} ${theme.utilities.textMuted} hover:${theme.utilities.textPrimary}`}
+                    ${selectedSize === size ? `${theme.utilities.bgContrast} ${theme.utilities.textInverse} border-transparent` : `${theme.utilities.border} ${theme.utilities.textMuted} theme-hover-text-primary theme-hover-border-strong`}
                   `}
                 >
                   {size}
@@ -165,7 +165,7 @@ const ProductDetailClient = ({ id, initialProduct }) => {
             <div className={`flex items-center border ${theme.utilities.border} h-14`}>
               <button
                 onClick={() => setQuantity(q => Math.max(1, q - 1))}
-                className={`w-12 h-full flex items-center justify-center hover:${theme.utilities.bgMuted} transition-colors ${theme.utilities.textPrimary}`}
+                className={`w-12 h-full flex items-center justify-center theme-hover-bg-muted transition-colors ${theme.utilities.textPrimary}`}
               >
                 <HiMinus className="text-xs" />
               </button>
@@ -177,7 +177,7 @@ const ProductDetailClient = ({ id, initialProduct }) => {
               />
               <button
                 onClick={() => setQuantity(q => q + 1)}
-                className={`w-12 h-full flex items-center justify-center hover:${theme.utilities.bgMuted} transition-colors ${theme.utilities.textPrimary}`}
+                className={`w-12 h-full flex items-center justify-center theme-hover-bg-muted transition-colors ${theme.utilities.textPrimary}`}
               >
                 <HiPlus className="text-xs" />
               </button>

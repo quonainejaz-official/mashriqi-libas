@@ -40,7 +40,7 @@ const LoginClient = () => {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={`w-full ${theme.utilities.bgMuted} border-none px-12 py-4 text-sm focus:ring-1 focus:ring-[#A08C5B] transition-all outline-none ${theme.utilities.textPrimary}`}
+              className={`w-full ${theme.components.input} border px-12 py-4 text-sm outline-none ${theme.utilities.textPrimary}`}
               placeholder="name@example.com"
             />
           </div>
@@ -49,7 +49,7 @@ const LoginClient = () => {
         <div className="space-y-2">
           <div className="flex justify-between items-center">
             <label className={`text-[10px] uppercase tracking-widest font-bold ${theme.utilities.textMuted}`}>Password</label>
-            <Link href="/forgot-password" title="Forgot Password" className={`text-[10px] uppercase tracking-widest font-bold ${theme.utilities.textPrimary} hover:opacity-60 transition-opacity`}>Forgot?</Link>
+            <Link href="/forgot-password" title="Forgot Password" className={`text-[10px] uppercase tracking-widest font-bold ${theme.components.link}`}>Forgot?</Link>
           </div>
           <div className="relative">
             <HiOutlineLockClosed className={`absolute left-4 top-1/2 -translate-y-1/2 ${theme.utilities.textMuted}`} />
@@ -58,7 +58,7 @@ const LoginClient = () => {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className={`w-full ${theme.utilities.bgMuted} border-none px-12 py-4 text-sm focus:ring-1 focus:ring-[#A08C5B] transition-all outline-none ${theme.utilities.textPrimary}`}
+              className={`w-full ${theme.components.input} border px-12 py-4 text-sm outline-none ${theme.utilities.textPrimary}`}
               placeholder="••••••••"
             />
           </div>
@@ -76,7 +76,7 @@ const LoginClient = () => {
 
       <div className={`mt-12 pt-8 border-t ${theme.utilities.border} text-center space-y-4`}>
         <p className={`text-xs ${theme.utilities.textMuted} uppercase tracking-widest font-medium`}>Don&apos;t have an account?</p>
-        <Link href={`/signup${redirect ? `?redirect=${redirect}` : ''}`} className={`text-sm font-bold uppercase tracking-widest border-b-2 ${theme.utilities.border} pb-1 hover:${theme.utilities.textPrimary} transition-all`}>
+        <Link href={`/signup${redirect ? `?redirect=${redirect}` : ''}`} className={`text-sm font-bold uppercase tracking-widest border-b-2 ${theme.utilities.border} pb-1 ${theme.components.link}`}>
           Create Account
         </Link>
       </div>

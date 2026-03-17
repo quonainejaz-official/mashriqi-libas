@@ -88,14 +88,14 @@ const HomeClient = () => {
                 />
                 <div className="absolute inset-0 bg-black/20 flex flex-col items-center justify-center text-center px-4">
                   <div className="animate-fadeIn space-y-6">
-                    <h2 className="text-white text-xs md:text-sm tracking-[0.4em] font-light uppercase">{slide.subtitle}</h2>
-                    <h1 className="text-white text-4xl md:text-7xl font-light tracking-[0.2em] uppercase">
+                    <h2 className={`text-xs md:text-sm tracking-[0.4em] font-light uppercase ${theme.utilities.textInverse}`}>{slide.subtitle}</h2>
+                    <h1 className={`text-4xl md:text-7xl font-light tracking-[0.2em] uppercase ${theme.utilities.textInverse}`}>
                       {slide.title}
                     </h1>
                     <div className="pt-4">
                       <Link
                         href={slide.link}
-                        className="inline-block border border-white text-white px-10 py-4 text-[10px] tracking-[0.3em] font-bold hover:bg-white hover:text-black transition-all duration-300 uppercase"
+                        className={`inline-block ${theme.components.buttonOutline} px-10 py-4 text-[10px] tracking-[0.3em] font-bold transition-all duration-300 uppercase`}
                       >
                         Shop Collection
                       </Link>
@@ -123,7 +123,7 @@ const HomeClient = () => {
               <div className="text-center">
                 <Link
                   href={cat.link}
-                  className="bg-white/95 text-black px-10 py-4 text-[10px] tracking-[0.4em] font-bold hover:bg-black hover:text-white transition-all duration-300 uppercase shadow-lg"
+                  className={`inline-block ${theme.components.buttonPrimary} px-10 py-4 text-[10px] tracking-[0.4em] font-bold transition-all duration-300 uppercase shadow-lg`}
                 >
                   Discover {cat.name}
                 </Link>
@@ -249,8 +249,8 @@ const HomeClient = () => {
               className="object-cover transition-transform duration-[2s] group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all flex flex-col items-center justify-center p-8">
-              <h3 className="text-white text-xl md:text-2xl font-light tracking-[0.3em] text-center mb-8 uppercase leading-relaxed">{item.label}</h3>
-              <Link href="/products" className="bg-white text-black px-10 py-4 text-[10px] tracking-[0.4em] font-bold hover:bg-black hover:text-white transition-all duration-300 uppercase shadow-2xl">
+              <h3 className={`text-xl md:text-2xl font-light tracking-[0.3em] text-center mb-8 uppercase leading-relaxed ${theme.utilities.textInverse}`}>{item.label}</h3>
+              <Link href="/products" className={`inline-block ${theme.components.buttonPrimary} px-10 py-4 text-[10px] tracking-[0.4em] font-bold transition-all duration-300 uppercase shadow-2xl`}>
                 Shop Now
               </Link>
             </div>
@@ -269,7 +269,7 @@ const HomeClient = () => {
             <input
               type="email"
               placeholder="Your email address"
-              className={`w-full ${theme.utilities.bgSurface} border ${theme.utilities.border} px-8 py-5 text-sm focus:outline-none focus:border-black transition-all font-light ${theme.utilities.textPrimary}`}
+              className={`w-full ${theme.components.input} border px-8 py-5 text-sm outline-none font-light ${theme.utilities.textPrimary}`}
               required
             />
             <button

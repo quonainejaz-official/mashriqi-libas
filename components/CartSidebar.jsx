@@ -28,7 +28,7 @@ const CartSidebar = () => {
               Your Bag
               <span className={`ml-4 ${theme.utilities.bgContrast} ${theme.utilities.textInverse} text-[10px] px-3 py-1 rounded-full font-bold shadow-lg`}>{cart.length}</span>
             </h2>
-            <button onClick={() => setIsCartOpen(false)} className={`text-2xl hover:rotate-90 transition-transform duration-500 ${theme.utilities.textMuted} hover:${theme.utilities.textPrimary}`}>
+            <button onClick={() => setIsCartOpen(false)} className={`text-2xl hover:rotate-90 transition-transform duration-500 ${theme.utilities.textMuted} theme-hover-text-primary`}>
               <HiX />
             </button>
           </div>
@@ -64,7 +64,7 @@ const CartSidebar = () => {
                       <h3 className={`text-[11px] font-bold uppercase tracking-wider ${theme.utilities.textPrimary}`}>{item.name}</h3>
                       <button 
                         onClick={() => removeFromCart(item._id, item.selectedSize, item.selectedColor?.name)}
-                        className={`${theme.utilities.textMuted} hover:${theme.utilities.textDanger} text-[10px] uppercase tracking-widest font-bold transition-colors`}
+                        className={`${theme.utilities.textMuted} theme-hover-text-danger text-[10px] uppercase tracking-widest font-bold transition-colors`}
                       >
                         Remove
                       </button>
@@ -79,14 +79,14 @@ const CartSidebar = () => {
                       <div className={`flex items-center border ${theme.utilities.border} rounded-sm overflow-hidden`}>
                         <button 
                           onClick={() => updateQuantity(item._id, item.selectedSize, item.selectedColor?.name, item.quantity - 1)}
-                          className={`p-2 hover:${theme.utilities.bgMuted} transition-colors border-r ${theme.utilities.border}`}
+                          className={`p-2 theme-hover-bg-muted transition-colors border-r ${theme.utilities.border}`}
                         >
                           <HiMinus className="text-[10px]" />
                         </button>
                         <span className="px-5 text-[11px] font-bold">{item.quantity}</span>
                         <button 
                           onClick={() => updateQuantity(item._id, item.selectedSize, item.selectedColor?.name, item.quantity + 1)}
-                          className={`p-2 hover:${theme.utilities.bgMuted} transition-colors border-l ${theme.utilities.border}`}
+                          className={`p-2 theme-hover-bg-muted transition-colors border-l ${theme.utilities.border}`}
                         >
                           <HiPlus className="text-[10px]" />
                         </button>

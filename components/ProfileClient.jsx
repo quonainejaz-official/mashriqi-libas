@@ -125,7 +125,7 @@ const ProfileClient = () => {
               <div className={`absolute top-0 right-0 w-32 h-32 ${theme.utilities.bgSurface} opacity-10 rounded-full blur-3xl -mr-16 -mt-16 group-hover:opacity-20 transition-colors duration-700`} />
               <div className="relative z-10 flex flex-col items-center text-center">
                 <div className="relative group/avatar">
-                  <div className={`relative w-24 h-24 rounded-full ${theme.utilities.bgContrastMuted} flex items-center justify-center text-4xl font-black ${theme.utilities.textInverse} shadow-2xl ring-4 ring-white/10 group-hover:scale-105 transition-transform duration-500 overflow-hidden`}>
+                  <div className={`relative w-24 h-24 rounded-full theme-bg-contrast-muted flex items-center justify-center text-4xl font-black ${theme.utilities.textInverse} shadow-2xl ring-4 ring-white/10 group-hover:scale-105 transition-transform duration-500 overflow-hidden`}>
                     {selectedImage ? (
                       <Image 
                         src={URL.createObjectURL(selectedImage)} 
@@ -146,7 +146,7 @@ const ProfileClient = () => {
                   </div>
                   <button 
                     onClick={() => fileInputRef.current?.click()}
-                    className={`absolute -bottom-1 -right-1 w-8 h-8 ${theme.utilities.bgContrastMuted} border-4 ${theme.utilities.bgContrast} rounded-full shadow-lg flex items-center justify-center ${theme.utilities.textInverse} hover:scale-110 transition-transform cursor-pointer`}
+                    className={`absolute -bottom-1 -right-1 w-8 h-8 theme-bg-contrast-muted border-4 ${theme.utilities.bgContrast} rounded-full shadow-lg flex items-center justify-center ${theme.utilities.textInverse} hover:scale-110 transition-transform cursor-pointer`}
                   >
                     <HiOutlineCamera className="text-sm" />
                   </button>
@@ -169,21 +169,21 @@ const ProfileClient = () => {
             <nav className={`rounded-[2rem] ${theme.utilities.bgSurface} border ${theme.utilities.border} p-4 shadow-xl shadow-black/[0.02] space-y-2`}>
               <button 
                 onClick={() => setActiveTab('profile')}
-                className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl text-[11px] uppercase tracking-[0.2em] font-bold transition-all duration-500 ${activeTab === 'profile' ? `${theme.utilities.bgContrast} ${theme.utilities.textInverse} shadow-lg shadow-black/20 translate-x-2` : `${theme.utilities.textMuted} hover:${theme.utilities.bgMuted} hover:${theme.utilities.textPrimary}`}`}
+                className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl text-[11px] uppercase tracking-[0.2em] font-bold transition-all duration-500 ${activeTab === 'profile' ? `${theme.utilities.bgContrast} ${theme.utilities.textInverse} shadow-lg shadow-black/20 translate-x-2` : `${theme.utilities.textMuted} theme-hover-bg-muted theme-hover-text-primary`}`}
               >
                 <HiOutlineUser className={`text-xl ${activeTab === 'profile' ? theme.utilities.textInverse : ''}`} />
                 Profile Information
               </button>
               <button 
                 onClick={() => setActiveTab('orders')}
-                className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl text-[11px] uppercase tracking-[0.2em] font-bold transition-all duration-500 ${activeTab === 'orders' ? `${theme.utilities.bgContrast} ${theme.utilities.textInverse} shadow-lg shadow-black/20 translate-x-2` : `${theme.utilities.textMuted} hover:${theme.utilities.bgMuted} hover:${theme.utilities.textPrimary}`}`}
+                className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl text-[11px] uppercase tracking-[0.2em] font-bold transition-all duration-500 ${activeTab === 'orders' ? `${theme.utilities.bgContrast} ${theme.utilities.textInverse} shadow-lg shadow-black/20 translate-x-2` : `${theme.utilities.textMuted} theme-hover-bg-muted theme-hover-text-primary`}`}
               >
                 <HiOutlineShoppingBag className={`text-xl ${activeTab === 'orders' ? theme.utilities.textInverse : ''}`} />
                 Order History
               </button>
               <button 
                 onClick={() => setActiveTab('addresses')}
-                className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl text-[11px] uppercase tracking-[0.2em] font-bold transition-all duration-500 ${activeTab === 'addresses' ? `${theme.utilities.bgContrast} ${theme.utilities.textInverse} shadow-lg shadow-black/20 translate-x-2` : `${theme.utilities.textMuted} hover:${theme.utilities.bgMuted} hover:${theme.utilities.textPrimary}`}`}
+                className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl text-[11px] uppercase tracking-[0.2em] font-bold transition-all duration-500 ${activeTab === 'addresses' ? `${theme.utilities.bgContrast} ${theme.utilities.textInverse} shadow-lg shadow-black/20 translate-x-2` : `${theme.utilities.textMuted} theme-hover-bg-muted theme-hover-text-primary`}`}
               >
                 <HiOutlineLocationMarker className={`text-xl ${activeTab === 'addresses' ? theme.utilities.textInverse : ''}`} />
                 Saved Addresses
@@ -193,12 +193,12 @@ const ProfileClient = () => {
                 <button
                   type="button"
                   onClick={logout}
-                  className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl text-[11px] uppercase tracking-[0.2em] font-bold ${theme.utilities.textDanger} hover:${theme.utilities.bgMuted} transition-all duration-500 group`}
+                  className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl text-[11px] uppercase tracking-[0.2em] font-bold ${theme.utilities.textDanger} theme-hover-bg-muted transition-all duration-500 group`}
                 >
                   <HiOutlineLogout className="text-xl group-hover:scale-110 transition-transform" />
                   Sign Out
                 </button>
-                <button className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl text-[11px] uppercase tracking-[0.2em] font-bold ${theme.utilities.textMuted} hover:${theme.utilities.textDanger} hover:${theme.utilities.bgMuted} transition-all duration-500 group`}>
+                <button className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl text-[11px] uppercase tracking-[0.2em] font-bold ${theme.utilities.textMuted} theme-hover-text-danger theme-hover-bg-muted transition-all duration-500 group`}>
                   <HiOutlineTrash className="text-xl group-hover:rotate-12 transition-transform" />
                   Close Account
                 </button>
@@ -240,7 +240,7 @@ const ProfileClient = () => {
               <form id="profile-form" onSubmit={handleSubmit} className="flex-1 space-y-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   <div className="group space-y-2">
-                    <label className={`text-[10px] uppercase tracking-[0.25em] font-black ${theme.utilities.textMuted} group-focus-within:${theme.utilities.textPrimary} transition-colors pl-1`}>Full Name</label>
+                    <label className={`text-[10px] uppercase tracking-[0.25em] font-black ${theme.utilities.textMuted} transition-colors pl-1`}>Full Name</label>
                     <div className="relative">
                       <input
                         type="text"
@@ -248,19 +248,19 @@ const ProfileClient = () => {
                         value={formData.name}
                         onChange={handleChange}
                         placeholder="John Doe"
-                        className={`w-full ${theme.utilities.bgSurface} border ${theme.utilities.border} rounded-2xl px-6 py-4.5 text-sm font-semibold ${theme.utilities.textPrimary} shadow-[0_4px_20px_rgba(0,0,0,0.02)] focus:${theme.utilities.borderStrong} outline-none transition-all duration-500 placeholder:${theme.utilities.textMuted}`}
+                        className={`w-full ${theme.components.input} border rounded-2xl px-6 py-4.5 text-sm font-semibold ${theme.utilities.textPrimary} shadow-[0_4px_20px_rgba(0,0,0,0.02)] outline-none`}
                       />
                     </div>
                   </div>
                   <div className="group space-y-2">
-                    <label className={`text-[10px] uppercase tracking-[0.25em] font-black ${theme.utilities.textMuted} group-focus-within:${theme.utilities.textPrimary} transition-colors pl-1`}>Phone Number</label>
+                    <label className={`text-[10px] uppercase tracking-[0.25em] font-black ${theme.utilities.textMuted} transition-colors pl-1`}>Phone Number</label>
                     <input
                       type="text"
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="+92 300 0000000"
-                      className={`w-full ${theme.utilities.bgSurface} border ${theme.utilities.border} rounded-2xl px-6 py-4.5 text-sm font-semibold ${theme.utilities.textPrimary} shadow-[0_4px_20px_rgba(0,0,0,0.02)] focus:${theme.utilities.borderStrong} outline-none transition-all duration-500 placeholder:${theme.utilities.textMuted}`}
+                      className={`w-full ${theme.components.input} border rounded-2xl px-6 py-4.5 text-sm font-semibold ${theme.utilities.textPrimary} shadow-[0_4px_20px_rgba(0,0,0,0.02)] outline-none`}
                     />
                   </div>
                   <div className="group space-y-2">
@@ -273,7 +273,7 @@ const ProfileClient = () => {
                         type="email"
                         value={user?.email || ''}
                         readOnly
-                        className={`w-full ${theme.utilities.bgMuted} opacity-50 border ${theme.utilities.border} rounded-2xl pl-14 pr-6 py-4.5 text-sm font-semibold ${theme.utilities.textMuted} outline-none cursor-not-allowed transition-all`}
+                      className={`w-full ${theme.utilities.bgMuted} opacity-50 border ${theme.utilities.border} rounded-2xl pl-14 pr-6 py-4.5 text-sm font-semibold ${theme.utilities.textMuted} outline-none cursor-not-allowed transition-all`}
                       />
                     </div>
                   </div>
@@ -287,43 +287,43 @@ const ProfileClient = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <div className="group space-y-2 md:col-span-2">
-                      <label className={`text-[10px] uppercase tracking-[0.25em] font-black ${theme.utilities.textMuted} group-focus-within:${theme.utilities.textPrimary} transition-colors pl-1`}>Street Address</label>
+                    <label className={`text-[10px] uppercase tracking-[0.25em] font-black ${theme.utilities.textMuted} transition-colors pl-1`}>Street Address</label>
                       <input
                         type="text"
                         name="address.street"
                         value={formData.address.street}
                         onChange={handleChange}
-                        className={`w-full ${theme.utilities.bgSurface} border ${theme.utilities.border} rounded-2xl px-6 py-4.5 text-sm font-semibold ${theme.utilities.textPrimary} shadow-[0_4px_20px_rgba(0,0,0,0.02)] focus:${theme.utilities.borderStrong} outline-none transition-all duration-500`}
+                      className={`w-full ${theme.components.input} border rounded-2xl px-6 py-4.5 text-sm font-semibold ${theme.utilities.textPrimary} shadow-[0_4px_20px_rgba(0,0,0,0.02)] outline-none`}
                       />
                     </div>
                     <div className="group space-y-2">
-                      <label className={`text-[10px] uppercase tracking-[0.25em] font-black ${theme.utilities.textMuted} group-focus-within:${theme.utilities.textPrimary} transition-colors pl-1`}>City</label>
+                    <label className={`text-[10px] uppercase tracking-[0.25em] font-black ${theme.utilities.textMuted} transition-colors pl-1`}>City</label>
                       <input
                         type="text"
                         name="address.city"
                         value={formData.address.city}
                         onChange={handleChange}
-                        className={`w-full ${theme.utilities.bgSurface} border ${theme.utilities.border} rounded-2xl px-6 py-4.5 text-sm font-semibold ${theme.utilities.textPrimary} shadow-[0_4px_20px_rgba(0,0,0,0.02)] focus:${theme.utilities.borderStrong} outline-none transition-all duration-500`}
+                      className={`w-full ${theme.components.input} border rounded-2xl px-6 py-4.5 text-sm font-semibold ${theme.utilities.textPrimary} shadow-[0_4px_20px_rgba(0,0,0,0.02)] outline-none`}
                       />
                     </div>
                     <div className="group space-y-2">
-                      <label className={`text-[10px] uppercase tracking-[0.25em] font-black ${theme.utilities.textMuted} group-focus-within:${theme.utilities.textPrimary} transition-colors pl-1`}>Province</label>
+                    <label className={`text-[10px] uppercase tracking-[0.25em] font-black ${theme.utilities.textMuted} transition-colors pl-1`}>Province</label>
                       <input
                         type="text"
                         name="address.province"
                         value={formData.address.province}
                         onChange={handleChange}
-                        className={`w-full ${theme.utilities.bgSurface} border ${theme.utilities.border} rounded-2xl px-6 py-4.5 text-sm font-semibold ${theme.utilities.textPrimary} shadow-[0_4px_20px_rgba(0,0,0,0.02)] focus:${theme.utilities.borderStrong} outline-none transition-all duration-500`}
+                      className={`w-full ${theme.components.input} border rounded-2xl px-6 py-4.5 text-sm font-semibold ${theme.utilities.textPrimary} shadow-[0_4px_20px_rgba(0,0,0,0.02)] outline-none`}
                       />
                     </div>
                     <div className="group space-y-2">
-                      <label className={`text-[10px] uppercase tracking-[0.25em] font-black ${theme.utilities.textMuted} group-focus-within:${theme.utilities.textPrimary} transition-colors pl-1`}>Postal Code</label>
+                    <label className={`text-[10px] uppercase tracking-[0.25em] font-black ${theme.utilities.textMuted} transition-colors pl-1`}>Postal Code</label>
                       <input
                         type="text"
                         name="address.postalCode"
                         value={formData.address.postalCode}
                         onChange={handleChange}
-                        className={`w-full ${theme.utilities.bgSurface} border ${theme.utilities.border} rounded-2xl px-6 py-4.5 text-sm font-semibold ${theme.utilities.textPrimary} shadow-[0_4px_20px_rgba(0,0,0,0.02)] focus:${theme.utilities.borderStrong} outline-none transition-all duration-500`}
+                      className={`w-full ${theme.components.input} border rounded-2xl px-6 py-4.5 text-sm font-semibold ${theme.utilities.textPrimary} shadow-[0_4px_20px_rgba(0,0,0,0.02)] outline-none`}
                       />
                     </div>
                     <div className="group space-y-2 md:col-span-2">
