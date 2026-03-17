@@ -92,7 +92,7 @@ const Navbar = () => {
                         <div className="space-y-3">
                           {renderSubcategoryLinks(category.subcategories || [], category.slug)}
                         </div>
-                        <div className="pt-4 mt-4 border-t border-gray-100/10">
+                        <div className={`pt-4 mt-4 border-t ${theme.utilities.border} opacity-20`}>
                           <Link href={`/products?category=${category.slug}`} className={`text-[10px] uppercase tracking-[0.3em] font-black ${theme.utilities.textPrimary} hover:opacity-60 transition-opacity`}>
                             Explore All
                           </Link>
@@ -103,7 +103,7 @@ const Navbar = () => {
                           {category.image?.url ? (
                             <Image src={category.image.url} alt={category.name} fill className="object-cover hover:scale-110 transition-transform duration-700" />
                           ) : (
-                            <div className="h-full w-full bg-gradient-to-br from-gray-50/50 to-gray-100/50" />
+                            <div className={`h-full w-full ${theme.utilities.bgMuted} opacity-50`} />
                           )}
                         </div>
                         <p className={`text-[9px] uppercase tracking-[0.4em] font-bold ${theme.utilities.textMuted} text-center`}>{category.name}</p>
@@ -197,7 +197,7 @@ const Navbar = () => {
                             setIsProfileOpen(false);
                             logout();
                           }}
-                          className={`w-full flex items-center gap-4 px-4 py-3 rounded-sm text-[10px] uppercase tracking-[0.2em] font-black text-red-500 hover:bg-red-50 transition-all`}
+                          className={`w-full flex items-center gap-4 px-4 py-3 rounded-sm text-[10px] uppercase tracking-[0.2em] font-black ${theme.utilities.textDanger} hover:${theme.utilities.bgMuted} transition-all`}
                         >
                           <HiOutlineLogout className="text-lg" />
                           Sign Out

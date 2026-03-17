@@ -2,10 +2,12 @@
 
 import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
+import { useTheme } from '@/context/ThemeContext';
 import Link from 'next/link';
 import { HiOutlineMail, HiOutlineLockClosed, HiOutlineUser, HiOutlinePhone, HiArrowRight } from 'react-icons/hi';
 
 const SignupClient = () => {
+  const { theme } = useTheme();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -27,72 +29,72 @@ const SignupClient = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto py-20 px-4">
+    <div className={`max-w-md mx-auto py-20 px-4 ${theme.utilities.textPrimary}`}>
       <div className="text-center space-y-4 mb-12">
-        <h1 className="text-3xl font-bold uppercase tracking-[0.2em] text-[#2C3E50]">Create Account</h1>
-        <p className="text-xs text-gray-400 uppercase tracking-widest">Join Mashriqi Libas for a personalized experience</p>
+        <h1 className={`text-3xl font-bold uppercase tracking-[0.2em] ${theme.utilities.textPrimary}`}>Create Account</h1>
+        <p className={`text-xs ${theme.utilities.textMuted} uppercase tracking-widest`}>Join Mashriqi Libas for a personalized experience</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-2">
-          <label className="text-[10px] uppercase tracking-widest font-bold text-gray-500">Full Name</label>
+          <label className={`text-[10px] uppercase tracking-widest font-bold ${theme.utilities.textMuted}`}>Full Name</label>
           <div className="relative">
-            <HiOutlineUser className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+            <HiOutlineUser className={`absolute left-4 top-1/2 -translate-y-1/2 ${theme.utilities.textMuted}`} />
             <input
               type="text"
               name="name"
               required
               value={formData.name}
               onChange={handleChange}
-              className="w-full bg-gray-50 border-none px-12 py-4 text-sm focus:ring-1 focus:ring-[#A08C5B] transition-all outline-none"
+              className={`w-full ${theme.utilities.bgMuted} border-none px-12 py-4 text-sm focus:ring-1 focus:ring-[#A08C5B] transition-all outline-none ${theme.utilities.textPrimary}`}
               placeholder="John Doe"
             />
           </div>
         </div>
 
         <div className="space-y-2">
-          <label className="text-[10px] uppercase tracking-widest font-bold text-gray-500">Email Address</label>
+          <label className={`text-[10px] uppercase tracking-widest font-bold ${theme.utilities.textMuted}`}>Email Address</label>
           <div className="relative">
-            <HiOutlineMail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+            <HiOutlineMail className={`absolute left-4 top-1/2 -translate-y-1/2 ${theme.utilities.textMuted}`} />
             <input
               type="email"
               name="email"
               required
               value={formData.email}
               onChange={handleChange}
-              className="w-full bg-gray-50 border-none px-12 py-4 text-sm focus:ring-1 focus:ring-[#A08C5B] transition-all outline-none"
+              className={`w-full ${theme.utilities.bgMuted} border-none px-12 py-4 text-sm focus:ring-1 focus:ring-[#A08C5B] transition-all outline-none ${theme.utilities.textPrimary}`}
               placeholder="name@example.com"
             />
           </div>
         </div>
 
         <div className="space-y-2">
-          <label className="text-[10px] uppercase tracking-widest font-bold text-gray-500">Phone Number</label>
+          <label className={`text-[10px] uppercase tracking-widest font-bold ${theme.utilities.textMuted}`}>Phone Number</label>
           <div className="relative">
-            <HiOutlinePhone className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+            <HiOutlinePhone className={`absolute left-4 top-1/2 -translate-y-1/2 ${theme.utilities.textMuted}`} />
             <input
               type="tel"
               name="phone"
               required
               value={formData.phone}
               onChange={handleChange}
-              className="w-full bg-gray-50 border-none px-12 py-4 text-sm focus:ring-1 focus:ring-[#A08C5B] transition-all outline-none"
+              className={`w-full ${theme.utilities.bgMuted} border-none px-12 py-4 text-sm focus:ring-1 focus:ring-[#A08C5B] transition-all outline-none ${theme.utilities.textPrimary}`}
               placeholder="+92 300 1234567"
             />
           </div>
         </div>
 
         <div className="space-y-2">
-          <label className="text-[10px] uppercase tracking-widest font-bold text-gray-500">Password</label>
+          <label className={`text-[10px] uppercase tracking-widest font-bold ${theme.utilities.textMuted}`}>Password</label>
           <div className="relative">
-            <HiOutlineLockClosed className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+            <HiOutlineLockClosed className={`absolute left-4 top-1/2 -translate-y-1/2 ${theme.utilities.textMuted}`} />
             <input
               type="password"
               name="password"
               required
               value={formData.password}
               onChange={handleChange}
-              className="w-full bg-gray-50 border-none px-12 py-4 text-sm focus:ring-1 focus:ring-[#A08C5B] transition-all outline-none"
+              className={`w-full ${theme.utilities.bgMuted} border-none px-12 py-4 text-sm focus:ring-1 focus:ring-[#A08C5B] transition-all outline-none ${theme.utilities.textPrimary}`}
               placeholder="••••••••"
             />
           </div>
@@ -101,16 +103,16 @@ const SignupClient = () => {
         <button
           type="submit"
           disabled={loading}
-          className="w-full btn-primary h-14 flex items-center justify-center space-x-3 disabled:opacity-50"
+          className={`w-full ${theme.components.buttonPrimary} h-14 flex items-center justify-center space-x-3 disabled:opacity-50`}
         >
           <span>{loading ? 'Creating Account...' : 'Sign Up'}</span>
           {!loading && <HiArrowRight className="text-lg" />}
         </button>
       </form>
 
-      <div className="mt-12 pt-8 border-t text-center space-y-4">
-        <p className="text-xs text-gray-400 uppercase tracking-widest font-medium">Already have an account?</p>
-        <Link href="/login" className="text-sm font-bold uppercase tracking-widest border-b-2 border-black pb-1 hover:text-[#A08C5B] hover:border-[#A08C5B] transition-all">
+      <div className={`mt-12 pt-8 border-t ${theme.utilities.border} text-center space-y-4`}>
+        <p className={`text-xs ${theme.utilities.textMuted} uppercase tracking-widest font-medium`}>Already have an account?</p>
+        <Link href="/login" className={`text-sm font-bold uppercase tracking-widest border-b-2 ${theme.utilities.border} pb-1 hover:${theme.utilities.textPrimary} transition-all`}>
           Sign In
         </Link>
       </div>

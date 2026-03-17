@@ -64,7 +64,7 @@ const CartSidebar = () => {
                       <h3 className={`text-[11px] font-bold uppercase tracking-wider ${theme.utilities.textPrimary}`}>{item.name}</h3>
                       <button 
                         onClick={() => removeFromCart(item._id, item.selectedSize, item.selectedColor?.name)}
-                        className={`${theme.utilities.textMuted} hover:text-red-500 text-[10px] uppercase tracking-widest font-bold transition-colors`}
+                        className={`${theme.utilities.textMuted} hover:${theme.utilities.textDanger} text-[10px] uppercase tracking-widest font-bold transition-colors`}
                       >
                         Remove
                       </button>

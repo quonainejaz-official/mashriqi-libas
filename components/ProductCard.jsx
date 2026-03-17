@@ -31,8 +31,8 @@ const ProductCard = ({ product }) => {
 
           {/* Out of Stock Overlay */}
           {isOutOfStock && (
-            <div className="absolute inset-0 bg-white/40 flex items-center justify-center backdrop-blur-[2px]">
-              <span className="bg-black text-white text-[10px] px-8 py-3 tracking-[0.4em] uppercase font-bold shadow-2xl">Sold Out</span>
+            <div className={`absolute inset-0 ${theme.utilities.bgSurface} opacity-40 flex items-center justify-center backdrop-blur-[2px]`}>
+              <span className={`${theme.utilities.bgContrast} ${theme.utilities.textInverse} text-[10px] px-8 py-3 tracking-[0.4em] uppercase font-bold shadow-2xl`}>Sold Out</span>
             </div>
           )}
 
@@ -59,7 +59,7 @@ const ProductCard = ({ product }) => {
         <div className={`flex items-center justify-center space-x-4 text-xs tracking-[0.15em] font-bold ${theme.utilities.textPrimary}`}>
           {comparePrice ? (
             <>
-              <span className="text-red-600">Rs. {displayPrice.toLocaleString()}</span>
+              <span className={theme.utilities.textDanger}>Rs. {displayPrice.toLocaleString()}</span>
               <span className={`${theme.utilities.textMuted} line-through opacity-50`}>Rs. {comparePrice.toLocaleString()}</span>
             </>
           ) : (

@@ -15,8 +15,10 @@ import {
 } from 'react-icons/hi';
 import toast from 'react-hot-toast';
 import Image from 'next/image';
+import { useTheme } from '@/context/ThemeContext';
 
 const AdminProductsPage = () => {
+  const { theme } = useTheme();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -181,15 +183,15 @@ const AdminProductsPage = () => {
   const subcategoryOptions = flattenSubcategories(selectedCategory?.subcategories || []);
 
   return (
-    <div className="space-y-8 animate-fadeIn">
+    <div className={`space-y-8 animate-fadeIn ${theme.utilities.textPrimary}`}>
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold uppercase tracking-widest text-[#2C3E50]">Product Management</h1>
-          <p className="text-xs text-gray-400 mt-1 uppercase tracking-widest">Inventory & Catalog Control</p>
+          <h1 className={`text-2xl font-bold uppercase tracking-widest ${theme.utilities.textPrimary}`}>Product Management</h1>
+          <p className={`text-xs ${theme.utilities.textMuted} mt-1 uppercase tracking-widest`}>Inventory & Catalog Control</p>
         </div>
         <button 
           onClick={() => { setEditingProduct(null); resetForm(); setShowModal(true); }}
-          className="btn-primary flex items-center space-x-2 h-12 px-6"
+          className={`${theme.components.buttonPrimary} flex items-center space-x-2 h-12 px-6`}
         >
           <HiOutlinePlus className="text-lg" />
           <span className="text-[11px]">Add New Product</span>
@@ -197,13 +199,13 @@ const AdminProductsPage = () => {
       </div>
 
       {/* Filter Bar */}
-      <div className="bg-white p-4 border border-gray-100 shadow-sm flex items-center space-x-4">
+      <div className={`${theme.utilities.bgSurface} p-4 border ${theme.utilities.border} shadow-sm flex items-center space-x-4`}>
         <div className="relative flex-grow max-w-md">
-          <HiOutlineSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+          <HiOutlineSearch className={`absolute left-4 top-1/2 -translate-y-1/2 ${theme.utilities.textMuted}`} />
           <input 
             type="text" 
             placeholder="Search by name or SKU..." 
-            className="w-full bg-gray-50 border-none pl-12 pr-4 py-3 text-sm focus:ring-1 focus:ring-[#A08C5B] outline-none"
+            className={`w-full ${theme.utilities.bgMuted} border-none pl-12 pr-4 py-3 text-sm focus:ring-1 focus:ring-[#A08C5B] outline-none ${theme.utilities.textPrimary}`}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -211,9 +213,9 @@ const AdminProductsPage = () => {
       </div>
 
       {/* Product Table */}
-      <div className="bg-white border border-gray-100 shadow-sm overflow-hidden">
+      <div className={`${theme.utilities.bgSurface} border ${theme.utilities.border} shadow-sm overflow-hidden`}>
         <table className="w-full text-left">
-          <thead className="bg-[#2C3E50] text-white text-[10px] uppercase tracking-widest">
+          <thead className={`${theme.utilities.bgContrast} ${theme.utilities.textInverse} text-[10px] uppercase tracking-widest`}>
             <tr>
               <th className="px-6 py-4 font-bold">Product</th>
               <th className="px-6 py-4 font-bold">Category</th>
@@ -223,49 +225,49 @@ const AdminProductsPage = () => {
               <th className="px-6 py-4 font-bold text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className={`divide-y ${theme.utilities.border}`}>
             {loading ? (
               [...Array(5)].map((_, i) => (
                 <tr key={i} className="animate-pulse">
-                  <td className="px-6 py-4"><div className="h-10 w-40 bg-gray-100"></div></td>
-                  <td className="px-6 py-4"><div className="h-4 w-20 bg-gray-100"></div></td>
-                  <td className="px-6 py-4"><div className="h-4 w-20 bg-gray-100"></div></td>
-                  <td className="px-6 py-4"><div className="h-4 w-10 bg-gray-100 mx-auto"></div></td>
-                  <td className="px-6 py-4"><div className="h-4 w-20 bg-gray-100 mx-auto"></div></td>
-                  <td className="px-6 py-4"><div className="h-8 w-20 bg-gray-100 ml-auto"></div></td>
+                  <td className="px-6 py-4"><div className={`h-10 w-40 ${theme.utilities.bgMuted} opacity-50`}></div></td>
+                  <td className="px-6 py-4"><div className={`h-4 w-20 ${theme.utilities.bgMuted} opacity-30`}></div></td>
+                  <td className="px-6 py-4"><div className={`h-4 w-20 ${theme.utilities.bgMuted} opacity-30`}></div></td>
+                  <td className="px-6 py-4"><div className={`h-4 w-10 ${theme.utilities.bgMuted} opacity-30 mx-auto`}></div></td>
+                  <td className="px-6 py-4"><div className={`h-4 w-20 ${theme.utilities.bgMuted} opacity-30 mx-auto`}></div></td>
+                  <td className="px-6 py-4"><div className={`h-8 w-20 ${theme.utilities.bgMuted} opacity-30 ml-auto`}></div></td>
                 </tr>
               ))
             ) : products.length > 0 ? (
               products.map((product) => (
-                <tr key={product._id} className="hover:bg-gray-50 transition-colors">
+                <tr key={product._id} className={`hover:${theme.utilities.bgMuted} transition-colors`}>
                   <td className="px-6 py-4 flex items-center space-x-4">
-                    <div className="relative w-10 h-14 bg-gray-100">
+                    <div className={`relative w-10 h-14 ${theme.utilities.bgMuted}`}>
                       <Image src={product.images?.[0]?.url || product.images?.[0] || '/placeholder.jpg'} alt={product.name} fill className="object-cover" />
                     </div>
                     <div className="space-y-1">
                       <p className="text-xs font-bold uppercase">{product.name}</p>
-                      {product.isFeatured && <span className="text-[9px] bg-amber-100 text-amber-700 px-1.5 py-0.5 font-bold uppercase tracking-widest">Featured</span>}
+                      {product.isFeatured && <span className={`text-[9px] ${theme.utilities.bgContrast} ${theme.utilities.textInverse} px-1.5 py-0.5 font-bold uppercase tracking-widest`}>Featured</span>}
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-xs tracking-widest uppercase text-gray-500">{product.category?.name || '---'}</td>
+                  <td className={`px-6 py-4 text-xs tracking-widest uppercase ${theme.utilities.textMuted}`}>{product.category?.name || '---'}</td>
                   <td className="px-6 py-4 text-[10px] font-mono tracking-widest uppercase text-gray-400 font-bold">{product.sku}</td>
                   <td className="px-6 py-4 text-center">
                     <span className={`text-xs font-bold px-2 py-1 ${product.stock <= 5 ? 'bg-red-50 text-red-600' : 'text-gray-600'}`}>
                       {product.stock}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-center text-sm font-bold text-[#2C3E50]">Rs. {product.price.toLocaleString()}</td>
+                  <td className={`px-6 py-4 text-center text-sm font-bold ${theme.utilities.textPrimary}`}>Rs. {product.price.toLocaleString()}</td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex justify-end space-x-2">
-                      <button onClick={() => handleEdit(product)} className="p-2 text-blue-600 hover:bg-blue-50 transition-all"><HiOutlinePencil /></button>
-                      <button onClick={() => handleDelete(product._id)} className="p-2 text-red-600 hover:bg-red-50 transition-all"><HiOutlineTrash /></button>
+                      <button onClick={() => handleEdit(product)} className={`p-2 text-blue-600 hover:${theme.utilities.bgMuted} transition-all`}><HiOutlinePencil /></button>
+                      <button onClick={() => handleDelete(product._id)} className={`p-2 ${theme.utilities.textDanger} hover:${theme.utilities.bgMuted} transition-all`}><HiOutlineTrash /></button>
                     </div>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="6" className="px-6 py-20 text-center text-gray-400 text-xs uppercase tracking-widest italic">No products found in the archive.</td>
+                <td colSpan="6" className={`px-6 py-20 text-center ${theme.utilities.textMuted} text-xs uppercase tracking-widest italic`}>No products found in the archive.</td>
               </tr>
             )}
           </tbody>
@@ -273,11 +275,11 @@ const AdminProductsPage = () => {
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="bg-gray-50 px-6 py-4 flex items-center justify-between border-t border-gray-100">
-            <p className="text-[10px] uppercase font-bold text-gray-400 tracking-widest">Page {page} of {totalPages}</p>
+          <div className={`${theme.utilities.bgMuted} px-6 py-4 flex items-center justify-between border-t ${theme.utilities.border}`}>
+            <p className={`text-[10px] uppercase font-bold ${theme.utilities.textMuted} tracking-widest`}>Page {page} of {totalPages}</p>
             <div className="flex space-x-2">
-              <button onClick={() => setPage(p => Math.max(1, p - 1))} className="p-2 border bg-white hover:bg-gray-50"><HiChevronLeft /></button>
-              <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} className="p-2 border bg-white hover:bg-gray-50"><HiChevronRight /></button>
+              <button onClick={() => setPage(p => Math.max(1, p - 1))} className={`p-2 border ${theme.utilities.border} ${theme.utilities.bgSurface} hover:${theme.utilities.bgMuted} ${theme.utilities.textPrimary}`}><HiChevronLeft /></button>
+              <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} className={`p-2 border ${theme.utilities.border} ${theme.utilities.bgSurface} hover:${theme.utilities.bgMuted} ${theme.utilities.textPrimary}`}><HiChevronRight /></button>
             </div>
           </div>
         )}
@@ -285,53 +287,53 @@ const AdminProductsPage = () => {
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-[1000] flex items-center justify-center p-4">
-          <div className="bg-white w-full max-w-4xl max-h-[90vh] overflow-y-auto p-10 animate-scaleIn">
-            <div className="flex justify-between items-center mb-10 border-b pb-6">
-              <h2 className="text-xl font-bold uppercase tracking-widest text-[#2C3E50]">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[1000] flex items-center justify-center p-4">
+          <div className={`${theme.utilities.bgSurface} ${theme.utilities.textPrimary} w-full max-w-4xl max-h-[90vh] overflow-y-auto p-10 animate-scaleIn border ${theme.utilities.border}`}>
+            <div className={`flex justify-between items-center mb-10 border-b ${theme.utilities.border} pb-6`}>
+              <h2 className={`text-xl font-bold uppercase tracking-widest ${theme.utilities.textPrimary}`}>
                 {editingProduct ? 'Edit Product' : 'Add New Product'}
               </h2>
-              <button onClick={() => setShowModal(false)} className="text-2xl hover:rotate-90 transition-transform"><HiX /></button>
+              <button onClick={() => setShowModal(false)} className={`text-2xl hover:rotate-90 transition-transform ${theme.utilities.textMuted} hover:${theme.utilities.textPrimary}`}><HiX /></button>
             </div>
 
             <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Left Column: Basic Info */}
               <div className="space-y-6">
                 <div className="space-y-2">
-                  <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400">Product Name</label>
-                  <input type="text" name="name" required className="w-full bg-gray-50 border-none p-4 text-sm focus:ring-1 focus:ring-[#A08C5B] outline-none" value={formData.name} onChange={handleInputChange} />
+                  <label className={`text-[10px] uppercase tracking-widest font-bold ${theme.utilities.textMuted}`}>Product Name</label>
+                  <input type="text" name="name" required className={`w-full ${theme.utilities.bgMuted} border-none p-4 text-sm focus:ring-1 focus:ring-[#A08C5B] outline-none ${theme.utilities.textPrimary}`} value={formData.name} onChange={handleInputChange} />
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400">Price (PKR)</label>
-                    <input type="number" name="price" required className="w-full bg-gray-50 border-none p-4 text-sm focus:ring-1 focus:ring-[#A08C5B] outline-none" value={formData.price} onChange={handleInputChange} />
+                    <label className={`text-[10px] uppercase tracking-widest font-bold ${theme.utilities.textMuted}`}>Price (PKR)</label>
+                    <input type="number" name="price" required className={`w-full ${theme.utilities.bgMuted} border-none p-4 text-sm focus:ring-1 focus:ring-[#A08C5B] outline-none ${theme.utilities.textPrimary}`} value={formData.price} onChange={handleInputChange} />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400">SKU Code</label>
-                    <input type="text" name="sku" required className="w-full bg-gray-50 border-none p-4 text-sm focus:ring-1 focus:ring-[#A08C5B] outline-none uppercase" value={formData.sku} onChange={handleInputChange} />
+                    <label className={`text-[10px] uppercase tracking-widest font-bold ${theme.utilities.textMuted}`}>SKU Code</label>
+                    <input type="text" name="sku" required className={`w-full ${theme.utilities.bgMuted} border-none p-4 text-sm focus:ring-1 focus:ring-[#A08C5B] outline-none uppercase ${theme.utilities.textPrimary}`} value={formData.sku} onChange={handleInputChange} />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400">Category</label>
-                    <select name="category" required className="w-full bg-gray-50 border-none p-4 text-sm focus:ring-1 focus:ring-[#A08C5B] outline-none" value={formData.category} onChange={handleInputChange}>
+                    <label className={`text-[10px] uppercase tracking-widest font-bold ${theme.utilities.textMuted}`}>Category</label>
+                    <select name="category" required className={`w-full ${theme.utilities.bgMuted} border-none p-4 text-sm focus:ring-1 focus:ring-[#A08C5B] outline-none ${theme.utilities.textPrimary}`} value={formData.category} onChange={handleInputChange}>
                       <option value="">Select Category</option>
                       {categories.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}
                     </select>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400">Stock Quantity</label>
-                    <input type="number" name="stock" required className="w-full bg-gray-50 border-none p-4 text-sm focus:ring-1 focus:ring-[#A08C5B] outline-none" value={formData.stock} onChange={handleInputChange} />
+                    <label className={`text-[10px] uppercase tracking-widest font-bold ${theme.utilities.textMuted}`}>Stock Quantity</label>
+                    <input type="number" name="stock" required className={`w-full ${theme.utilities.bgMuted} border-none p-4 text-sm focus:ring-1 focus:ring-[#A08C5B] outline-none ${theme.utilities.textPrimary}`} value={formData.stock} onChange={handleInputChange} />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400">Subcategory</label>
+                  <label className={`text-[10px] uppercase tracking-widest font-bold ${theme.utilities.textMuted}`}>Subcategory</label>
                   <select
                     name="subcategory"
-                    className="w-full bg-gray-50 border-none p-4 text-sm focus:ring-1 focus:ring-[#A08C5B] outline-none"
+                    className={`w-full ${theme.utilities.bgMuted} border-none p-4 text-sm focus:ring-1 focus:ring-[#A08C5B] outline-none ${theme.utilities.textPrimary}`}
                     value={formData.subcategory}
                     onChange={handleInputChange}
                     disabled={!formData.category || subcategoryOptions.length === 0}
@@ -347,28 +349,28 @@ const AdminProductsPage = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400">Product Description</label>
-                  <textarea name="description" rows="4" className="w-full bg-gray-50 border-none p-4 text-sm focus:ring-1 focus:ring-[#A08C5B] outline-none resize-none" value={formData.description} onChange={handleInputChange}></textarea>
+                  <label className={`text-[10px] uppercase tracking-widest font-bold ${theme.utilities.textMuted}`}>Product Description</label>
+                  <textarea name="description" rows="4" className={`w-full ${theme.utilities.bgMuted} border-none p-4 text-sm focus:ring-1 focus:ring-[#A08C5B] outline-none resize-none ${theme.utilities.textPrimary}`} value={formData.description} onChange={handleInputChange}></textarea>
                 </div>
               </div>
 
               {/* Right Column: media & extra info */}
               <div className="space-y-6">
                 <div className="space-y-4">
-                  <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400 flex items-center">
+                  <label className={`text-[10px] uppercase tracking-widest font-bold ${theme.utilities.textMuted} flex items-center`}>
                     <HiOutlinePhotograph className="mr-2 text-lg" /> Product Images
                   </label>
-                  <div className="border-2 border-dashed border-gray-200 p-8 text-center space-y-4 hover:border-[#A08C5B] transition-colors relative">
+                  <div className={`border-2 border-dashed ${theme.utilities.border} p-8 text-center space-y-4 hover:border-[#A08C5B] transition-colors relative`}>
                     <input 
                       type="file" 
                       multiple 
                       onChange={handleImageChange} 
                       className="absolute inset-0 opacity-0 cursor-pointer"
                     />
-                    <p className="text-[10px] uppercase tracking-widest text-gray-400">Drop images here or click to upload</p>
+                    <p className={`text-[10px] uppercase tracking-widest ${theme.utilities.textMuted}`}>Drop images here or click to upload</p>
                     <div className="flex flex-wrap gap-2 justify-center">
                       {selectedImages.map((file, i) => (
-                        <div key={i} className="text-[8px] bg-[#A08C5B] text-white px-2 py-1 rounded-full">{file.name}</div>
+                        <div key={i} className={`text-[8px] ${theme.utilities.bgContrast} ${theme.utilities.textInverse} px-2 py-1 rounded-full`}>{file.name}</div>
                       ))}
                     </div>
                   </div>
@@ -376,15 +378,15 @@ const AdminProductsPage = () => {
 
                 <div className="flex items-center space-x-3 pt-4">
                   <input type="checkbox" name="isFeatured" className="w-4 h-4 accent-[#A08C5B]" checked={formData.isFeatured} onChange={handleInputChange} id="feat-check" />
-                  <label htmlFor="feat-check" className="text-[10px] uppercase tracking-widest font-bold text-gray-500 cursor-pointer">Mark as Featured Product</label>
+                  <label htmlFor="feat-check" className={`text-[10px] uppercase tracking-widest font-bold ${theme.utilities.textMuted} cursor-pointer`}>Mark as Featured Product</label>
                 </div>
 
-                <div className="space-y-4 pt-10 border-t">
-                  <button type="submit" className="w-full btn-primary h-14 flex items-center justify-center space-x-3">
+                <div className={`space-y-4 pt-10 border-t ${theme.utilities.border}`}>
+                  <button type="submit" className={`w-full ${theme.components.buttonPrimary} h-14 flex items-center justify-center space-x-3`}>
                     <HiCheckCircle className="text-xl" />
                     <span>{editingProduct ? 'Update Product' : 'Release Product'}</span>
                   </button>
-                  <button type="button" onClick={() => setShowModal(false)} className="w-full text-center text-[10px] uppercase tracking-widest font-bold text-gray-400 hover:text-black">Cancel Changes</button>
+                  <button type="button" onClick={() => setShowModal(false)} className={`w-full text-center text-[10px] uppercase tracking-widest font-bold ${theme.utilities.textMuted} hover:${theme.utilities.textPrimary}`}>Cancel Changes</button>
                 </div>
               </div>
             </form>

@@ -2,12 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
+import { useAuth } from '@/context/AuthContext';
+import { useTheme } from '@/context/ThemeContext';
 import axios from 'axios';
 import Image from 'next/image';
-import { HiOutlineShoppingBag, HiCheck, HiOutlineTruck, HiOutlineRefresh } from 'react-icons/hi';
+import { HiOutlineShoppingBag, HiCheck, HiOutlineTruck, HiOutlineRefresh, HiMinus, HiPlus } from 'react-icons/hi';
 import toast from 'react-hot-toast';
 
 const ProductDetailClient = ({ id, initialProduct }) => {
+  const { theme } = useTheme();
   const [product, setProduct] = useState(initialProduct || null);
   const [loading, setLoading] = useState(!initialProduct);
   const [selectedImage, setSelectedImage] = useState(0);
@@ -46,21 +49,21 @@ const ProductDetailClient = ({ id, initialProduct }) => {
   };
 
   if (loading) return (
-    <div className="max-w-7xl mx-auto px-4 md:px-8 py-20 animate-pulse">
+    <div className={`max-w-7xl mx-auto px-4 md:px-8 py-20 animate-pulse ${theme.utilities.bgPage}`}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-        <div className="bg-gray-100 aspect-[3/4] w-full"></div>
+        <div className={`${theme.utilities.bgMuted} aspect-[3/4] w-full opacity-50`}></div>
         <div className="space-y-6">
-          <div className="h-8 bg-gray-100 w-3/4"></div>
-          <div className="h-6 bg-gray-100 w-1/4"></div>
-          <div className="h-20 bg-gray-100 w-full"></div>
+          <div className={`h-8 ${theme.utilities.bgMuted} w-3/4 opacity-30`}></div>
+          <div className={`h-6 ${theme.utilities.bgMuted} w-1/4 opacity-20`}></div>
+          <div className={`h-20 ${theme.utilities.bgMuted} w-full opacity-10`}></div>
         </div>
       </div>
     </div>
   );
 
   if (!product) return (
-    <div className="h-96 flex items-center justify-center">
-      <p className="text-gray-500 uppercase tracking-widest">Product not found.</p>
+    <div className={`h-96 flex items-center justify-center ${theme.utilities.bgPage}`}>
+      <p className={`${theme.utilities.textMuted} uppercase tracking-widest`}>Product not found.</p>
     </div>
   );
 
@@ -70,10 +73,10 @@ const ProductDetailClient = ({ id, initialProduct }) => {
   const comparePrice = product.salePrice && product.salePrice < product.price ? product.price : null;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 md:px-8 py-10">
+    <div className={`max-w-7xl mx-auto px-4 md:px-8 py-10 ${theme.utilities.textPrimary}`}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
         <div className="space-y-4">
-          <div className="relative aspect-[3/4] bg-gray-50 overflow-hidden">
+          <div className={`relative aspect-[3/4] ${theme.utilities.bgMuted} overflow-hidden border ${theme.utilities.border}`}>
             <Image
               src={getImageUrl(imageList[selectedImage])}
               alt={product.name}
@@ -87,7 +90,7 @@ const ProductDetailClient = ({ id, initialProduct }) => {
               <button
                 key={idx}
                 onClick={() => setSelectedImage(idx)}
-                className={`relative aspect-[3/4] border-2 transition-all ${selectedImage === idx ? 'border-[#A08C5B]' : 'border-transparent'}`}
+                className={`relative aspect-[3/4] border-2 transition-all ${selectedImage === idx ? theme.utilities.borderStrong : 'border-transparent'}`}
               >
                 <Image src={getImageUrl(img)} alt={`${product.name} ${idx}`} fill className="object-cover" />
               </button>
@@ -97,31 +100,31 @@ const ProductDetailClient = ({ id, initialProduct }) => {
 
         <div className="space-y-8">
           <div className="space-y-2">
-            <p className="text-xs uppercase tracking-[0.3em] gold-accent font-bold">{product.category?.name || 'Collection'}</p>
-            <h1 className="text-3xl md:text-4xl font-bold uppercase tracking-tighter text-[#2C3E50]">
+            <p className={`text-xs uppercase tracking-[0.3em] ${theme.utilities.textPrimary} font-bold`}>{product.category?.name || 'Collection'}</p>
+            <h1 className={`text-3xl md:text-4xl font-bold uppercase tracking-tighter ${theme.utilities.textPrimary}`}>
               {product.name}
             </h1>
-            <p className="text-xs text-gray-400 font-mono tracking-widest uppercase">SKU: {product.sku}</p>
+            <p className={`text-xs ${theme.utilities.textMuted} font-mono tracking-widest uppercase`}>SKU: {product.sku}</p>
           </div>
 
           <div className="flex items-center space-x-4">
-            <span className="text-2xl font-bold text-[#2C3E50]">Rs. {displayPrice.toLocaleString()}</span>
+            <span className={`text-2xl font-bold ${theme.utilities.textPrimary}`}>Rs. {displayPrice.toLocaleString()}</span>
             {comparePrice && (
-              <span className="text-lg text-gray-400 line-through">Rs. {comparePrice.toLocaleString()}</span>
+              <span className={`text-lg ${theme.utilities.textMuted} line-through opacity-60`}>Rs. {comparePrice.toLocaleString()}</span>
             )}
             {product.stock > 0 && product.stock <= 5 && (
-              <span className="text-[10px] bg-amber-100 text-amber-700 font-bold uppercase tracking-widest px-2 py-1">Low Stock</span>
+              <span className={`text-[10px] ${theme.utilities.bgContrast} ${theme.utilities.textInverse} font-bold uppercase tracking-widest px-2 py-1`}>Low Stock</span>
             )}
           </div>
 
-          <p className="text-gray-600 text-sm leading-relaxed">
+          <p className={`${theme.utilities.textSecondary} text-sm leading-relaxed`}>
             {product.description}
           </p>
 
           <div className="space-y-4">
-            <div className="flex justify-between items-center text-xs uppercase tracking-widest font-bold">
+            <div className={`flex justify-between items-center text-xs uppercase tracking-widest font-bold ${theme.utilities.textPrimary}`}>
               <span>Select Size</span>
-              <button className="text-[#A08C5B] border-b border-[#A08C5B]">Size Guide</button>
+              <button className={`border-b ${theme.utilities.border} hover:opacity-60 transition-opacity`}>Size Guide</button>
             </div>
             <div className="flex flex-wrap gap-2">
               {(product.sizes || []).map((size) => (
@@ -130,7 +133,7 @@ const ProductDetailClient = ({ id, initialProduct }) => {
                   onClick={() => setSelectedSize(size)}
                   className={`
                     min-w-[50px] h-10 flex items-center justify-center border text-[11px] font-bold transition-all
-                    ${selectedSize === size ? 'bg-[#2C3E50] text-white border-[#2C3E50]' : 'border-gray-200 text-gray-500 hover:border-black'}
+                    ${selectedSize === size ? `${theme.utilities.bgContrast} ${theme.utilities.textInverse} border-transparent` : `${theme.utilities.border} ${theme.utilities.textMuted} hover:${theme.utilities.textPrimary}`}
                   `}
                 >
                   {size}
@@ -140,7 +143,7 @@ const ProductDetailClient = ({ id, initialProduct }) => {
           </div>
 
           <div className="space-y-4">
-            <div className="text-xs uppercase tracking-widest font-bold">Select Color: <span className="font-normal text-gray-400 ml-1 uppercase">{selectedColor?.name}</span></div>
+            <div className={`text-xs uppercase tracking-widest font-bold ${theme.utilities.textPrimary}`}>Select Color: <span className={`font-normal ${theme.utilities.textMuted} ml-1 uppercase`}>{selectedColor?.name}</span></div>
             <div className="flex flex-wrap gap-3">
               {(product.colors || []).map((color, idx) => (
                 <button
@@ -148,7 +151,7 @@ const ProductDetailClient = ({ id, initialProduct }) => {
                   onClick={() => setSelectedColor(color)}
                   className={`
                     w-8 h-8 rounded-full border-2 p-0.5 transition-all
-                    ${selectedColor?.name === color.name ? 'border-[#A08C5B]' : 'border-transparent'}
+                    ${selectedColor?.name === color.name ? theme.utilities.borderStrong : 'border-transparent'}
                   `}
                   title={color.name}
                 >
@@ -159,32 +162,32 @@ const ProductDetailClient = ({ id, initialProduct }) => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
-            <div className="flex items-center border border-gray-200 h-14">
+            <div className={`flex items-center border ${theme.utilities.border} h-14`}>
               <button
                 onClick={() => setQuantity(q => Math.max(1, q - 1))}
-                className="w-12 h-full flex items-center justify-center hover:bg-gray-50 transition-colors"
+                className={`w-12 h-full flex items-center justify-center hover:${theme.utilities.bgMuted} transition-colors ${theme.utilities.textPrimary}`}
               >
-                -
+                <HiMinus className="text-xs" />
               </button>
               <input
                 type="number"
                 value={quantity}
                 onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
-                className="w-12 text-center text-sm font-bold bg-transparent outline-none"
+                className={`w-12 text-center text-sm font-bold bg-transparent outline-none ${theme.utilities.textPrimary}`}
               />
               <button
                 onClick={() => setQuantity(q => q + 1)}
-                className="w-12 h-full flex items-center justify-center hover:bg-gray-50 transition-colors"
+                className={`w-12 h-full flex items-center justify-center hover:${theme.utilities.bgMuted} transition-colors ${theme.utilities.textPrimary}`}
               >
-                +
+                <HiPlus className="text-xs" />
               </button>
             </div>
             <button
               onClick={handleAddToCart}
               disabled={product.stock <= 0}
               className={`
-                h-14 flex-grow btn-primary flex items-center justify-center space-x-3
-                ${product.stock <= 0 ? 'bg-gray-400 cursor-not-allowed' : ''}
+                h-14 flex-grow ${theme.components.buttonPrimary} flex items-center justify-center space-x-3
+                ${product.stock <= 0 ? 'opacity-50 grayscale cursor-not-allowed' : ''}
               `}
             >
               <HiOutlineShoppingBag className="text-lg" />
@@ -192,17 +195,17 @@ const ProductDetailClient = ({ id, initialProduct }) => {
             </button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t pt-8">
-            <div className="flex items-center space-x-3 text-xs text-gray-500 uppercase tracking-widest">
-              <HiOutlineTruck className="text-xl text-[#A08C5B]" />
+          <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 border-t ${theme.utilities.border} pt-8`}>
+            <div className={`flex items-center space-x-3 text-xs ${theme.utilities.textMuted} uppercase tracking-widest`}>
+              <HiOutlineTruck className={`text-xl ${theme.utilities.textPrimary}`} />
               <span>Express Shipping</span>
             </div>
-            <div className="flex items-center space-x-3 text-xs text-gray-500 uppercase tracking-widest">
-              <HiOutlineRefresh className="text-xl text-[#A08C5B]" />
+            <div className={`flex items-center space-x-3 text-xs ${theme.utilities.textMuted} uppercase tracking-widest`}>
+              <HiOutlineRefresh className={`text-xl ${theme.utilities.textPrimary}`} />
               <span>Easy 14-Day Returns</span>
             </div>
-            <div className="flex items-center space-x-3 text-xs text-gray-500 uppercase tracking-widest">
-              <HiCheck className="text-xl text-[#A08C5B]" />
+            <div className={`flex items-center space-x-3 text-xs ${theme.utilities.textMuted} uppercase tracking-widest`}>
+              <HiCheck className={`text-xl ${theme.utilities.textPrimary}`} />
               <span>100% Authentic Fabric</span>
             </div>
           </div>

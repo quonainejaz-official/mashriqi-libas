@@ -78,20 +78,20 @@ const DashboardPage = () => {
   };
 
   const statCards = [
-    { label: 'Total Sales', value: `Rs. ${stats.totalSales.toLocaleString()}`, icon: HiOutlineCurrencyDollar, color: 'bg-green-100 text-green-700' },
-    { label: 'Total Orders', value: stats.totalOrders, icon: HiOutlineShoppingBag, color: 'bg-blue-100 text-blue-700' },
-    { label: 'Total Products', value: stats.totalProducts, icon: HiOutlineChartBar, color: 'bg-purple-100 text-purple-700' },
-    { label: 'Low Stock', value: stats.lowStockItems, icon: HiOutlineExclamationCircle, color: 'bg-red-100 text-red-700' },
+    { label: 'Total Sales', value: `Rs. ${stats.totalSales.toLocaleString()}`, icon: HiOutlineCurrencyDollar, color: `bg-green-500/10 text-green-600` },
+    { label: 'Total Orders', value: stats.totalOrders, icon: HiOutlineShoppingBag, color: `bg-blue-500/10 text-blue-600` },
+    { label: 'Total Products', value: stats.totalProducts, icon: HiOutlineChartBar, color: `bg-purple-500/10 text-purple-600` },
+    { label: 'Low Stock', value: stats.lowStockItems, icon: HiOutlineExclamationCircle, color: `bg-red-500/10 text-red-600` },
   ];
 
   return (
-    <div className="space-y-8 animate-fadeIn">
+    <div className={`space-y-8 animate-fadeIn ${theme.utilities.textPrimary}`}>
       <div className="flex justify-between items-end">
         <div>
-          <h1 className="text-2xl font-bold uppercase tracking-widest text-[#2C3E50]">Dashboard Overview</h1>
-          <p className="text-xs text-gray-400 mt-1 uppercase tracking-widest">Real-time store performance</p>
+          <h1 className={`text-2xl font-bold uppercase tracking-widest ${theme.utilities.textPrimary}`}>Dashboard Overview</h1>
+          <p className={`text-xs ${theme.utilities.textMuted} mt-1 uppercase tracking-widest`}>Real-time store performance</p>
         </div>
-        <div className="hidden md:block text-[10px] font-bold uppercase tracking-widest bg-white border px-4 py-2">
+        <div className={`hidden md:block text-[10px] font-bold uppercase tracking-widest ${theme.utilities.bgSurface} border ${theme.utilities.border} px-4 py-2`}>
           March 2024
         </div>
       </div>
@@ -99,13 +99,13 @@ const DashboardPage = () => {
       {/* Stat Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {statCards.map((card, idx) => (
-          <div key={idx} className="bg-white p-6 rounded-none border border-gray-100 shadow-sm flex items-center space-x-4">
+          <div key={idx} className={`${theme.utilities.bgSurface} p-6 rounded-none border ${theme.utilities.border} shadow-sm flex items-center space-x-4`}>
             <div className={`w-12 h-12 rounded-full flex items-center justify-center ${card.color}`}>
               <card.icon className="text-2xl" />
             </div>
             <div>
-              <p className="text-[10px] uppercase tracking-widest font-bold text-gray-400">{card.label}</p>
-              <h3 className="text-xl font-bold text-[#2C3E50]">{card.value}</h3>
+              <p className={`text-[10px] uppercase tracking-widest font-bold ${theme.utilities.textMuted}`}>{card.label}</p>
+              <h3 className={`text-xl font-bold ${theme.utilities.textPrimary}`}>{card.value}</h3>
             </div>
           </div>
         ))}
@@ -113,23 +113,23 @@ const DashboardPage = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Sales Chart */}
-        <div className="lg:col-span-2 bg-white p-8 border border-gray-100 shadow-sm">
-          <h3 className="text-sm font-bold uppercase tracking-widest text-[#2C3E50] mb-8">Sales Analytics</h3>
+        <div className={`lg:col-span-2 ${theme.utilities.bgSurface} p-8 border ${theme.utilities.border} shadow-sm`}>
+          <h3 className={`text-sm font-bold uppercase tracking-widest ${theme.utilities.textPrimary} mb-8`}>Sales Analytics</h3>
           <div className="h-64">
             <Bar data={chartData} options={{ maintainAspectRatio: false }} />
           </div>
         </div>
 
         {/* Recent Orders */}
-        <div className="bg-white p-8 border border-gray-100 shadow-sm">
-          <h3 className="text-sm font-bold uppercase tracking-widest text-[#2C3E50] mb-8">Recent Activity</h3>
+        <div className={`${theme.utilities.bgSurface} p-8 border ${theme.utilities.border} shadow-sm`}>
+          <h3 className={`text-sm font-bold uppercase tracking-widest ${theme.utilities.textPrimary} mb-8`}>Recent Activity</h3>
           <div className="space-y-6">
             {stats.recentSales.length > 0 ? (
               stats.recentSales.map((order, idx) => (
-                <div key={order._id} className="flex justify-between items-center border-b pb-4 last:border-0 last:pb-0">
+                <div key={order._id} className={`flex justify-between items-center border-b ${theme.utilities.border} pb-4 last:border-0 last:pb-0`}>
                   <div className="space-y-1">
                     <p className="text-xs font-bold uppercase">{order.orderId}</p>
-                    <p className="text-[10px] text-gray-400 uppercase tracking-widest">{new Date(order.createdAt).toLocaleDateString()}</p>
+                    <p className={`text-[10px] ${theme.utilities.textMuted} uppercase tracking-widest`}>{new Date(order.createdAt).toLocaleDateString()}</p>
                   </div>
                   <div className="text-right">
                     <p className="text-xs font-bold">Rs. {order.total.toLocaleString()}</p>
@@ -141,7 +141,7 @@ const DashboardPage = () => {
               ))
             ) : (
               <div className="h-40 flex items-center justify-center text-center">
-                 <p className="text-[10px] text-gray-400 uppercase tracking-widest">No recent sales records</p>
+                 <p className={`text-[10px] ${theme.utilities.textMuted} uppercase tracking-widest`}>No recent sales records</p>
               </div>
             )}
           </div>

@@ -182,9 +182,9 @@ const HomeClient = () => {
             [...Array(5)].map((_, idx) => (
               <SwiperSlide key={idx}>
                 <div className="space-y-4 animate-pulse">
-                  <div className="bg-gray-100 aspect-[3/4] w-full"></div>
-                  <div className="h-4 bg-gray-100 w-3/4 mx-auto"></div>
-                  <div className="h-4 bg-gray-100 w-1/4 mx-auto"></div>
+                  <div className={`${theme.utilities.bgMuted} aspect-[3/4] w-full opacity-50`}></div>
+                  <div className={`h-4 ${theme.utilities.bgMuted} w-3/4 mx-auto opacity-30`}></div>
+                  <div className={`h-4 ${theme.utilities.bgMuted} w-1/4 mx-auto opacity-20`}></div>
                 </div>
               </SwiperSlide>
             ))
@@ -220,7 +220,7 @@ const HomeClient = () => {
                     <div className={`flex items-center justify-center space-x-4 text-xs tracking-[0.15em] font-bold ${theme.utilities.textPrimary}`}>
                       {product.salePrice && product.salePrice < product.price ? (
                         <>
-                          <span className="text-red-600">Rs. {product.salePrice.toLocaleString()}</span>
+                          <span className="text-red-500">Rs. {product.salePrice.toLocaleString()}</span>
                           <span className={`${theme.utilities.textMuted} line-through opacity-50`}>Rs. {product.price.toLocaleString()}</span>
                         </>
                       ) : (

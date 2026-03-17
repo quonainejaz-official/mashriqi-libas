@@ -72,17 +72,6 @@ const AdminCategoriesPage = () => {
   }, [formData]);
 
   useEffect(() => {
-    const handleShortcut = (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
-        e.preventDefault();
-        handleSubmit();
-      }
-    };
-    window.addEventListener('keydown', handleShortcut);
-    return () => window.removeEventListener('keydown', handleShortcut);
-  });
-
-  useEffect(() => {
     if (!loading) {
       const next = new Set();
       categories.forEach((category) => next.add(getPathKey(category._id, [])));
@@ -436,10 +425,21 @@ const AdminCategoriesPage = () => {
       fetchCategories();
     } catch (err) {
       toast.error(err.response?.data?.error || 'Save failed', { id: loadingToast });
-    } finally {
-      setSaving(false);
-    }
-  };
+  } finally {
+    setSaving(false);
+  }
+};
+
+  useEffect(() => {
+    const handleShortcut = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+        e.preventDefault();
+        handleSubmit();
+      }
+    };
+    window.addEventListener('keydown', handleShortcut);
+    return () => window.removeEventListener('keydown', handleShortcut);
+  });
 
   const toggleExpand = (rootId, path) => {
     const key = getPathKey(rootId, path);

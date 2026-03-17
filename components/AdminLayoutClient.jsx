@@ -42,7 +42,7 @@ const AdminLayoutClient = ({ children }) => {
               href={item.href}
               className={`
                 flex items-center space-x-4 px-4 py-3 text-sm font-medium transition-all
-                ${pathname === item.href ? `${theme.utilities.bgContrastMuted} text-white shadow-lg` : `opacity-60 hover:opacity-100 hover:${theme.utilities.bgContrastMuted}`}
+                ${pathname === item.href ? `${theme.utilities.bgContrastMuted} ${theme.utilities.textInverse} shadow-lg` : `opacity-60 hover:opacity-100 hover:${theme.utilities.bgContrastMuted}`}
               `}
             >
               <item.icon className="text-xl" />
