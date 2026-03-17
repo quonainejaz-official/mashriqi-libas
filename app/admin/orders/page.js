@@ -126,11 +126,18 @@ const AdminOrdersPage = () => {
 
       {/* Order Details/Status Modal */}
       {selectedOrder && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-[1000] flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black/50 z-[1000] flex items-center justify-center p-4">
           <div className="bg-white w-full max-w-4xl p-10 animate-scaleIn max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-8 border-b pb-4">
               <h2 className="text-xl font-bold uppercase tracking-widest">Order Details: {selectedOrder.orderId}</h2>
-              <button onClick={() => setSelectedOrder(null)}><HiX className="text-2xl" /></button>
+              <button
+                type="button"
+                onClick={() => setSelectedOrder(null)}
+                className="p-2 border border-gray-200 hover:bg-gray-50 transition-all"
+                aria-label="Close order details"
+              >
+                <HiX className="text-2xl" />
+              </button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">

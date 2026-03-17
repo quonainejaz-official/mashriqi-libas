@@ -61,8 +61,8 @@
   --color-logo-glow-strong: rgba(255, 214, 90, 0.9);
   --color-logo-glow-soft: rgba(198, 122, 0, 0.4);
   --color-link: var(--color-text-primary);
-  --color-link-hover: color-mix(in srgb, var(--color-link) 88%, #ffffff);
-  --color-link-active: color-mix(in srgb, var(--color-link) 92%, #000000);
+  --color-link-hover: var(--color-link);
+  --color-link-active: var(--color-link);
   --primary: var(--color-text-primary);
   --secondary: var(--color-accent);
   --accent: var(--color-accent);
@@ -104,11 +104,11 @@ h1, h2, h3, h4, h5, h6 {
   transition: background-color var(--theme-transition) ease, color var(--theme-transition) ease, border-color var(--theme-transition) ease, box-shadow var(--theme-transition) ease;
 }
 
-:where(a, button, input, textarea, select, [role="button"]):hover {
+:where(a, button, input, textarea, select, [role="button"]):not(:disabled):not([aria-disabled="true"]):hover {
   filter: brightness(1.12);
 }
 
-:where(a, button, input, textarea, select, [role="button"]):active {
+:where(a, button, input, textarea, select, [role="button"]):not(:disabled):not([aria-disabled="true"]):active {
   filter: brightness(0.94);
 }
 
@@ -179,10 +179,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .theme-button-primary:hover {
+  background-color: var(--color-button-bg);
   background-color: color-mix(in srgb, var(--color-button-bg) 88%, #ffffff);
 }
 
 .theme-button-primary:active {
+  background-color: var(--color-button-bg);
   background-color: color-mix(in srgb, var(--color-button-bg) 92%, #000000);
 }
 
@@ -193,11 +195,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .theme-button-outline:hover {
+  background-color: var(--color-button-outline-border);
   background-color: color-mix(in srgb, var(--color-button-outline-border) 88%, #ffffff);
   color: var(--color-text-inverse) !important;
 }
 
 .theme-button-outline:active {
+  background-color: var(--color-button-outline-border);
   background-color: color-mix(in srgb, var(--color-button-outline-border) 92%, #000000);
 }
 
@@ -233,31 +237,23 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 0 0 2px var(--color-selected);
 }
 
-[class*="bg-black"],
-[class*="bg-gray-800"],
-[class*="bg-gray-900"] {
+:where([class~="bg-black"], [class~="bg-gray-800"], [class~="bg-gray-900"]) {
   background-color: var(--color-bg-contrast) !important;
 }
 
-[class*="bg-[#1a1a1a]"],
-[class*="bg-[#2d2d2d]"],
-[class*="bg-[#2C3E50]"] {
+:where([class~="bg-[#1a1a1a]"], [class~="bg-[#2d2d2d]"], [class~="bg-[#2C3E50]"]) {
   background-color: var(--color-bg-contrast) !important;
 }
 
-[class*="bg-white"] {
+:where([class~="bg-white"]) {
   background-color: var(--surface-bg) !important;
 }
 
-[class*="bg-gray-50"],
-[class*="bg-gray-100"],
-[class*="bg-gray-200"] {
+:where([class~="bg-gray-50"], [class~="bg-gray-100"], [class~="bg-gray-200"]) {
   background-color: var(--surface-muted) !important;
 }
 
-[class*="bg-[#fafafa]"],
-[class*="bg-[#FAFAFA]"],
-[class*="bg-[#F9F9F9]"] {
+:where([class~="bg-[#fafafa]"], [class~="bg-[#FAFAFA]"], [class~="bg-[#F9F9F9]"]) {
   background-color: var(--surface-muted) !important;
 }
 
@@ -282,7 +278,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
 }
 
-:where(p, span, li, label, input, textarea, select, a, button, small, strong, em) {
+:where(p, span, li, label, small, strong, em) {
   color: var(--text-default) !important;
 }
 
@@ -382,21 +378,25 @@ hr {
   background-color: var(--color-info-bg) !important;
 }
 
-[class*="bg-[#A08C5B]"],
-[class*="bg-[#a08c5b]"],
-[class*="bg-[#d4af37]"],
-[class*="bg-[#D4AF37]"],
-[class*="bg-[#ffd700]"],
-[class*="bg-[#FFD700]"] {
+:where(
+  [class~="bg-[#A08C5B]"],
+  [class~="bg-[#a08c5b]"],
+  [class~="bg-[#d4af37]"],
+  [class~="bg-[#D4AF37]"],
+  [class~="bg-[#ffd700]"],
+  [class~="bg-[#FFD700]"]
+) {
   background-color: var(--color-accent) !important;
 }
 
-[class*="border-[#A08C5B]"],
-[class*="border-[#a08c5b]"],
-[class*="border-[#d4af37]"],
-[class*="border-[#D4AF37]"],
-[class*="border-[#ffd700]"],
-[class*="border-[#FFD700]"] {
+:where(
+  [class~="border-[#A08C5B]"],
+  [class~="border-[#a08c5b]"],
+  [class~="border-[#d4af37]"],
+  [class~="border-[#D4AF37]"],
+  [class~="border-[#ffd700]"],
+  [class~="border-[#FFD700]"]
+) {
   border-color: var(--color-accent) !important;
 }
 
@@ -418,23 +418,23 @@ hr {
   accent-color: var(--color-accent);
 }
 
-[class*="text-[#A08C5B]"],
-[class*="text-[#d4af37]"],
-[class*="text-[#D4AF37]"],
-[class*="text-[#ffd700]"],
-[class*="text-[#FFD700]"] {
+:where(
+  [class~="text-[#A08C5B]"],
+  [class~="text-[#d4af37]"],
+  [class~="text-[#D4AF37]"],
+  [class~="text-[#ffd700]"],
+  [class~="text-[#FFD700]"]
+) {
   color: var(--color-accent) !important;
 }
 
-[class*="text-[#2C3E50]"],
-[class*="text-[#2c3e50]"],
-[class*="text-[#1a1a1a]"],
-[class*="text-[#2d2d2d]"] {
+:where(
+  [class~="text-[#2C3E50]"],
+  [class~="text-[#2c3e50]"],
+  [class~="text-[#1a1a1a]"],
+  [class~="text-[#2d2d2d]"]
+) {
   color: var(--color-text-primary) !important;
-}
-
-[class*="text-[#"] {
-  color: var(--text-default) !important;
 }
 
 :where(a:link) {
@@ -453,8 +453,58 @@ hr {
   color: var(--text-link-active) !important;
 }
 
-:where(button) {
-  color: var(--text-default) !important;
+.btn-primary:disabled,
+.btn-outline:disabled,
+.theme-button-primary:disabled,
+.theme-button-outline:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  filter: none;
+}
+
+:where([class*="hover:text-[#2C3E50]"]):hover,
+:where([class*="hover:text-[#2c3e50]"]):hover,
+:where([class*="hover:text-[#1a1a1a]"]):hover,
+:where([class*="hover:text-[#2d2d2d]"]):hover {
+  color: var(--color-text-primary) !important;
+}
+
+:where([class*="hover:text-[#A08C5B]"]):hover,
+:where([class*="hover:text-[#a08c5b]"]):hover,
+:where([class*="hover:text-[#d4af37]"]):hover,
+:where([class*="hover:text-[#D4AF37]"]):hover,
+:where([class*="hover:text-[#ffd700]"]):hover,
+:where([class*="hover:text-[#FFD700]"]):hover {
+  color: var(--color-accent) !important;
+}
+
+:where([class*="hover:border-[#A08C5B]"]):hover,
+:where([class*="hover:border-[#a08c5b]"]):hover,
+:where([class*="hover:border-[#d4af37]"]):hover,
+:where([class*="hover:border-[#D4AF37]"]):hover,
+:where([class*="hover:border-[#ffd700]"]):hover,
+:where([class*="hover:border-[#FFD700]"]):hover {
+  border-color: var(--color-accent) !important;
+}
+
+:where([class*="hover:bg-black"]):hover,
+:where([class*="hover:bg-gray-800"]):hover,
+:where([class*="hover:bg-gray-900"]):hover,
+:where([class*="hover:bg-[#1a1a1a]"]):hover,
+:where([class*="hover:bg-[#2d2d2d]"]):hover,
+:where([class*="hover:bg-[#2C3E50]"]):hover {
+  background-color: var(--color-bg-contrast) !important;
+  color: var(--color-text-inverse) !important;
+}
+
+:where([class*="hover:bg-gray-50"]):hover,
+:where([class*="hover:bg-gray-100"]):hover,
+:where([class*="hover:bg-gray-200"]):hover,
+:where([class*="hover:bg-[#fafafa]"]):hover,
+:where([class*="hover:bg-[#FAFAFA]"]):hover,
+:where([class*="hover:bg-[#F9F9F9]"]):hover,
+:where([class*="hover:bg-white"]):hover {
+  background-color: var(--surface-muted) !important;
 }
 
 /* Dark background detection for text overrides */
@@ -473,8 +523,8 @@ hr {
   --text-default: var(--color-text-inverse);
   --text-placeholder: var(--color-text-inverse-muted);
   --text-link: var(--color-text-inverse);
-  --text-link-hover: color-mix(in srgb, var(--color-text-inverse) 88%, #ffffff);
-  --text-link-active: color-mix(in srgb, var(--color-text-inverse) 92%, #000000);
+  --text-link-hover: var(--color-text-inverse);
+  --text-link-active: var(--color-text-inverse);
   --text-link-visited: var(--color-text-inverse);
 }
 
@@ -638,10 +688,12 @@ hr {
 }
 
 .btn-primary:hover {
+  background-color: var(--color-button-bg);
   background-color: color-mix(in srgb, var(--color-button-bg) 88%, #ffffff);
 }
 
 .btn-primary:active {
+  background-color: var(--color-button-bg);
   background-color: color-mix(in srgb, var(--color-button-bg) 92%, #000000);
 }
 
@@ -653,11 +705,13 @@ hr {
 }
 
 .btn-outline:hover {
+  background-color: var(--color-button-outline-border);
   background-color: color-mix(in srgb, var(--color-button-outline-border) 88%, #ffffff);
   color: var(--color-text-inverse) !important;
 }
 
 .btn-outline:active {
+  background-color: var(--color-button-outline-border);
   background-color: color-mix(in srgb, var(--color-button-outline-border) 92%, #000000);
 }
 
@@ -672,6 +726,7 @@ hr {
 
 /* Swiper Customization */
 .swiper-pagination-bullet {
+  background-color: var(--color-text-muted) !important;
   background-color: color-mix(in srgb, var(--color-text-primary) 50%, transparent) !important;
 }
 .swiper-pagination-bullet-active {
@@ -691,6 +746,7 @@ hr {
 /* Product Carousel Specifics */
 .product-carousel .swiper-button-next, 
 .product-carousel .swiper-button-prev {
+  background-color: var(--color-bg-surface) !important;
   background-color: color-mix(in srgb, var(--color-bg-surface) 80%, transparent) !important;
   width: 3rem !important;
   height: 3rem !important;
@@ -710,12 +766,15 @@ hr {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
+  background: var(--color-bg-surface);
   background: color-mix(in srgb, var(--color-bg-surface) 80%, transparent);
 }
 ::-webkit-scrollbar-thumb {
+  background: var(--color-text-muted);
   background: color-mix(in srgb, var(--color-text-primary) 50%, transparent);
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-secondary);
   background: color-mix(in srgb, var(--color-text-primary) 70%, transparent);
 }

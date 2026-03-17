@@ -54,8 +54,8 @@ const Navbar = () => {
 
   const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
   const themeIcons = {
-    dark: HiMoon,
-    light: HiSun,
+    dark: HiSun,
+    light: HiMoon,
     gold: HiStar
   };
   const ThemeIcon = themeIcons[themeKey] || HiMoon;
@@ -242,7 +242,7 @@ const Navbar = () => {
                 type="text" 
                 autoFocus
                 placeholder="Search Mashriqi Libas..." 
-                className={`w-full bg-transparent border-b-2 ${theme.utilities.border} py-8 text-3xl md:text-6xl font-light uppercase tracking-tighter focus:border-black outline-none transition-all ${theme.utilities.textPrimary}`}
+                className={`w-full bg-transparent border-b-2 ${theme.utilities.border} py-8 text-3xl md:text-6xl font-light uppercase tracking-tighter focus:border-current outline-none transition-all ${theme.utilities.textPrimary}`}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />

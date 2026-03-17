@@ -79,10 +79,6 @@ const AdminCategoriesPage = () => {
     }
   }, [loading, categories]);
 
-  useEffect(() => {
-    setErrors(validateForm(formData));
-  }, [formData, validateForm]);
-
   const fetchCategories = async () => {
     setLoading(true);
     try {
@@ -119,6 +115,10 @@ const AdminCategoriesPage = () => {
     },
     [editingTarget]
   );
+
+  useEffect(() => {
+    setErrors(validateForm(formData));
+  }, [formData, validateForm]);
 
   const updateChildrenByPath = (nodes, path, updater) => {
     if (path.length === 0) return updater(nodes);
